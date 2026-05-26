@@ -4,46 +4,69 @@ Este documento resume los cambios estéticos y estructurales aplicados para impl
 
 ---
 
-## 🎨 Identidad Visual y Paleta de Colores
+## 🎨 Identidad Visual y Paleta de Colores (v2 - Azul Corporativo + Naranja Energético)
 
-Se extrajo rigurosamente la paleta de colores sofisticada y cálida del diseño de referencia, integrándola como variables nativas en el sistema de diseño:
+La nueva paleta transiciona de un estilo "café/espresso" a un estilo **corporativo premium** con tonos azul profundo y naranja vibrante:
 
-*   **Color de Fondo Primario (`#FDFBF7`)**: Un tono crema/off-white que reemplaza el blanco genérico por un lienzo editorial cálido y sofisticado.
-*   **Color de Contraste Oscuro (`#2A1A12`)**: Un marrón/espresso profundo utilizado para textos primarios, elementos estructurales oscuros, encabezados, botones de alta jerarquía y el pie de página principal.
-*   **Acento de Marca (`#F27D26`)**: Un naranja vibrante y energético que resalta estados activos, insignias de oferta, selecciones de navegación y botones destacados de llamada a la acción (CTA).
+*   **Color de Fondo Primario (`#FFF9F5`)**: Tono crema/off-white cálido que reemplaza el blanco genérico, ahora más claro y limpio.
+*   **Color de Contraste Oscuro (`#122C9B`)**: Azul corporativo profundo que reemplaza al marrón espresso. Usado para textos primarios, fondos oscuros (hero, footer), encabezados y botones de alta jerarquía.
+*   **Acento de Marca (`#FFA42C`)**: Naranja vibrante/ámbar que reemplaza al naranja anterior. Resalta estados activos, insignias de oferta, selecciones de navegación y CTAs principales.
+*   **Color Secundario (`#3D5FC9`)**: Azul medio usado para hover states de enlaces y elementos secundarios.
+
+### Variables CSS en Tailwind v4 (index.css)
+```css
+@theme {
+  --color-brand-accent: #FFA42C;
+  --color-brand-dark: #122C9B;
+  --color-brand-secondary: #3D5FC9;
+  --color-brand-bg: #FFF9F5;
+}
+```
+
+### Reglas de Aplicación de Colores
+| Rol | Color | Uso principal |
+|-----|-------|---------------|
+| Fondo página | `#FFF9F5` | `bg-[#FFF9F5]`, `text-[#122C9B]` en body |
+| Oscuro/Estructura | `#122C9B` | `bg-[#122C9B]` (hero, footer), `text-[#122C9B]` (textos) |
+| Acento/CTA | `#FFA42C` | Hover botones, badges activos, iconos destacados |
+| Secundario | `#3D5FC9` | `hover:text-[#3D5FC9]`, hover en links de navegación |
 
 ---
 
 ## 🛠️ Ajustes y Mejoras por Componente
 
 ### 1. Sistema Global de Estilos (`/src/index.css`)
-*   Se registraron variables core de Tailwind (`--color-brand-accent`, `--color-brand-dark`, `--color-brand-bg`).
-*   Se modificaron los comportamientos de selección del navegador para utilizar fondo `#F27D26` con bajo nivel de opacidad, asegurando coherencia visual en cada interacción del usuario.
+*   Se registraron variables core de Tailwind (`--color-brand-accent`, `--color-brand-dark`, `--color-brand-secondary`, `--color-brand-bg`).
+*   Se actualizó la selección del navegador a `bg-[#FFA42C]/20` con color de texto `#122C9B`.
+*   Scrollbars actualizados: thumb `#3D5FC9`, hover `#FFA42C`.
 
 ### 2. Barra de Navegación Principal (`/src/components/Navbar.tsx`)
-*   **Rediseño del Logotipo**: Transición de un bloque de icono tradicional hacia un distintivo circular con el icono de café en tono acento y la tipografía de marca en negrita sans-serif (`JAGUARCOFFEE` de alto impacto).
-*   **Navegación Limpia y Minimalista**: Los enlaces ahora lucen en mayúsculas, con menor escala de fuente (`text-xs`), un espacio de tracking expandido, y una animación de borde inferior activo en el color de acento de marca.
-*   **Bordes y Sombras Pulidas**: Reemplazo de los bordes rectangulares gruesos anteriores por divisores sutiles con opacidad (`border-[#2A1A12]/10`).
+*   **Rediseño del Logotipo**: Círculo con icono café en tono acento (`#FFA42C`) sobre fondo oscuro (`#122C9B`).
+*   **Navegación**: Links en mayúsculas con hover `hover:text-[#3D5FC9]` (azul secundario), estado activo con borde inferior `#FFA42C`.
+*   **Botón Carrito**: Badge naranja `#FFA42C`, fondo hover `bg-[#122C9B]/10`.
+*   **Botones Auth**: Primary button `bg-[#122C9B]` → hover `bg-[#FFA42C]`.
 
 ### 3. Página de Inicio (`/src/pages/Home.tsx`)
-*   **Héroe Carrusel Elevado**: Adaptación de los banners del carrusel con tipografía display extra-bold (`font-extrabold tracking-tighter uppercase leading-[0.9]`), fondos oscuros tipo espresso, e insignias de estilo de alta gama.
-*   **Tarjetas de Venta Rápida de Café**:
-    *   Bordes redondeados de categoría premium (`rounded-3xl`).
-    *   Fondo de imagen con contenedor de contraste suave en vez de la sombra estándar.
-    *   Botón "Comprar" estilizado en forma de píldora redondeada completa (`rounded-full`) en color espresso profundo que cambia dinámicamente al color de acento sobre el hover.
-*   **Bento Grid de Valores**: Modificado con iconos sobre fondos circulares más limpios de tipo acento translúcido y bordes editoriales de contraste bajo.
-*   **Sección de Experiencias y Catas**: Enmarcado en un elegante contenedor curvo oscuro que genera contraste instantáneo con el resto del sitio, invitando al usuario a reservar catas.
+*   **Hero Carrusel**: Fondo `#122C9B` (reemplaza `#2A1A12`), badges en `#FFA42C`.
+*   **Bento Grid Valores**: Iconos en `#FFA42C`, fondos `bg-[#FFA42C]/10`.
+*   **Tarjetas Producto**: Borde `border-[#122C9B]/10`, botón "Comprar" `bg-[#122C9B]` → hover `bg-[#FFA42C]`.
+*   **Sección Experiencias**: Fondo `#122C9B` oscuro, CTAs en `#FFA42C`.
+*   **Turismo/Academia Cards**: Hover links `hover:text-[#3D5FC9]`.
 
-### 4. Catálogo de la Tienda de Especialidad (`/src/pages/Tienda.tsx`)
-*   **Banner de Búsqueda Mejorado**: Rediseñado en un bloque espresso sólido con efecto overlay y una barra de búsqueda premium integrada con botones de acento vibrante.
-*   **Filtros de Categoría Rediseñados**: Píldoras interactivas redondeadas en mayúsculas de tipo profesional que permiten filtrar el menú de productos.
-*   **Grilla de Productos de Especialidad**: Estructura de tarjetas más ligera y estilizada que incluye tags flotantes en el borde superior de tipo "Oferta", "Agotado" o "Pocas Unidades" y botones de acción rápida estilizados.
+### 4. Catálogo Tienda (`/src/pages/Tienda.tsx`)
+*   **Banner**: Fondo `#122C9B`, search button `#FFA42C`.
+*   **Filtros activos**: `bg-[#FFA42C]`, inactivos `hover:border-[#FFA42C] hover:text-[#FFA42C]`.
+*   **Cards productos**: Badge "Pocas unidades" en `#FFA42C`, hover overlay `#122C9B`.
 
-### 5. Pie de Página de Ingeniería y Créditos (`/src/components/Footer.tsx`)
-*   **Unificación Estética**: Se reestructuraron las secciones del footer con el color `#2A1A12`, adaptando el logotipo y distribuyendo la información del origen del grano de forma visualmente armoniosa.
-*   **Barra de Especificaciones Tecnológicas Activa**: Se agregó la barra inferior de estilo "monospaced" inspirada en desarrolladores de alta costura que destaca:
-    *   *Entorno Operativo*: Node.js v20 | React 18 + Vite | MySQL 8.x Hostinger.
-    *   *Estado del Sistema de Pagos*: Sello verde activo "WooMPI Checkout Connected" y control de versión compilada de producción.
+### 5. Footer (`/src/components/Footer.tsx`)
+*   **Fondo**: `#122C9B` (reemplaza `#2A1A12`).
+*   **Logo/iconos**: Tono `#FFA42C`.
+*   **Links hover**: `hover:text-[#FFA42C]`.
+
+### 6. Formularios (Login, Register, Checkout, Admin, Contacto)
+*   Botones primarios: `bg-[#122C9B]` → hover `bg-[#FFA42C]`.
+*   Botones admin/secondary: hover `bg-[#FFA42C]`.
+*   Iconos de secciones: `text-[#FFA42C]`.
 
 ---
 

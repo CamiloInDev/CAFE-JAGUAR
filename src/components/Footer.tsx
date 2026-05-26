@@ -3,16 +3,16 @@ import { Coffee, ShieldCheck, Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer id="app-footer" className="bg-[#2A1A12] text-stone-300 border-t border-white/10 pt-16 pb-12">
+    <footer id="app-footer" className="bg-[#122C9B] text-stone-300 border-t border-white/10 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Brand Section */}
         <div className="md:col-span-1 space-y-4">
-          <div className="flex items-center gap-3 text-white">
+            <div className="flex items-center gap-3 text-white">
             <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
-              <Coffee className="w-5 h-5 text-[#F27D26]" />
+              <Coffee className="w-5 h-5 text-[#FFA42C]" />
             </div>
             <span className="text-xl font-bold tracking-tighter uppercase">
-              JAGUAR<span className="text-[#F27D26]">COFFEE</span>
+              JAGUAR<span className="text-[#FFA42C]">COFFEE</span>
             </span>
           </div>
           <p className="text-xs text-stone-400 font-light leading-relaxed">
@@ -28,10 +28,10 @@ export default function Footer() {
         <div className="space-y-4">
           <h4 className="text-white font-bold text-xs tracking-widest uppercase font-mono">Líneas de Negocio</h4>
           <ul className="space-y-2.5 text-xs text-stone-400">
-            <li><a href="/tienda" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">E-commerce de Grano y Molido</a></li>
-            <li><a href="/experiencias" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Reserva de Catas & Talleres</a></li>
-            <li><a href="/turismo" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Haciendas Cafeteras Airbnb</a></li>
-            <li><a href="/academia" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Academia de Barismo Digital</a></li>
+            <li><a href="/tienda" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">E-commerce de Grano y Molido</a></li>
+            <li><a href="/experiencias" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Reserva de Catas & Talleres</a></li>
+            <li><a href="/turismo" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Haciendas Cafeteras Airbnb</a></li>
+            <li><a href="/academia" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Academia de Barismo Digital</a></li>
           </ul>
         </div>
 
@@ -39,10 +39,10 @@ export default function Footer() {
         <div className="space-y-4">
           <h4 className="text-white font-bold text-xs tracking-widest uppercase font-mono">Atención al Cliente</h4>
           <ul className="space-y-2.5 text-xs text-stone-400">
-            <li><a href="/contacto" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Contacto de Soporte</a></li>
-            <li><a href="/mi-cuenta" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Mi Perfil y Pedidos</a></li>
-            <li><a href="/carrito" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Carrito de Compra</a></li>
-            <li><a href="/auth/login" className="hover:text-[#F27D26] transition-colors uppercase tracking-wider font-mono">Acceso de Portal</a></li>
+            <li><a href="/contacto" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Contacto de Soporte</a></li>
+            <li><a href="/mi-cuenta" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Mi Perfil y Pedidos</a></li>
+            <li><a href="/carrito" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Carrito de Compra</a></li>
+            <li><a href="/auth/login" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">Acceso de Portal</a></li>
           </ul>
         </div>
 
@@ -53,7 +53,7 @@ export default function Footer() {
             <p className="text-xs text-stone-400 leading-normal font-light">
               Todos nuestros cafés cuentan con denominación de origen y comercio justo certificado, cultivados de forma sostenible a más de 1,700 metros de altura.
             </p>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F27D26]/10 border border-[#F27D26]/20 rounded-full text-[10px] font-semibold text-[#F27D26] font-mono uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFA42C]/10 border border-[#FFA42C]/20 rounded-full text-[10px] font-semibold text-[#FFA42C] font-mono uppercase tracking-wider">
               ☕ Hecho en Colombia
             </div>
           </div>
@@ -81,9 +81,9 @@ export default function Footer() {
         
         <div className="text-center text-[10px] text-stone-500 flex flex-col md:flex-row justify-between items-center gap-2">
           <span>© {new Date().getFullYear()} Jaguar Coffee S.A.S. Todos los derechos reservados.</span>
-          <span className="flex items-center gap-1">
-            Desarrollado con <Heart className="w-3 h-3 text-[#F27D26] fill-[#F27D26]" /> para los apasionados del café de especialidad.
-          </span>
+            <span className="flex items-center gap-1">
+              Desarrollado con <Heart className="w-3 h-3 text-[#FFA42C] fill-[#FFA42C]" /> para los apasionados del café de especialidad.
+            </span>
         </div>
       </div>
     </footer>

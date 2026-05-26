@@ -65,7 +65,7 @@ export default function ExperienciaDetail() {
         {/* Left Side: Editorial descriptive column (8 Grid columns) */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-3">
-            <span className="text-xs font-bold text-amber-700 font-mono tracking-widest uppercase">
+            <span className="text-xs font-bold text-[#122C9B] font-mono tracking-widest uppercase">
               RESERVA GARANTIZADA DE TALLER
             </span>
             <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-stone-900 leading-tight">
@@ -75,11 +75,11 @@ export default function ExperienciaDetail() {
             {/* Metadata badges container */}
             <div className="flex flex-wrap gap-4 pt-2 text-xs text-stone-500 font-mono font-medium">
               <span className="flex items-center gap-1 bg-stone-100 px-2.5 py-1 rounded-md">
-                <Clock className="w-3.5 h-3.5 text-amber-800" />
+                <Clock className="w-3.5 h-3.5 text-[#FFA42C]" />
                 {experience.duracion_min} minutos de duración
               </span>
               <span className="flex items-center gap-1 bg-stone-100 px-2.5 py-1 rounded-md">
-                <Users className="w-3.5 h-3.5 text-amber-800" />
+                <Users className="w-3.5 h-3.5 text-[#FFA42C]" />
                 Hasta {experience.capacidad_max} cata-participantes
               </span>
             </div>
@@ -139,7 +139,7 @@ export default function ExperienciaDetail() {
 
           <div className="space-y-3">
             <div className="flex items-start gap-2 text-xs text-stone-500 leading-relaxed">
-              <ShieldCheck className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+              <ShieldCheck className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
               <span>
                 Garantía oficial Booking.com. Modificaciones gratuitas hasta con 24 horas de antelación llamando a la mesa de asistencia de Jaguar Coffee.
               </span>

@@ -25,7 +25,7 @@ export default function Experiencias() {
       
       {/* Intro Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold font-mono tracking-wider uppercase">
+        <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase">
           Línea Experiencias
         </span>
         <h1 className="font-display text-4xl font-extrabold text-stone-900 tracking-tight">
@@ -47,7 +47,7 @@ export default function Experiencias() {
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="group bg-white border border-stone-200 hover:border-amber-700/20 rounded-3xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+              className="group bg-white border border-stone-200 hover:border-[#FFA42C]/20 rounded-3xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
             >
               {/* Media banner */}
               <div className="relative aspect-video w-full overflow-hidden bg-stone-100 leading-none">
@@ -58,7 +58,7 @@ export default function Experiencias() {
                   referrerPolicy="no-referrer"
                 />
                 
-                <span className="absolute bottom-4 right-4 bg-stone-900/90 text-white text-xs font-bold font-mono px-3 py-1.5 rounded-lg">
+                <span className="absolute bottom-4 right-4 bg-[#122C9B]/90 text-white text-xs font-bold font-mono px-3 py-1.5 rounded-lg">
                   ${exp.precio.toLocaleString('es-CO')} COP
                 </span>
               </div>
@@ -66,7 +66,7 @@ export default function Experiencias() {
               {/* Body particulars */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-3">
-                  <h3 className="font-display text-xl font-bold text-stone-900 group-hover:text-amber-800 transition-colors">
+                  <h3 className="font-display text-xl font-bold text-stone-900 group-hover:text-[#FFA42C] transition-colors">
                     {exp.nombre}
                   </h3>
                   <p className="text-xs text-stone-500 leading-relaxed font-light line-clamp-3">
@@ -77,15 +77,15 @@ export default function Experiencias() {
                 {/* Meta details (Duration, Capacity) */}
                 <div className="pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-mono">
                   <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4 text-amber-700" />
+                    <Clock className="w-4 h-4 text-[#FFA42C]" />
                     <span>{exp.duracion_min} mins</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Users className="w-4 h-4 text-amber-700" />
+                    <Users className="w-4 h-4 text-[#FFA42C]" />
                     <span>Máx {exp.capacidad_max} personas</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-amber-800 font-bold">
-                    <Award className="w-4 h-4 text-amber-700" />
+                  <div className="flex items-center gap-1.5 text-[#FFA42C] font-bold">
+                    <Award className="w-4 h-4 text-[#FFA42C]" />
                     <span>Certificado</span>
                   </div>
                 </div>
@@ -94,7 +94,7 @@ export default function Experiencias() {
                 <div className="pt-2">
                   <Link
                     to={`/experiencias/${exp.slug}`}
-                    className="w-full flex items-center justify-center gap-2 py-3 bg-stone-900 hover:bg-amber-900 text-white rounded-xl text-sm font-semibold transition-all shadow-sm"
+                    className="w-full flex items-center justify-center gap-2 py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl text-sm font-semibold transition-all shadow-sm"
                   >
                     <span>Ver Fechas & Reservar</span>
                     <ChevronRight className="w-4 h-4" />

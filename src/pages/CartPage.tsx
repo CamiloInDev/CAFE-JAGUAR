@@ -27,7 +27,7 @@ export default function CartPage() {
         <p className="text-sm text-stone-500 font-light max-w-sm mx-auto">
           ¿Aún no has elegido tus cosechas predilectas? Revisa la tienda de especialidad para comenzar.
         </p>
-        <Link to="/tienda" className="inline-block px-6 py-3 bg-amber-900 text-[#FAF8F5] font-semibold rounded-xl text-sm">
+        <Link to="/tienda" className="inline-block px-6 py-3 bg-[#122C9B] text-white font-semibold rounded-xl text-sm">
           Ir a la Tienda
         </Link>
       </div>
@@ -40,7 +40,7 @@ export default function CartPage() {
       {/* Editorial Header */}
       <div className="border-b border-stone-200 pb-5">
         <h1 className="font-display text-3xl font-extrabold text-stone-900 tracking-tight flex items-center gap-3">
-          <ShoppingCart className="w-8 h-8 text-amber-800" />
+          <ShoppingCart className="w-8 h-8 text-[#FFA42C]" />
           <span>Carrito de Compra</span>
         </h1>
         <p className="text-sm text-stone-500 mt-1">Revisa y edita los productos de especialidad seleccionados antes de facturar.</p>
@@ -135,7 +135,7 @@ export default function CartPage() {
           <div className="pt-2 text-left">
             <Link
               to="/tienda"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#122C9B] hover:text-[#FFA42C] hover:underline"
             >
               <CornerUpLeft className="w-4 h-4" />
               <span>Seguir Comprando Café</span>
@@ -168,7 +168,7 @@ export default function CartPage() {
 
           <button
             onClick={handleCheckoutRedirect}
-            className="w-full flex items-center justify-center gap-2 py-3.5 bg-amber-900 border border-amber-950 hover:bg-amber-800 text-[#FAF8F5] text-sm font-bold rounded-xl transition-all shadow-md cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#122C9B] border border-[#122C9B] hover:bg-[#FFA42C] text-white text-sm font-bold rounded-xl transition-all shadow-md cursor-pointer"
           >
             <span>Proceder al pago con WooMPI</span>
             <ArrowRight className="w-4 h-4" />

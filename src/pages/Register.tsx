@@ -49,10 +49,10 @@ export default function Register() {
         
         {/* Header Title */}
         <div className="text-center space-y-2">
-          <span className="p-2.5 bg-amber-50 text-amber-900 rounded-xl inline-block shadow-inner">
+          <span className="p-2.5 bg-[#FFA42C]/10 text-[#122C9B] rounded-xl inline-block shadow-inner">
             <UserPlus className="w-6 h-6" />
           </span>
-          <h1 className="font-display text-2xl font-extrabold text-stone-900">Crear Cuenta</h1>
+          <h1 className="font-display text-2xl font-extrabold text-[#122C9B]">Crear Cuenta</h1>
           <p className="text-xs text-stone-500 font-light max-w-xs mx-auto leading-normal">
             Regístrate para realizar compras especiales, guardar tus direcciones y acumular puntos Jaguar.
           </p>
@@ -150,7 +150,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-amber-900 border border-amber-950 hover:bg-amber-800 text-[#FAF8F5] text-sm font-semibold rounded-xl shadow transition duration-200 cursor-pointer"
+              className="w-full py-3 bg-[#122C9B] border border-[#122C9B] hover:bg-[#3D5FC9] text-white text-sm font-semibold rounded-xl shadow transition duration-200 cursor-pointer"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" />

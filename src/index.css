@@ -6,13 +6,14 @@
   --font-display: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   
-  --color-brand-accent: #F27D26;
-  --color-brand-dark: #2A1A12;
-  --color-brand-bg: #FDFBF7;
+  --color-brand-accent: #FFA42C;
+  --color-brand-dark: #122C9B;
+  --color-brand-secondary: #3D5FC9;
+  --color-brand-bg: #FFF9F5;
 }
 
 body {
-  @apply bg-[#FDFBF7] text-[#2A1A12] antialiased font-sans selection:bg-[#F27D26]/20 selection:text-[#2A1A12];
+  @apply bg-[#FFF9F5] text-[#122C9B] antialiased font-sans selection:bg-[#FFA42C]/20 selection:text-[#122C9B];
 }
 
 /* Custom scrollbars for a premium editorial style */
@@ -24,14 +25,14 @@ body {
   background: #fbfbf9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #e2ded5;
+  background: #3D5FC9;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #cdc7b9;
+  background: #FFA42C;
 }
 
 /* Form resets */
 input, select, textarea {
-  @apply focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 transition-all duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-[#FFA42C]/20 focus:border-[#FFA42C] transition-all duration-200;
 }

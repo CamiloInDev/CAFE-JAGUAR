@@ -48,7 +48,7 @@ export default function Contacto() {
       
       {/* Visual Header */}
       <div className="max-w-3xl mx-auto text-center space-y-4">
-        <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold font-mono tracking-wider uppercase animate-pulse">
+        <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase animate-pulse">
           Mesa de Ayuda
         </span>
         <h1 className="font-display text-4xl font-extrabold text-stone-900 tracking-tight">
@@ -71,7 +71,7 @@ export default function Contacto() {
 
             <div className="space-y-4 pt-2">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-bold text-stone-800 font-mono uppercase">Dirección</h4>
                   <p className="text-xs text-stone-500 mt-0.5 font-light">Calle 10 # 5-42, El Poblado, Medellín, Colombia</p>
@@ -79,7 +79,7 @@ export default function Contacto() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                <Mail className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-bold text-stone-800 font-mono uppercase">Correo electrónico</h4>
                   <p className="text-xs text-stone-500 mt-0.5 font-light">hola@jaguarcoffee.com</p>
@@ -87,7 +87,7 @@ export default function Contacto() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                <Phone className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-bold text-stone-800 font-mono uppercase">Canal de Whatsapp</h4>
                   <p className="text-xs text-stone-500 mt-0.5 font-light">+57 (300) 123-4567</p>
@@ -98,7 +98,7 @@ export default function Contacto() {
 
           {/* Quick FAQ info Card */}
           <div className="p-5 bg-stone-50 border border-stone-200 rounded-xl flex items-start gap-3 leading-relaxed">
-            <HelpCircle className="w-5 h-5 text-amber-750 flex-shrink-0" />
+            <HelpCircle className="w-5 h-5 text-[#FFA42C] flex-shrink-0" />
             <div>
               <h4 className="text-xs font-bold text-stone-900 uppercase tracking-wide font-mono">¿Eres Mayorista?</h4>
               <p className="text-xs text-stone-500 mt-1 font-light">
@@ -195,7 +195,7 @@ export default function Contacto() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-900 border border-amber-950 text-[#FAF8F5] hover:bg-amber-800 text-sm font-bold rounded-lg transition-all shadow-md mt-4 cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#122C9B] border border-[#122C9B] hover:bg-[#FFA42C] text-white text-sm font-bold rounded-lg transition-all shadow-md mt-4 cursor-pointer"
               >
                 {loading ? (
                   <span className="w-5 h-5 border-2 border-[#FAF8F5] border-t-transparent rounded-full animate-spin" />

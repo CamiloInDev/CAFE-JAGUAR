@@ -59,14 +59,14 @@ export default function Tienda() {
     <div id="shop-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       
       {/* Search Header Banner */}
-      <div className="bg-[#2A1A12] rounded-3xl text-[#FDFBF7] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden border border-[#2A1A12]/10">
+      <div className="bg-[#122C9B] rounded-3xl text-[#FFF9F5] p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden border border-[#122C9B]/10">
         {/* Decorative background image */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541170155377-5091f3b2b044?auto=format&fit=crop&q=40&w=400')] bg-cover bg-center mix-blend-overlay opacity-15" />
         
         <div className="space-y-3 max-w-xl z-10 relative">
-          <span className="text-[#F27D26] font-mono text-xs font-black uppercase tracking-widest">Tienda de Especialidad</span>
+          <span className="text-[#FFA42C] font-mono text-xs font-black uppercase tracking-widest">Tienda de Especialidad</span>
           <h1 className="font-sans text-4xl font-extrabold tracking-tighter uppercase leading-[0.9]">Catálogo de Café Especial</h1>
-          <p className="text-sm text-[#FDFBF7]/80 font-light leading-relaxed">
+          <p className="text-sm text-[#FFF9F5]/80 font-light leading-relaxed">
             Nuestros granos son seleccionados a mano por caficultores colombianos expertos, garantizando un tueste perfecto y frescura sublime en la entrega.
           </p>
         </div>
@@ -78,26 +78,26 @@ export default function Tienda() {
             placeholder="Buscar por origen, notas..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-grow px-4 py-3 bg-transparent text-white placeholder-[#FDFBF7]/60 text-sm border-none focus:ring-0 focus:outline-none"
+            className="flex-grow px-4 py-3 bg-transparent text-white placeholder-[#FFF9F5]/60 text-sm border-none focus:ring-0 focus:outline-none"
           />
-          <button type="submit" className="p-3 bg-[#F27D26] text-white hover:bg-[#F27D26]/90 transition-all cursor-pointer">
+          <button type="submit" className="p-3 bg-[#FFA42C] text-white hover:bg-[#FFA42C]/90 transition-all cursor-pointer">
             <Search className="w-4 h-4" />
           </button>
         </form>
       </div>
 
       {/* Row: Filter pills navigation row */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2A1A12]/10 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#122C9B]/10 pb-5">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-          <SlidersHorizontal className="w-4 h-4 text-[#2A1A12]/60 hidden md:inline-block" />
+          <SlidersHorizontal className="w-4 h-4 text-[#122C9B]/60 hidden md:inline-block" />
           {categories.map((cat) => (
             <button
               key={cat.value}
               onClick={() => setSelectedCategory(cat.value)}
               className={`px-4 py-2 text-xs font-bold uppercase tracking-widest rounded-full border transition-all cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat.value
-                  ? 'bg-[#F27D26] border-[#F27D26] text-white shadow-sm shadow-[#F27D26]/20'
-                  : 'bg-white border-[#2A1A12]/10 text-[#2A1A12]/80 hover:border-[#F27D26] hover:text-[#F27D26]'
+                  ? 'bg-[#FFA42C] border-[#FFA42C] text-white shadow-sm shadow-[#FFA42C]/20'
+                  : 'bg-white border-[#122C9B]/10 text-[#122C9B]/80 hover:border-[#FFA42C] hover:text-[#FFA42C]'
               }`}
             >
               {cat.label}
@@ -134,7 +134,7 @@ export default function Tienda() {
           {products.map((prod) => (
             <div
               key={prod.id}
-              className="group bg-white border border-[#2A1A12]/10 rounded-3xl overflow-hidden hover:shadow-xl hover:shadow-[#2A1A12]/5 transition-all duration-300 flex flex-col justify-between relative"
+              className="group bg-white border border-[#122C9B]/10 rounded-3xl overflow-hidden hover:shadow-xl hover:shadow-[#122C9B]/5 transition-all duration-300 flex flex-col justify-between relative"
             >
               {/* Product Badge */}
               <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
@@ -143,14 +143,14 @@ export default function Tienda() {
                     Agotado
                   </span>
                 ) : prod.stock < 15 ? (
-                  <span className="bg-[#F27D26] text-white text-[9px] font-mono font-black px-2.5 py-1 rounded-full uppercase tracking-widest">
+                  <span className="bg-[#FFA42C] text-white text-[9px] font-mono font-black px-2.5 py-1 rounded-full uppercase tracking-widest">
                     Pocas unidades
                   </span>
                 ) : null}
               </div>
 
               {/* Product Media Column */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#2A1A12]/5">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#122C9B]/5">
                 <img
                   src={prod.imagen_url}
                   alt={prod.nombre}
@@ -159,10 +159,10 @@ export default function Tienda() {
                 />
                 
                 {/* Embedded action overlay on hover */}
-                <div className="absolute inset-0 bg-[#2A1A12]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <div className="absolute inset-0 bg-[#122C9B]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                   <Link
                     to={`/tienda/${prod.slug}`}
-                    className="p-3 bg-white text-[#2A1A12] hover:text-[#F27D26] rounded-full shadow-lg transition-colors"
+                    className="p-3 bg-white text-[#122C9B] hover:text-[#FFA42C] rounded-full shadow-lg transition-colors"
                   >
                     <Eye className="w-4 h-4" />
                   </Link>
@@ -172,29 +172,29 @@ export default function Tienda() {
               {/* Information Frame */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-[10px] text-[#2A1A12]/60 font-mono uppercase tracking-wider">
+                  <div className="flex items-center justify-between text-[10px] text-[#122C9B]/60 font-mono uppercase tracking-wider">
                     <span>{prod.origen}</span>
                     <span>Tueste: {prod.tueste}</span>
                   </div>
                   <Link to={`/tienda/${prod.slug}`}>
-                    <h3 className="font-sans text-lg font-bold text-[#2A1A12] hover:text-[#F27D26] transition-colors leading-tight">
+                    <h3 className="font-sans text-lg font-bold text-[#122C9B] hover:text-[#FFA42C] transition-colors leading-tight">
                       {prod.nombre}
                     </h3>
                   </Link>
-                  <p className="text-xs text-[#2A1A12]/70 leading-relaxed font-light line-clamp-2">
+                  <p className="text-xs text-[#122C9B]/70 leading-relaxed font-light line-clamp-2">
                     {prod.descripcion}
                   </p>
                 </div>
 
-                <div className="pt-2 flex items-center justify-between border-t border-[#2A1A12]/5">
+                <div className="pt-2 flex items-center justify-between border-t border-[#122C9B]/5">
                   <div className="flex flex-col">
                     {prod.precio_antes && (
-                      <span className="text-[10px] text-[#2A1A12]/45 line-through">
+                      <span className="text-[10px] text-[#122C9B]/45 line-through">
                         ${prod.precio_antes.toLocaleString('es-CO')} COP
                       </span>
                     )}
-                    <span className="text-[#2A1A12] font-extrabold text-base">
-                      ${prod.precio.toLocaleString('es-CO')} <span className="text-[10px] text-[#2A1A12]/60 font-light font-mono">COP</span>
+                    <span className="text-[#122C9B] font-extrabold text-base">
+                      ${prod.precio.toLocaleString('es-CO')} <span className="text-[10px] text-[#122C9B]/60 font-light font-mono">COP</span>
                     </span>
                   </div>
 
@@ -204,7 +204,7 @@ export default function Tienda() {
                         addToCart(prod, 1);
                         alert(`¡"${prod.nombre}" fue agregado con éxito a su carrito!`);
                       }}
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#2A1A12] hover:bg-[#F27D26] text-white text-[10px] font-bold rounded-full uppercase tracking-widest transition-all cursor-pointer shadow-sm"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#122C9B] hover:bg-[#FFA42C] text-white text-[10px] font-bold rounded-full uppercase tracking-widest transition-all cursor-pointer shadow-sm"
                     >
                       <ShoppingBag className="w-3.5 h-3.5" />
                       <span>Comprar</span>
@@ -212,7 +212,7 @@ export default function Tienda() {
                   ) : (
                     <button
                       disabled
-                      className="px-5 py-2.5 bg-[#2A1A12]/5 text-[#2A1A12]/40 text-[10px] font-bold rounded-full uppercase tracking-widest cursor-not-allowed"
+                      className="px-5 py-2.5 bg-[#122C9B]/5 text-[#122C9B]/40 text-[10px] font-bold rounded-full uppercase tracking-widest cursor-not-allowed"
                     >
                       Sin stock
                     </button>

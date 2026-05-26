@@ -112,7 +112,7 @@ export default function CheckoutPage() {
         {/* Left Hand: Delivery Address Formulation (7 Columns) */}
         <form onSubmit={handleOpenWompi} className="lg:col-span-7 bg-white border border-stone-200 rounded-3xl p-8 shadow-sm space-y-6">
           <h2 className="font-display text-2xl font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2.5">
-            <MapPin className="w-6 h-6 text-amber-800" />
+            <MapPin className="w-6 h-6 text-[#FFA42C]" />
             <span>Detalles del Despacho</span>
           </h2>
 
@@ -183,7 +183,7 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 py-3.5 bg-amber-900 border border-amber-950 hover:bg-amber-805 text-white text-sm font-bold rounded-lg cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#122C9B] border border-[#122C9B] hover:bg-[#FFA42C] text-white text-sm font-bold rounded-lg cursor-pointer"
           >
             <CreditCard className="w-4 h-4" />
             <span>Validar Orden & Pagar con WooMPI</span>
@@ -191,9 +191,9 @@ export default function CheckoutPage() {
         </form>
 
         {/* Right Hand: Facturation Overviews (5 Columns) */}
-        <div className="lg:col-span-5 bg-[#FAF8F5] border border-stone-200 rounded-3xl p-6 shadow-sm space-y-6">
+        <div className="lg:col-span-5 bg-[#FFF9F5] border border-stone-200 rounded-3xl p-6 shadow-sm space-y-6">
           <h3 className="font-display text-lg font-bold text-stone-900 border-b border-stone-150 pb-2 flex items-center gap-2">
-            <ClipboardList className="w-5 h-5 text-amber-850" />
+            <ClipboardList className="w-5 h-5 text-[#FFA42C]" />
             <span>Resumen del Café</span>
           </h3>
 
@@ -245,9 +245,9 @@ export default function CheckoutPage() {
           <div className="bg-white border-2 border-stone-200 max-w-md w-full rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between relative animate-scaleUp">
             
             {/* Header branding */}
-            <div className="bg-[#1C1816] text-[#F5F2EB] p-5 flex items-center justify-between">
+            <div className="bg-[#122C9B] text-white p-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-amber-600 text-[#F5F2EB] text-[9px] font-extrabold font-mono rounded">
+                <span className="px-2 py-0.5 bg-[#FFA42C] text-white text-[9px] font-extrabold font-mono rounded">
                   SANDBOX
                 </span>
                 <span className="font-display text-lg font-extrabold tracking-tight">Pasarela WooMPI</span>
@@ -278,8 +278,8 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentMethod('card')}
                     className={`py-2 px-1 text-center font-bold text-xs rounded-lg border transition-all cursor-pointer ${
                       paymentMethod === 'card'
-                        ? 'bg-[#1C1917] text-white border-[#1C1917]'
-                        : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+                        ? 'bg-[#122C9B] text-white border-[#122C9B]'
+                        : 'bg-white text-stone-600 border-stone-200 hover:border-[#3D5FC9]'
                     }`}
                   >
                     💳 Tarjeta
@@ -289,8 +289,8 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentMethod('pse')}
                     className={`py-2 px-1 text-center font-bold text-xs rounded-lg border transition-all cursor-pointer ${
                       paymentMethod === 'pse'
-                        ? 'bg-[#1C1917] text-white border-[#1C1917]'
-                        : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+                        ? 'bg-[#122C9B] text-white border-[#122C9B]'
+                        : 'bg-white text-stone-600 border-stone-200 hover:border-[#3D5FC9]'
                     }`}
                   >
                     🏦 PSE (PSE)
@@ -300,8 +300,8 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentMethod('nequi')}
                     className={`py-2 px-1 text-center font-bold text-xs rounded-lg border transition-all cursor-pointer ${
                       paymentMethod === 'nequi'
-                        ? 'bg-[#1C1917] text-white border-[#1C1917]'
-                        : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+                        ? 'bg-[#122C9B] text-white border-[#122C9B]'
+                        : 'bg-white text-stone-600 border-stone-200 hover:border-[#3D5FC9]'
                     }`}
                   >
                     📱 Nequi
@@ -390,8 +390,8 @@ export default function CheckoutPage() {
                 )}
               </button>
 
-              <div className="flex justify-center items-center gap-1.5 text-[10px] text-[#2C210E] font-medium p-2 bg-[#FBF7EE] border border-[#ECD9BA] rounded-xl">
-                <Sparkles className="w-3.5 h-3.5 text-amber-700 font-bold" />
+              <div className="flex justify-center items-center gap-1.5 text-[10px] text-[#122C9B] font-medium p-2 bg-[#FFA42C]/10 border border-[#FFA42C]/20 rounded-xl">
+                <Sparkles className="w-3.5 h-3.5 text-[#FFA42C] font-bold" />
                 <span>Modo Prueba Activo: No se debitará dinero real.</span>
               </div>
             </div>

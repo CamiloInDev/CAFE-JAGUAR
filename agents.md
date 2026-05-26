@@ -59,3 +59,22 @@ Referencia obligatoria para el modelado de amenazas:
 | `wompi-checkout` | Seguridad criptográfica en pasarela Wompi y Webhooks |
 | `sequelize-mysql` | Optimización de Sequelize, pools y mitigación de N+1 |
 | `jwt-cookie-auth` | Autenticación JWT con cookies httpOnly y rotación RTR |
+
+---
+
+## 7. Workflow de Desarrollo por Fases
+
+### Regla: Validar antes de avanzar
+Cada fase debe compilar sin errores (`npm run lint` / `tsc --noEmit`) y pasar revisión visual antes de iniciar la siguiente.
+
+### Fases del Proyecto
+1. **FASE 3 → Frontend (Completada)**: Recoloreado completo de todos los componentes con nueva paleta `#FFA42C` (acento), `#122C9B` (oscuro), `#3D5FC9` (secundario), `#FFF9F5` (fondo).
+2. **FASE 2 → Backend Security**: Refactorizar server.ts en módulos, aplicar skills express-owasp-sec, jwt-cookie-auth.
+3. **FASE 1 → Base de Datos**: Migración de JSON file a MySQL con Sequelize, aplicar skill sequelize-mysql.
+4. **FASE 4 → Integración Wompi**: Widget real, webhook handler con validación SHA256.
+5. **FASE 5 → Produccion**: Build, deploy, variables entorno en Hostinger.
+
+### Notas de Implementación Frontend
+- Los colores hardcodeados (`#XXXXXX`) en lugar de clases Tailwind (`bg-brand-accent`) deben migrarse gradualmente.
+- El patrón correcto es usar `bg-brand-accent`, `text-brand-dark`, `hover:text-brand-secondary`.
+- Scrollbars y focus rings fueron actualizados a la nueva paleta.

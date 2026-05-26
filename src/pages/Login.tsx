@@ -51,28 +51,28 @@ export default function Login() {
         
         {/* Header Title */}
         <div className="text-center space-y-2">
-          <span className="p-2.5 bg-amber-50 text-amber-900 rounded-xl inline-block shadow-inner">
+          <span className="p-2.5 bg-[#FFA42C]/10 text-[#122C9B] rounded-xl inline-block shadow-inner">
             <LogIn className="w-6 h-6" />
           </span>
-          <h1 className="font-display text-2xl font-extrabold text-stone-900">Iniciar Sesión</h1>
+          <h1 className="font-display text-2xl font-extrabold text-[#122C9B]">Iniciar Sesión</h1>
           <p className="text-xs text-stone-500 font-light max-w-xs mx-auto leading-normal">
             Ingresa a tu cuenta para verificar tus pedidos, historiales de cata y sincronizar tu carrito.
           </p>
         </div>
 
         {/* Demo login shortcuts */}
-        <div className="p-4 bg-amber-50/50 border border-amber-200/50 rounded-2xl text-center space-y-2.5">
-          <h4 className="text-[10px] uppercase font-bold text-amber-800 tracking-wider font-mono">Simulador de Acceso Crítico (Sandbox)</h4>
+        <div className="p-4 bg-[#FFA42C]/5 border border-[#FFA42C]/20 rounded-2xl text-center space-y-2.5">
+          <h4 className="text-[10px] uppercase font-bold text-[#122C9B] tracking-wider font-mono">Simulador de Acceso Crítico (Sandbox)</h4>
           <div className="flex justify-center gap-2">
             <button
               onClick={() => loadPreset('cliente')}
-              className="px-3 py-1.5 bg-white border border-amber-200 text-amber-800 text-[10px] font-bold rounded-lg hover:bg-amber-50 transition cursor-pointer"
+              className="px-3 py-1.5 bg-white border border-[#FFA42C]/30 text-[#122C9B] text-[10px] font-bold rounded-lg hover:bg-[#FFA42C]/10 transition cursor-pointer"
             >
               Cargar Cliente de Prueba
             </button>
             <button
               onClick={() => loadPreset('admin')}
-              className="px-2.5 py-1.5 bg-amber-900 border border-amber-950 text-white text-[10px] font-bold rounded-lg hover:bg-amber-850 transition cursor-pointer"
+              className="px-2.5 py-1.5 bg-[#122C9B] border border-[#122C9B] text-white text-[10px] font-bold rounded-lg hover:bg-[#3D5FC9] transition cursor-pointer"
             >
               Cargar Administrador
             </button>
@@ -137,7 +137,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-amber-900 border border-amber-950 hover:bg-amber-800 text-[#FAF8F5] text-sm font-semibold rounded-xl shadow transition duration-200 cursor-pointer"
+              className="w-full py-3 bg-[#122C9B] border border-[#122C9B] hover:bg-[#3D5FC9] text-white text-sm font-semibold rounded-xl shadow transition duration-200 cursor-pointer"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" />

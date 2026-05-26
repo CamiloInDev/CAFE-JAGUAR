@@ -24,7 +24,7 @@ export default function Turismo() {
       
       {/* Editorial Header */}
       <div className="max-w-3xl mx-auto text-center space-y-4">
-        <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold font-mono tracking-wider uppercase">
+        <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase">
           Línea Turismo
         </span>
         <h1 className="font-display text-4xl font-extrabold text-stone-900 tracking-tight leading-tight">
@@ -61,8 +61,8 @@ export default function Turismo() {
               {/* Informational Column (takes 55% space) */}
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-1.5 text-xs text-amber-800 font-bold font-mono">
-                    <MapPin className="w-4 h-4 text-amber-700" />
+                  <div className="flex items-center gap-1.5 text-xs text-[#122C9B] font-bold font-mono">
+                    <MapPin className="w-4 h-4 text-[#FFA42C]" />
                     <span>{hac.ubicacion}</span>
                   </div>
                   
@@ -78,7 +78,7 @@ export default function Turismo() {
                 {/* Local highlight banners */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pt-2 text-xs font-mono text-stone-500">
                   <span className="flex items-center gap-1.5 bg-stone-50 p-2.5 rounded-lg border border-stone-100">
-                    <Compass className="w-3.5 h-3.5 text-amber-700" />
+                    <Compass className="w-3.5 h-3.5 text-[#FFA42C]" />
                     Senderos ecológicos
                   </span>
                   <span className="flex items-center gap-1.5 bg-stone-50 p-2.5 rounded-lg border border-stone-100">
@@ -119,7 +119,7 @@ export default function Turismo() {
 
       {/* Redirection Notice */}
       <div className="p-5 bg-amber-50/50 border border-amber-200/50 rounded-2xl max-w-4xl mx-auto flex items-start gap-4">
-        <Shield className="w-5 h-5 text-amber-750 flex-shrink-0 mt-0.5" />
+        <Shield className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
           <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider font-mono">Nota sobre las reservaciones de estadías</h4>
           <p className="text-xs text-amber-800 leading-relaxed font-light">

@@ -41,7 +41,7 @@ export default function Academia() {
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=40&w=400')] bg-cover bg-center mix-blend-overlay opacity-10" />
         
         <div className="max-w-2xl space-y-4 relative z-10">
-          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-xs font-mono font-bold uppercase tracking-widest">
+          <span className="px-2.5 py-1 bg-[#FFA42C]/10 text-[#122C9B] border border-[#FFA42C]/20 rounded-full text-xs font-mono font-bold uppercase tracking-widest">
             🎓 Escuela de Café Digital
           </span>
           <h1 className="font-display text-4xl font-extrabold text-[#FAF8F5] tracking-tight">
@@ -61,7 +61,7 @@ export default function Academia() {
             className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300"
           >
             <div className="space-y-4 flex-grow">
-              <span className="p-2.5 bg-amber-50 text-amber-800 rounded-xl inline-block shadow-inner leading-none">
+              <span className="p-2.5 bg-[#FFA42C]/10 text-[#122C9B] rounded-xl inline-block shadow-inner leading-none">
                 <BookOpen className="w-5 h-5" />
               </span>
               
@@ -78,14 +78,14 @@ export default function Academia() {
 
               {/* Course Meta */}
               <div className="pt-4 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500 font-mono">
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-amber-800" />
-                  {course.duration}
-                </span>
-                <span className="flex items-center gap-1">
-                  <BarChart className="w-3.5 h-3.5 text-amber-800" />
-                  {course.level}
-                </span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-[#FFA42C]" />
+                    {course.duration}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <BarChart className="w-3.5 h-3.5 text-[#FFA42C]" />
+                    {course.level}
+                  </span>
               </div>
             </div>
 
@@ -95,7 +95,7 @@ export default function Academia() {
                 href={course.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-amber-900 hover:bg-amber-800 border border-amber-950 text-[#FAF8F5] text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#122C9B] hover:bg-[#FFA42C] border border-[#122C9B] text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer"
               >
                 <span>Ir al curso en LinkedIn Learning</span>
                 <ExternalLink className="w-3.5 h-3.5" />

@@ -64,7 +64,7 @@ export default function MiCuenta() {
       {/* Editorial Profile Frame */}
       <div className="bg-white border border-stone-200 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6 md:p-8">
         <div className="flex items-center gap-5">
-          <span className="w-14 h-14 bg-amber-900 text-amber-50 rounded-2xl flex items-center justify-center font-display text-2xl font-black">
+          <span className="w-14 h-14 bg-[#122C9B] text-[#FFA42C] rounded-2xl flex items-center justify-center font-display text-2xl font-black">
             {user?.nombre?.[0]?.toUpperCase()}
           </span>
           <div className="space-y-1">
@@ -90,7 +90,7 @@ export default function MiCuenta() {
         <button
           onClick={() => setActiveTab('pedidos')}
           className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-            activeTab === 'pedidos' ? 'border-amber-850 text-amber-900 font-extrabold' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeTab === 'pedidos' ? 'border-[#122C9B] text-[#122C9B] font-extrabold' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           🛒 Historial de Pedidos ({orders.length})
@@ -98,7 +98,7 @@ export default function MiCuenta() {
         <button
           onClick={() => setActiveTab('experiencias')}
           className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-            activeTab === 'experiencias' ? 'border-amber-850 text-amber-900 font-extrabold' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeTab === 'experiencias' ? 'border-[#122C9B] text-[#122C9B] font-extrabold' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           🎫 Mis Talleres & Catas
@@ -106,7 +106,7 @@ export default function MiCuenta() {
         <button
           onClick={() => setActiveTab('perfil')}
           className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-            activeTab === 'perfil' ? 'border-amber-850 text-amber-900 font-extrabold' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeTab === 'perfil' ? 'border-[#122C9B] text-[#122C9B] font-extrabold' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           👤 Editar Datos del Perfil
@@ -217,7 +217,7 @@ export default function MiCuenta() {
         {activeTab === 'perfil' && (
           <div className="bg-white border border-stone-200 rounded-3xl p-8 shadow-sm">
             <h2 className="font-display text-xl font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
-              <PenTool className="w-5 h-5 text-amber-800" />
+              <PenTool className="w-5 h-5 text-[#FFA42C]" />
               <span>Editar Datos Generales</span>
             </h2>
 
@@ -276,7 +276,7 @@ export default function MiCuenta() {
 
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#1C1917] hover:bg-amber-900 border border-stone-950 text-[#FAF8F5] text-xs font-semibold rounded-xl cursor-pointer"
+                className="px-6 py-3 bg-[#122C9B] hover:bg-[#FFA42C] border border-stone-950 text-white text-xs font-semibold rounded-xl cursor-pointer"
               >
                 Actualizar Mis Datos
               </button>

@@ -161,7 +161,7 @@ export default function Admin() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-200 pb-5">
         <div className="space-y-1">
           <h1 className="font-display text-3xl font-extrabold text-stone-900 flex items-center gap-2">
-            <ShieldCheck className="w-8 h-8 text-amber-800" />
+            <ShieldCheck className="w-8 h-8 text-[#FFA42C]" />
             <span>Mesa de Operaciones Jaguar</span>
           </h1>
           <p className="text-sm text-stone-500">Consola ejecutiva para CRUD de inventarios, despachos de transacciones y correspondencia.</p>
@@ -223,7 +223,7 @@ export default function Admin() {
         <button
           onClick={() => { setActiveSegment('productos'); setIsEditingProduct(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-            activeSegment === 'productos' ? 'border-amber-850 text-amber-900 font-black' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeSegment === 'productos' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           Cafés (CRUD)
@@ -231,7 +231,7 @@ export default function Admin() {
         <button
           onClick={() => { setActiveSegment('ordenes'); setIsEditingProduct(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-            activeSegment === 'ordenes' ? 'border-amber-850 text-amber-900 font-black' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeSegment === 'ordenes' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           Despachar Pedidos
@@ -239,7 +239,7 @@ export default function Admin() {
         <button
           onClick={() => { setActiveSegment('mensajes'); setIsEditingProduct(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-            activeSegment === 'mensajes' ? 'border-amber-850 text-amber-900 font-black' : 'border-transparent text-stone-500 hover:text-stone-850'
+            activeSegment === 'mensajes' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           Mensajes de Ayuda ({pendingInquiries.length})
@@ -250,7 +250,7 @@ export default function Admin() {
       {isEditingProduct ? (
         <form onSubmit={handleSaveProductSubmit} className="bg-white border border-stone-200 rounded-3xl p-8 shadow space-y-6 max-w-2xl">
           <h3 className="font-display text-xl font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
-            <PenTool className="w-5 h-5 text-amber-800" />
+            <PenTool className="w-5 h-5 text-[#FFA42C]" />
             <span>{editingId ? 'Editar Cosecha Cafetera' : 'Añadir Nueva Cosecha o Café'}</span>
           </h3>
 
@@ -370,7 +370,7 @@ export default function Admin() {
           <div className="pt-2 flex gap-4">
             <button
               type="submit"
-              className="px-6 py-3 bg-[#1C1917] hover:bg-amber-900 text-white font-bold rounded-xl text-xs cursor-pointer"
+              className="px-6 py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white font-bold rounded-xl text-xs cursor-pointer"
             >
               Guardar Cosecha
             </button>
@@ -391,13 +391,13 @@ export default function Admin() {
             <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
               <div className="p-6 bg-stone-50 border-b border-stone-150 flex justify-between items-center">
                 <h3 className="font-display font-bold text-stone-900 text-sm">Cosechas del Menú ({products.length})</h3>
-                <button
-                  onClick={handleCreateProductClick}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-900 text-white rounded-lg text-xs font-bold cursor-pointer"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Crear Cosecha</span>
-                </button>
+                  <button
+                    onClick={handleCreateProductClick}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#122C9B] text-white rounded-lg text-xs font-bold cursor-pointer"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Crear Cosecha</span>
+                  </button>
               </div>
 
               {/* Grid tabular table products */}
@@ -566,7 +566,7 @@ export default function Admin() {
                           ) : (
                             <button
                               onClick={() => handleMarkMessageRead(m.id)}
-                              className="px-2.5 py-1.5 bg-stone-905 hover:bg-amber-900 text-white text-[10px] font-mono font-bold rounded-xl transition cursor-pointer"
+                              className="px-2.5 py-1.5 bg-[#122C9B] hover:bg-[#FFA42C] text-white text-[10px] font-mono font-bold rounded-xl transition cursor-pointer"
                             >
                               Marcar como Leído
                             </button>

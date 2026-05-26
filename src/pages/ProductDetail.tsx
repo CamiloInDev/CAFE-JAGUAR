@@ -43,7 +43,7 @@ export default function ProductDetail() {
       <div className="max-w-3xl mx-auto px-4 py-20 text-center space-y-6">
         <h2 className="font-display text-2xl font-bold text-stone-950">El producto solicitado no está disponible</h2>
         <p className="text-sm text-stone-500 font-light">Es posible que la cosecha haya cambiado de temporada o la referencia haya expirado.</p>
-        <Link to="/tienda" className="inline-block px-6 py-3 bg-amber-900 text-white rounded-xl">
+        <Link to="/tienda" className="inline-block px-6 py-3 bg-[#122C9B] text-white rounded-xl">
           Regresar a la Tienda
         </Link>
       </div>
@@ -136,21 +136,21 @@ export default function ProductDetail() {
           {/* Quality Seals / Shipping Promises column */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-4 bg-stone-50 rounded-2xl border border-stone-150 p-4">
             <div className="flex items-center gap-3 sm:flex-col sm:text-center p-2">
-              <Truck className="w-5 h-5 text-amber-800" />
+              <Truck className="w-5 h-5 text-[#FFA42C]" />
               <div>
                 <h4 className="text-xs font-bold text-stone-900">Envíos Colombia</h4>
                 <p className="text-[10px] text-stone-400 font-light mt-0.5">Bogotá 24h · Nacional 2-3 días</p>
               </div>
             </div>
             <div className="flex items-center gap-3 sm:flex-col sm:text-center p-2 border-t sm:border-t-0 sm:border-x border-stone-200">
-              <RefreshCw className="w-5 h-5 text-amber-800" />
+              <RefreshCw className="w-5 h-5 text-[#FFA42C]" />
               <div>
                 <h4 className="text-xs font-bold text-stone-900">Frescura Continua</h4>
                 <p className="text-[10px] text-stone-400 font-light mt-0.5">Tostado de lotes semanal</p>
               </div>
             </div>
             <div className="flex items-center gap-3 sm:flex-col sm:text-center p-2 border-t sm:border-t-0 border-stone-200">
-              <ShieldCheck className="w-5 h-5 text-amber-800" />
+              <ShieldCheck className="w-5 h-5 text-[#FFA42C]" />
               <div>
                 <h4 className="text-xs font-bold text-stone-900">Pago Garantizado</h4>
                 <p className="text-[10px] text-stone-400 font-light mt-0.5">WooMPI Checkout cifrado</p>
@@ -204,7 +204,7 @@ export default function ProductDetail() {
                 <>
                   <button
                     onClick={handleAddToCart}
-                    className="flex-grow flex items-center justify-center gap-2 px-8 py-3.5 bg-amber-900 hover:bg-amber-800 text-[#FAF8F5] text-sm font-semibold rounded-xl transition-all shadow-md cursor-pointer"
+                    className="flex-grow flex items-center justify-center gap-2 px-8 py-3.5 bg-[#122C9B] hover:bg-[#3D5FC9] text-white text-sm font-semibold rounded-xl transition-all shadow-md cursor-pointer"
                   >
                     <ShoppingCart className="w-4 h-4" />
                     <span>Añadir al Carrito</span>
