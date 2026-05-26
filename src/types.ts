@@ -1,0 +1,95 @@
+export interface User {
+  id: string;
+  email: string;
+  nombre: string;
+  apellido: string;
+  telefono?: string;
+  rol: 'cliente' | 'admin';
+  created_at: string;
+}
+
+export type CoffeeCategory = 'grano' | 'molido' | 'capsulas' | 'kit' | 'accesorio';
+
+export interface Product {
+  id: string;
+  slug: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  precio_antes?: number;
+  stock: number;
+  categoria: CoffeeCategory;
+  origen: string;
+  tueste: string;
+  imagen_url: string;
+  activo: boolean;
+  created_at: string;
+}
+
+export interface Experience {
+  id: string;
+  slug: string;
+  nombre: string;
+  descripcion: string;
+  duracion_min: number;
+  precio: number;
+  capacidad_max: number;
+  booking_widget: string; // Embed HTML / custom trigger
+  imagen_url: string;
+  activo: boolean;
+}
+
+export interface Hacienda {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  ubicacion: string;
+  imagen_url: string;
+  airbnb_url: string;
+  booking_url: string;
+}
+
+export interface CartItem {
+  product_id: string;
+  cantidad: number;
+  product?: Product; // Populated client-side or during retrieval
+}
+
+export type OrderStatus = 'pendiente' | 'pagado' | 'enviado' | 'entregado' | 'cancelado';
+
+export interface OrderItem {
+  product_id: string;
+  nombre: string;
+  precio_unit: number;
+  cantidad: number;
+}
+
+export interface ShippingAddress {
+  direccion: string;
+  ciudad: string;
+  departamento: string;
+  telefono: string;
+}
+
+export interface Order {
+  id: string;
+  user_id: string;
+  user_email?: string;
+  estado: OrderStatus;
+  total: number;
+  wompi_transaction_id?: string;
+  direccion_envio: ShippingAddress;
+  notas?: string;
+  items: OrderItem[];
+  created_at: string;
+}
+
+export interface ContactMessage {
+  id: string;
+  nombre: string;
+  email: string;
+  asunto: string;
+  mensaje: string;
+  respondido: boolean;
+  created_at: string;
+}
