@@ -47,6 +47,16 @@ Se extrajo rigurosamente la paleta de colores sofisticada y cálida del diseño 
 
 ---
 
+## 6. Seguridad y Gobernanza de Agentes IA
+
+El proyecto implementa un sistema de skills documentado en `agents.md` que define:
+
+- **Estándar OWASP Agentic Skills Top 10 (AST10)** para modelado de amenazas.
+- **Controles obligatorios**: sandboxing, allowlist de red, firma criptográfica, logging inmutable.
+- **5 Skills activos** para seguridad (express-owasp-sec), frontend (react-vite-tailwind), pagos (wompi-checkout), base de datos (sequelize-mysql) y autenticación (jwt-cookie-auth).
+
+---
+
 ## 🚀 Resultados y Construcción
 
 Todas las modificaciones fueron aprobadas a través del compilador y el linter de la plataforma sin reportar ninguna falla o advertencia de compilación, entregando una interfaz de usuario fluida, de alto rendimiento y estéticamente superior.
