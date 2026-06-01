@@ -14,10 +14,9 @@ const PORT = 3000;
 process.on('uncaughtException', (err) => {
   console.log(`[UNCAUGHT EXCEPTION] ${err.message}`);
   console.log(`[STACK] ${err.stack}`);
-  console.log('[SERVER] Restarting in 2 seconds...');
+console.log('[SERVER] Restarting in 2 seconds...');
   setTimeout(() => process.exit(1), 2000);
 });
-
 process.on('unhandledRejection', (reason, promise) => {
   console.log(`[UNHANDLED REJECTION] ${reason}`);
   console.log('[SERVER] Restarting in 2 seconds...');
@@ -33,7 +32,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'jaguar_secret_key_987654';
 const WOMPI_INTEGRITY_KEY = process.env.WOMPI_INTEGRITY_KEY || 'integridad_sandbox_key_123';
 const WOMPI_PUBLIC_KEY = process.env.VITE_WOMPI_PUBLIC_KEY || 'pub_test_wompi_sandbox_public_key';
@@ -227,7 +225,7 @@ app.post('/api/auth/recuperar', (req, res) => {
 app.get('/api/productos', (req, res) => {
   try {
     let products = dbService.getProducts();
-    log(`GET /api/productos - returning ${products.length} products`);
+    console.log(`GET /api/productos - returning ${products.length} products`);
     const { categoria, q } = req.query;
 
     if (categoria && categoria !== 'todos') {
@@ -243,7 +241,7 @@ app.get('/api/productos', (req, res) => {
     }
     res.json(products);
   } catch (err: any) {
-    log(`ERROR /api/productos: ${err}`);
+    console.log(`ERROR /api/productos: ${err}`);
     res.status(500).json({ error: err.message });
   }
 });
@@ -577,13 +575,13 @@ app.post('/api/slides', authenticateToken, requireAdmin, (req, res) => {
 
 app.put('/api/slides/:id', authenticateToken, requireAdmin, (req, res) => {
   try {
-    log(`PUT /api/slides/${req.params.id} - body: ${JSON.stringify(req.body).substring(0, 200)}`);
+    console.log(`PUT /api/slides/${req.params.id} - body: ${JSON.stringify(req.body).substring(0, 200)}`);
     const { title, subtitle, badge, buttonText, buttonLink, button2Text, button2Link, bgImage, orden, activo } = req.body;
     if (!title || !subtitle || !badge || !buttonText || !buttonLink || !bgImage) {
-      log('PUT /api/slides - validation failed');
+      console.log('PUT /api/slides - validation failed');
       return res.status(400).json({ error: 'Todos los campos obligatorios deben ser diligenciados.' });
     }
-    log('PUT /api/slides - calling dbService.saveSlide');
+    console.log('PUT /api/slides - calling dbService.saveSlide');
     dbService.saveSlide({
       id: req.params.id,
       title,
@@ -619,7 +617,7 @@ app.delete('/api/slides/:id', authenticateToken, requireAdmin, (req, res) => {
 async function start() {
   try {
     if (process.env.NODE_ENV !== 'production') {
-      log('Starting Vite dev server...');
+      console.log('Starting Vite dev server...');
       // Development Mode
       const vite = await createViteServer({
         server: { 
@@ -628,7 +626,7 @@ async function start() {
         },
         appType: 'spa',
       });
-      log('Vite server created successfully');
+      console.log('Vite server created successfully');
       app.use(vite.middlewares);
     } else {
       // Production Mode
@@ -640,10 +638,10 @@ async function start() {
     }
 
     app.listen(PORT, '0.0.0.0', () => {
-      log(`[JAGUAR-SERVER] Running on http://localhost:${PORT}`);
+      console.log(`[JAGUAR-SERVER] Running on http://localhost:${PORT}`);
     });
   } catch (err) {
-    log(`[STARTUP ERROR] ${err}`);
+    console.log(`[STARTUP ERROR] ${err}`);
     process.exit(1);
   }
 }
