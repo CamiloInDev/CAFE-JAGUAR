@@ -21,7 +21,7 @@ export function hashPassword(password: string): string {
   return crypto.pbkdf2Sync(password, 'jaguar_salt_123', 1000, 64, 'sha512').toString('hex');
 }
 
-const DB_FILE = path.join(process.cwd(), 'data', 'db.json');
+const DB_FILE = path.join(process.env.NODE_ENV === 'production' ? '/app/data' : process.cwd(), 'db.json');
 
 interface LoginAttempt {
   email: string;

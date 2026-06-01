@@ -9,7 +9,7 @@ Ninguno. El proyecto ya está listo con JSON DB.
 ### Configuración en Coolify
 ```
 Repository:  https://github.com/CamiloInDev/CAFE-JAGUAR
-Branch:      main
+Branch:      master
 Build Pack:   Nixpacks
 Base Dir:     /
 Port:         3000
@@ -19,12 +19,13 @@ Is static?:   No
 **Variables de entorno:**
 ```
 NODE_ENV=production
-JWT_SECRET=generar_random_64_chars
+JWT_SECRET=jaguar2026tokenseguro
 ```
 
 **Volume persistente:**
 ```
-Montar: /app/data
+Type: Directory Mount
+Path: /app/data
 ```
 
 **Dominio en NPM:**
@@ -89,3 +90,28 @@ DATABASE_URL=mysql://user:pass@host:3306/cafejaguar
 
 ## Nota importante
 El proyecto usa JSON DB (`data/db.json`) que funciona en un solo servidor. Para producción con Hostinger, **FASE 1 del roadmap** (Migración MySQL) debe completarse primero para evitar inconsistencias en datos si hay escalado horizontal.
+
+---
+
+## Fix: Ruta DB para producción (29 May 2026)
+
+**Problema**: En producción (Coolify), el volumen se monta en `/app/data`, pero el código buscaba en `data/db.json` (relativo al proyecto).
+
+**Solución en `server/db.ts`**:
+```typescript
+// Desarrollo: ./data/db.json
+// Producción: /app/data/db.json
+const DB_FILE = path.join(
+  process.env.NODE_ENV === 'production' ? '/app/data' : process.cwd(),
+  'db.json'
+);
+```
+
+**Para Hostinger**:
+- Crear directorio `/app/data` si no existe
+- O cambiar la lógica para que siempre use una variable de entorno:
+  ```typescript
+  const DB_FILE = path.join(process.env.DB_PATH || './data', 'db.json');
+  ```
+
+**Commit**: `adbede2` — fix duplicate PORT + log → console.log
