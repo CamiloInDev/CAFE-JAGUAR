@@ -1,0 +1,216 @@
+{
+  "users": [
+    {
+      "id": "usr_admin",
+      "email": "admin@jaguarcoffee.com",
+      "password_hash": "83ade82afc6ff2be997fa1de439d2e914b0ff79ec42dd2f81113e6c43cb2731a2ab91b5ad6882a1e918d10d29cecc2805b9e4ed5cbf05ee156ddc6b9705860c6",
+      "nombre": "Administrador",
+      "apellido": "Jaguar",
+      "telefono": "+573001234567",
+      "rol": "admin",
+      "created_at": "2026-05-26T04:12:42.473Z"
+    },
+    {
+      "id": "usr_cliente",
+      "email": "cliente@jaguarcoffee.com",
+      "password_hash": "84d554dba0d147b4cdc4011e4484a76e70863c7997e6840a7984f4f072a5806ec4dd71f95d6038e5781b753d9c17f5e08d2de34f419fc0e98425139a5fe06a38",
+      "nombre": "Mateo",
+      "apellido": "Gómez",
+      "telefono": "+573159876543",
+      "rol": "cliente",
+      "created_at": "2026-05-26T04:12:42.474Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_1",
+      "slug": "jaguar-reserva-bourbon",
+      "nombre": "Jaguar Reserva Bourbon Rosado",
+      "descripcion": "Edición limitada cosechada a más de 1,900 msnm en el corazón del Huila. Este café presenta notas florales intensas, aroma a jazmín y un dulce perfil frutal que asemeja frutos rojos y durazno, complementado con una acidez brillante y jugosa de uva blanca.",
+      "precio": 48000,
+      "precio_antes": 55000,
+      "stock": 45,
+      "categoria": "grano",
+      "origen": "Huila (Pitalito)",
+      "tueste": "Medio",
+      "imagen_url": "https://images.unsplash.com/photo-1559056191-4819004e3827?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    },
+    {
+      "id": "prod_2",
+      "slug": "sierra-nevada-organic",
+      "nombre": "Sierra Nevada Orgánico",
+      "descripcion": "Cultivado bajo sombra nativa por comunidades indígenas de la Sierra Nevada de Santa Marta. Posee un perfil robusto y equilibrado, destacando por su cuerpo denso, baja acidez y notas rústicas a chocolate negro, nueces tostadas y un sutil regusto a panela artesanal.",
+      "precio": 36000,
+      "precio_antes": 39000,
+      "stock": 60,
+      "categoria": "grano",
+      "origen": "Sierra Nevada de Santa Marta",
+      "tueste": "Medio-Oscuro",
+      "imagen_url": "https://images.unsplash.com/photo-1580933181604-7fa417bd74e8?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    },
+    {
+      "id": "prod_3",
+      "slug": "geisha-especial",
+      "nombre": "Variedad Geisha Especial",
+      "descripcion": "Uno de los varietales más codiciados del mundo, cultivado en la región del Quindío. Su taza es sumamente limpia y delicada, con un bouquet perfumado de notas cítricas como limoncillo, té de jazmín, miel de abejas silvestre y un retrogusto sedoso y prolongado.",
+      "precio": 85000,
+      "stock": 12,
+      "categoria": "molido",
+      "origen": "Quindío (Genoa)",
+      "tueste": "Ligero",
+      "imagen_url": "https://images.unsplash.com/photo-1610632380989-6800249be455?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    },
+    {
+      "id": "prod_4",
+      "slug": "capsulas-espresso-jaguar",
+      "nombre": "Cápsulas Espresso Premium (x10)",
+      "descripcion": "Compatible con sistema Nespresso. Nuestro café insignia de especialidad molido y sellado en cápsulas de aluminio 100% reciclables. Ofrece un café corto cremoso, de cuerpo redondo y notas intensas a cacao y caramelo quemado.",
+      "precio": 24000,
+      "precio_antes": 28000,
+      "stock": 120,
+      "categoria": "capsulas",
+      "origen": "Tolima",
+      "tueste": "Oscuro",
+      "imagen_url": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    },
+    {
+      "id": "prod_5",
+      "slug": "kit-barista-inicial",
+      "nombre": "Kit Barista Profesional Inicial",
+      "descripcion": "Todo lo que necesitas para comenzar tu viaje en el café de especialidad. Incluye: 1 Cafetera de Prensa Francesa de émbolo en acero inoxidable y vidrio borosilicatado (600ml), y 1 bolsa de Café Jaguar Bourbon Rosado de 340g molido en el punto óptimo.",
+      "precio": 110000,
+      "precio_antes": 130000,
+      "stock": 25,
+      "categoria": "kit",
+      "origen": "Accesorios / Huila",
+      "tueste": "Variado",
+      "imagen_url": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    },
+    {
+      "id": "prod_6",
+      "slug": "taza-ceramica-artesanal",
+      "nombre": "Taza de Cerámica Jaguar Negra",
+      "descripcion": "Taza de gres cerámico modelada a mano por artesanos locales en Colombia. Acabado en esmalte mate negro con sutiles toques cobrizos, capacidad perfecta de 8oz para cappuccinos, lattes o café filtrado. Excelente retención del calor.",
+      "precio": 29000,
+      "stock": 80,
+      "categoria": "accesorio",
+      "origen": "Artesanal Raquira",
+      "tueste": "N/A",
+      "imagen_url": "https://images.unsplash.com/photo-1517256064527-09c53b2d0bc6?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "created_at": "2026-05-26T04:12:42.474Z"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp_1",
+      "slug": "cata-sensorial-jaguar",
+      "nombre": "Cata Sensorial Jaguar de Especialidad",
+      "descripcion": "Sumérgete en el cautivador mundo de los aromas del café colombianos. En esta cata guiada por nuestros baristas autorizados aprenderás a identificar descriptores, fragancias, acidez, cuerpo y dulzor de 4 varietales exclusivos de Jaguar Coffee.",
+      "duracion_min": 120,
+      "precio": 85000,
+      "capacidad_max": 10,
+      "imagen_url": "https://images.unsplash.com/photo-1541170155377-5091f3b2b044?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "booking_widget": "<div class=\"p-6 bg-amber-50 border border-amber-200 rounded-xl max-w-md mx-auto text-center\" id=\"booking-widget-mock\">\n        <h4 class=\"text-lg font-bold text-amber-900 mb-2 font-display\">Reserva tu Experiencia vía Booking.com Alianzas</h4>\n        <p class=\"text-sm text-amber-800 mb-4 font-sans\">Estás a punto de reservar esta actividad a través de nuestro operador autorizado en Booking.com.</p>\n        <div class=\"inline-block px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-semibold cursor-pointer hover:bg-amber-700 transition\" onclick=\"alert('Redirigiendo al widget seguro de Booking.com para reservar la Cata Sensorial...')\">\n          Reservar en Booking.com\n        </div>\n      </div>"
+    },
+    {
+      "id": "exp_2",
+      "slug": "taller-barismo-profesional",
+      "nombre": "Taller Práctico de Barismo y Arte Latte",
+      "descripcion": "Aprende los secretos detrás de la extracción perfecta del espresso y la textura sedosa de la leche. Este taller práctico en nuestra máquina italiana te dará las bases para elaborar lattes de concurso, cappuccinos perfectos y hermosos lattes art.",
+      "duracion_min": 180,
+      "precio": 140000,
+      "capacidad_max": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=600",
+      "activo": true,
+      "booking_widget": "<div class=\"p-6 bg-amber-50 border border-amber-200 rounded-xl max-w-md mx-auto text-center\" id=\"booking-widget-mock\">\n        <h4 class=\"text-lg font-bold text-amber-900 mb-2 font-display\">Reserva de Taller Barista en Booking.com Experiences</h4>\n        <p class=\"text-sm text-amber-800 mb-4 font-sans\">Administrado y garantizado por las experiencias oficiales de Booking de Jaguar Coffee.</p>\n        <div class=\"inline-block px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-semibold cursor-pointer hover:bg-amber-700 transition\" onclick=\"alert('Redirigiendo al widget seguro de Booking.com para reservar el Taller Práctico...')\">\n          Reservar en Booking.com\n        </div>\n      </div>"
+    }
+  ],
+  "haciendas": [
+    {
+      "id": "hac_1",
+      "nombre": "Hacienda El Jaguar Real",
+      "descripcion": "Una majestuosa casona cafetera del siglo XIX ubicada en Venecia, Antioquia. Rodeada de exuberante vegetación y senderos con avistamiento de aves, ofrece caminatas guiadas por los cafetales ecológicos, piscinas naturales, cabalgatas y confortables habitaciones con terraza colonial con vista a los Farallones del Citará.",
+      "ubicacion": "Venecia, Antioquia - Km 4 vía Bolombolo",
+      "imagen_url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600",
+      "airbnb_url": "https://airbnb.com/rooms/mock-jaguar-real",
+      "booking_url": "https://booking.com/hotel/co/hacienda-el-jaguar-real.html"
+    },
+    {
+      "id": "hac_2",
+      "nombre": "Finca Cafetera Vista Hermosa",
+      "descripcion": "Ubicada sobre el cañón del río Cauca en Jericó, Antioquia, esta espectacular y moderna cabaña rústica te permite despertar flotando sobre un mar de nubes. El hospedaje incluye una inmersión completa de cosecha en canasto artesanal, molienda a pedal y degustación en fogata campesina.",
+      "ubicacion": "Jericó, Antioquia - Vereda La Soledad",
+      "imagen_url": "https://images.unsplash.com/photo-1546548970-71785318a17b?auto=format&fit=crop&q=80&w=600",
+      "airbnb_url": "https://airbnb.com/rooms/mock-vista-hermosa",
+      "booking_url": "https://booking.com/hotel/co/finca-vista-hermosa-jerico.html"
+    }
+  ],
+  "slides": [
+    {
+      "id": "slide_1",
+      "title": "Café Exótico",
+      "subtitle": "Reconocidos como el mejor café de especialidad de Cundinamarca. Cosechado con pasión en las alturas de Silvania.",
+      "badge": "Mejor Café de Cundinamarca",
+      "buttonText": "Explorar Cosechas",
+      "buttonLink": "/tienda",
+      "button2Text": null,
+      "button2Link": null,
+      "bgImage": "/images/HERO/CAFEwebp.webp",
+      "orden": 1,
+      "activo": true
+    },
+    {
+      "id": "slide_2",
+      "title": "SCA Premier\nCampus",
+      "subtitle": "Certificaciones internacionales SCA y CQI. Instructores autorizados AST liderados por Mario Patiño.",
+      "badge": "Certificaciones Internacionales",
+      "buttonText": "Ver Academia",
+      "buttonLink": "/academia",
+      "button2Text": "Reservar Ahora",
+      "button2Link": "/experiencias",
+      "bgImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=85&w=1200",
+      "orden": 2,
+      "activo": true
+    },
+    {
+      "id": "slide_3",
+      "title": "Experiencias\nde Specialty",
+      "subtitle": "Catación, barismo, tostión, coffee tour, glamping y scooter tour. Vive la tradición cafeteramente.",
+      "badge": "Vive el Café",
+      "buttonText": "Reservar Experiencia",
+      "buttonLink": "/experiencias",
+      "button2Text": null,
+      "button2Link": null,
+      "bgImage": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=85&w=1200",
+      "orden": 3,
+      "activo": true
+    },
+    {
+      "id": "slide_4",
+      "title": "Estadías entre\nCafetales",
+      "subtitle": "Despierta flotando sobre las montañas de Antioquia y Caldas en nuestras estadías cafeteras.",
+      "badge": "Estadías Authentic",
+      "buttonText": "Ver Estadías",
+      "buttonLink": "/turismo",
+      "button2Text": null,
+      "button2Link": null,
+      "bgImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=85&w=1200",
+      "orden": 4,
+      "activo": true
+    }
+  ],
+  "orders": [],
+  "contactMessages": []
+}
