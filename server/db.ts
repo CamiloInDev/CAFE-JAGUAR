@@ -238,13 +238,16 @@ function readDb(): DatabaseSchema {
     const data = JSON.parse(raw);
     if (!data.slides) {
       data.slides = [];
-      writeDb(data);
     }
+    if (!data.loginAttempts) {
+      data.loginAttempts = {};
+    }
+    writeDb(data);
     return data;
   } catch (err) {
-    log(`ERROR readDb: ${err}`);
+    console.error(`ERROR readDb: ${err}`);
     initDb();
-    return { ...INITIAL_DB, slides: [] };
+    return { ...INITIAL_DB, slides: [], loginAttempts: {} };
   }
 }
 
@@ -582,7 +585,7 @@ export const dbService = {
 
   checkLoginAttempt(email: string): { blocked: boolean; remainingAttempts: number; lockoutRemaining?: number } {
     const data = readDb();
-    const attempt = data.loginAttempts[email.toLowerCase()];
+    const attempt = (data.loginAttempts || {})[email.toLowerCase()];
     
     if (!attempt) {
       return { blocked: false, remainingAttempts: this.MAX_LOGIN_ATTEMPTS };
@@ -607,7 +610,7 @@ export const dbService = {
   recordFailedLogin(email: string): number {
     const data = readDb();
     const key = email.toLowerCase();
-    const attempt = data.loginAttempts[key];
+    const attempt = (data.loginAttempts || {})[key];
 
     if (!attempt) {
       data.loginAttempts[key] = { email: key, count: 1, lastAttempt: Date.now() };
@@ -628,7 +631,7 @@ export const dbService = {
 
   clearLoginAttempts(email: string) {
     const data = readDb();
-    delete data.loginAttempts[email.toLowerCase()];
+    delete (data.loginAttempts || {})[email.toLowerCase()];
     writeDb(data);
   }
 };
