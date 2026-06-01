@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Krub:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krub:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Krub", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Krub", Georgia, serif;
+  --font-mono: "Krub", ui-monospace, monospace;
   
   --color-brand-accent: #FFA42C;
   --color-brand-dark: #122C9B;
