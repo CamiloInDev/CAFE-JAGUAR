@@ -71,8 +71,8 @@ export default function Footer() {
       </div>
 
       {/* Credits Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center text-[10px] text-stone-500 flex flex-col md:flex-row justify-between items-center gap-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/5">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[10px] text-stone-500">
           <span>© {new Date().getFullYear()} Jaguar Coffee S.A.S. Todos los derechos reservados.</span>
             <span className="flex items-center gap-1">
               Desarrollado con <Heart className="w-3 h-3 text-[#FFA42C] fill-[#FFA42C]" /> para los apasionados del café de especialidad.
