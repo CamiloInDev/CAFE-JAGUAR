@@ -93,3 +93,17 @@ export interface ContactMessage {
   respondido: boolean;
   created_at: string;
 }
+
+export interface CarouselSlide {
+  id: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  buttonText: string;
+  buttonLink: string;
+  button2Text?: string;
+  button2Link?: string;
+  bgImage: string;
+  orden: number;
+  activo: boolean;
+}

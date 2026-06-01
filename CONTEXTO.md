@@ -80,6 +80,157 @@ El proyecto implementa un sistema de skills documentado en `agents.md` que defin
 
 ---
 
-## 🚀 Resultados y Construcción
+---
 
-Todas las modificaciones fueron aprobadas a través del compilador y el linter de la plataforma sin reportar ninguna falla o advertencia de compilación, entregando una interfaz de usuario fluida, de alto rendimiento y estéticamente superior.
+## 🆕 Actualización de Contenido (27 May 2026)
+
+### Navegación
+- **Navbar**: Links activos: Tienda, Experiencias, Estadías, Academia, Contacto.
+
+### Home.tsx
+- **Hero Slides**: Títulos cortos en 2 líneas (ej: "Jaguar Coffee\nCafé Exótico")
+- **Badge hero**: "Mejor Café de Cundinamarca" (sin emoji)
+- **Subtítulos**: Mayor legibilidad con `text-white font-medium`
+- **Botón 1er slide**: Solo 1 botón (Explorar Cosechas → /tienda)
+- **Botón 2do slide**: 2 botones (Ver Academia + Reservar Ahora)
+- **Valores**: Tueste sobre pedido, Certificación SCA & CQI, Transacción Segura
+- **Nueva sección**: "Desarrollo de Producto" (Trilla/Tostión, Perfilación, Logística Exportadora)
+- **Sección inferior**: Estadías + SCA Academy cards
+
+### Experiencias.tsx (estático)
+- 6 experiencias: Catación, Barismo, Tostión, Coffee Tour, Glamping, Scooter Tour
+- Imágenes reales de cafejaguar.com
+- Precios en COP
+
+### Academia.tsx
+- SCA Premier Campus con Mario Patiño AST
+- Certificaciones SCA & CQI
+- 3 cursos con sílabos
+
+### Contacto.tsx
+- Email: cafejaguarcolombia@gmail.com
+- Tel: (+57) 315 7307016
+- Dirección: Cra 4 # 12 – 78, La Candelaria, Bogotá
+
+### Footer.tsx
+- Grid 5 columnas: Marca, Líneas de Negocio, Atención al Cliente, Servicios, Contacto
+- Email y teléfono reales integrados
+
+---
+
+## 🆕 Añadiduras de la Sesión Anterior (27 May 2026)
+
+### 1. Logo Real del Cliente Integrado
+*   **Archivos**: `public/images/logo-color.png`, `public/images/logo-azul.png` (copiados desde `src/assets/`).
+*   **Recorte**: Se eliminó el padding transparente excesivo del PNG (1080×1081 → 448×459 px) para que el logo se renderice sin verse diminuto.
+*   **Navbar** (`Navbar.tsx`): Reemplazado SVG inline por `<img src="/images/logo-color.png" className="h-16 w-auto" />`.
+*   **Footer** (`Footer.tsx`): Logo color integrado en la sección de marca.
+*   **Favicon** (`index.html`): `<link rel="icon" type="image/png" href="/images/logo-color.png" />`.
+
+### 2. Títulos y Textos de Marca Actualizados
+*   **Título de pestaña** (`index.html`): "Jaguar Coffee — Café de Especialidad Colombiano".
+*   **Loading screen** (`App.tsx:44`): "Jaguar Coffee S.A.S." (antes "Jaguar Coffee Inc.").
+
+### 3. Hero Carrusel — Mejoras
+*   **Nuevo slide**: "Academia de Barismo Profesional" (4to slide) con link a `/academia`.
+*   **Imagen real en 1er slide**: Reemplazada la URL Unsplash por `/images/HERO/CAFEwebp.webp` (foto de cerezas de café del cliente con logo superpuesto).
+*   **Atenuación del filtro azul**: `mix-blend-multiply opacity-50` → `opacity-80` y gradiente `from-100%/via-40%` → `from-60%/via-15%` para que la fotografía real brille sin perder la identidad corporativa.
+
+### 4. Navbar Desktop — Distribución Espaciada
+*   **Ancho máximo**: `max-w-7xl` → `max-w-[90rem]`.
+*   **Navegación central**: `flex-1 justify-center space-x-14` para evitar que los links queden "apiñados" en pantallas grandes.
+*   **Padding lateral**: Incrementado a `px-8 lg:px-20`.
+
+### 5. Limpieza del Entorno
+*   Eliminados scripts Python temporales (`crop_logo.py`) y entorno virtual (`imgvenv`) usados para el recorte del logo.
+
+---
+
+## 🧭 Roadmap — Próximos Pasos
+
+### FASE A — Personalización de Marca (Assets del Cliente)
+> **Estado**: 🟡 **Parcialmente Completada** — Logo, contenido textual, imágenes de experiencias y academia integrados.
+
+| Elemento | Estado | Acción requerida |
+|----------|--------|------------------|
+| **Logo** | ✅ Completado | Integrado en Navbar, Footer y Favicon |
+| **Favicon** | ✅ Completado | Usando logo-color.png |
+| **Hero imágenes** | 🟡 Parcial | 1ra imagen real; slides 2-4 con Unsplash |
+| **Imágenes producto** | ⏳ Pendiente | Reemplazar URLs Unsplash en db.json |
+| **Imágenes experiencias** | ✅ Completado | Integradas desde cafejaguar.com |
+| **Imágenes academia** | ✅ Completado | Imagen real de Academia integrada |
+| **Contenido textual** | ✅ Completado | Texto real de cafejaguar.com en todas las páginas |
+| **Contact info** | ✅ Completado | Email, tel y dirección reales integrados |
+
+### FASE B — Gestión de Carrusel desde Admin
+> **Estado**: ✅ **Completada**
+
+| Componente | Descripción |
+|-----------|-------------|
+| **Modelo DB** | Nuevo tipo `CarouselSlide` en `types.ts` y sección `slides` en `db.json` |
+| **API REST** | `GET /api/slides` (público), `GET/POST/PUT/DELETE /api/slides/all` (admin) |
+| **Componente carrusel** | Extraído de `Home.tsx` para consumir `GET /api/slides` |
+| **Admin UI — Pestaña Banner Home** | Nuevo 4to segmento en `Admin.tsx` con tabla de slides + modal formulario |
+| **Imágenes** | URLs externas (Unsplash, etc.) - el admin ingresa el link directamente |
+
+---
+
+## 🆕 Sesión: 29 May 2026 — Fixes Crashes + Limpieza + Prep Deploy
+
+### 1. Fix: Carousel Crashes (`Home.tsx`)
+**Problema**: `TypeError` cuando `slides` era `undefined`.  
+**Solución**: Validación con `Array.isArray(slides)` y bound checks en `setCurrentSlide`.
+
+### 2. Fix: Backend ERR_CONNECTION_REFUSED
+**Problema**: Servidor Express no corría.  
+**Solución**: Ejecutar `npm run dev` en terminal separada → `http://localhost:3000`.
+
+### 3. Server Hardening (`server.ts`)
+- Error handlers globales para `uncaughtException` y `unhandledRejection` (previene crashes silenciosos)
+- Endpoint `GET /api/health` para monitoring
+- Middleware de logging de requests API
+- Global error handler para errores no capturados
+
+### 4. DB Service (`server/db.ts`)
+- Modelo completo `CarouselSlide` (CRUD completo en JSON DB)
+- Métodos de seguridad: `checkLoginAttempt`, `recordFailedLogin`, `clearLoginAttempts`
+- Bloqueo de cuenta tras 5 intentos fallidos (15 min lockout)
+- Stock deduction al confirmar pagos
+
+### 5. Admin Panel — Slide Management (`Admin.tsx`)
+- Pestaña 4ta: "Banner Home" con tabla de slides activos
+- Modal crear/editar con preview de imagen
+- Toggle activo/inactivo por slide
+- DELETE con confirmación
+
+### 6. Limpieza Logs y Probing
+- Eliminado `logs/server.log`
+- Reemplazada función `log()` por `console.log()` en server.ts
+- Sistema de logging sigue funcional (solo salida a consola, no a archivo)
+
+### 7. Prep Deploy a Coolify/VPS
+- Servidor listo para producción (`npm run build` + `npm start`)
+- Base de datos JSON (`data/db.json`) funciona en servidor único
+- Para producción en cloud: migrar a MySQL (FASE 1 pendiente)
+
+### Archivos Nuevos
+- `public/images/logo-color.png`, `public/images/logo-azul.png`
+- `public/images/HERO/CAFEwebp.webp` (hero real)
+- `src/components/Toast.tsx`
+- `src/assets/` (logos originales del cliente)
+
+### Estado Actual
+- Servidor Express + Vite en puerto 3000 ✅
+- 6 productos, 2 experiencias, 2 haciendas ✅
+- Slides editables desde admin ✅
+- Auth con JWT + cookies httpOnly ✅
+- Wompi sandbox integrado ✅
+
+---
+
+## 🚀 Estado de Construcción
+
+- TypeScript: ✅ Compila sin errores
+- npm: ✅ 0 vulnerabilidades
+- Dependencias: Todas instaladas y funcionales
+- Git: 17 archivos modificados, listo para push

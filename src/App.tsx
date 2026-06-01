@@ -5,6 +5,7 @@ import { useAuthStore, useCartStore } from './store';
 // Layout components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { ToastContainer } from './components/Toast';
 
 // Pages
 import Home from './pages/Home';
@@ -36,18 +37,19 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center space-y-4">
-        <div className="p-3 bg-amber-900 rounded-2xl text-white animate-bounce">
-          ☕
+      <div className="min-h-screen bg-[#122C9B] flex flex-col items-center justify-center">
+        <div className="relative mb-6">
+          <img src="/images/logo-color.png" alt="Jaguar Coffee" className="h-20 w-auto animate-pulse" />
         </div>
-        <div className="w-8 h-8 border-4 border-amber-800 border-t-transparent rounded-full animate-spin" />
-        <p className="text-stone-500 text-xs font-mono tracking-widest uppercase">Jaguar Coffee Inc.</p>
+        <div className="w-10 h-10 border-4 border-[#FFA42C] border-t-transparent rounded-full animate-spin" />
+        <p className="mt-6 text-[#FFF9F5]/70 text-xs font-mono tracking-[0.3em] uppercase">Jaguar Coffee S.A.S.</p>
       </div>
     );
   }
 
   return (
     <BrowserRouter>
+      <ToastContainer />
       <div className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
         <Navbar />
 

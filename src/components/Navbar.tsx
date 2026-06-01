@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore, useCartStore } from '../store';
-import { ShoppingCart, User as UserIcon, LogOut, ShieldCheck, Menu, X, Coffee } from 'lucide-react';
+import { ShoppingCart, User as UserIcon, LogOut, ShieldCheck, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
@@ -20,7 +20,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Tienda', path: '/tienda' },
     { name: 'Experiencias', path: '/experiencias' },
-    { name: 'Haciendas', path: '/turismo' },
+    { name: 'Estadías', path: '/turismo' },
     { name: 'Academia', path: '/academia' },
     { name: 'Contacto', path: '/contacto' },
   ];
@@ -29,22 +29,21 @@ export default function Navbar() {
 
   return (
     <nav id="app-navbar" className="bg-[#FFF9F5]/95 backdrop-blur-md border-b border-[#122C9B]/10 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[90rem] mx-auto px-8 sm:px-12 lg:px-20">
         <div className="flex justify-between h-20">
           {/* Logo Brand */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-all">
-              <div className="w-10 h-10 bg-[#122C9B] rounded-full flex items-center justify-center shadow-md">
-                <Coffee className="w-5 h-5 text-[#FFA42C]" />
-              </div>
-              <span className="text-2xl font-bold tracking-tighter uppercase text-[#122C9B]">
-                JAGUAR<span className="text-[#FFA42C]">COFFEE</span>
-              </span>
+              <img
+                src="/images/logo-color.png"
+                alt="Jaguar Coffee"
+                className="h-16 w-auto"
+              />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex flex-1 items-center justify-center space-x-14">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -61,7 +60,7 @@ export default function Navbar() {
           </div>
 
           {/* Actions Menu */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             {/* Shopping Cart Trigger */}
             <Link
               to="/carrito"

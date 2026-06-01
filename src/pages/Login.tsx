@@ -27,8 +27,13 @@ export default function Login() {
       setTimeout(() => {
         navigate(returnUrl);
       }, 800);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Login prompt failure', err);
+      // Show remaining attempts if available
+      if (err.response?.data?.remainingAttempts !== undefined) {
+        clearError();
+        // We'll show this in the error display
+      }
     } finally {
       setLoading(false);
     }

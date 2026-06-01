@@ -28,7 +28,7 @@ export default function Turismo() {
           Línea Turismo
         </span>
         <h1 className="font-display text-4xl font-extrabold text-stone-900 tracking-tight leading-tight">
-          Hospédate en las Haciendas Cafeteras Históricas
+          Hospédate en las Estadías Cafeteras Históricas
         </h1>
         <p className="text-stone-500 font-light text-base leading-relaxed">
           Vive la magia de despertar flotando sobre las montañas de Antioquia y el Caldas colonial. Te abrimos las puertas de nuestras fincas tradicionales con reservas 100% garantizadas a través de Airbnb.
@@ -123,7 +123,7 @@ export default function Turismo() {
         <div className="space-y-1">
           <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider font-mono">Nota sobre las reservaciones de estadías</h4>
           <p className="text-xs text-amber-800 leading-relaxed font-light">
-            Las Haciendas son operadas directamente bajo el sello oficial Jaguar Coffee. Al hacer clic, se abre una ventana segura de Airbnb o Booking.com para confirmar las noches preferidas.
+            Las Estadías son operadas directamente bajo el sello oficial Jaguar Coffee. Al hacer clic, se abre una ventana segura de Airbnb o Booking.com para confirmar las noches preferidas.
           </p>
         </div>
       </div>

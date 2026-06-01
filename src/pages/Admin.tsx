@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Plus, Trash2, Edit2, ShoppingBag, Landmark, MessageSquare, ClipboardList, PenTool, CheckCircle, RefreshCw } from 'lucide-react';
-import { Product, Order, Experience, ContactMessage, CoffeeCategory, OrderStatus } from '../types';
+import { Product, Order, Experience, ContactMessage, CoffeeCategory, OrderStatus, CarouselSlide } from '../types';
 import axios from 'axios';
 
 export default function Admin() {
@@ -13,7 +13,22 @@ export default function Admin() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   
-  const [activeSegment, setActiveSegment] = useState<'productos' | 'ordenes' | 'mensajes'>('productos');
+  const [activeSegment, setActiveSegment] = useState<'productos' | 'ordenes' | 'mensajes' | 'slides'>('productos');
+  const [slides, setSlides] = useState<CarouselSlide[]>([]);
+  const [isEditingSlide, setIsEditingSlide] = useState(false);
+  const [editingSlideId, setEditingSlideId] = useState<string | null>(null);
+  const [slideForm, setSlideForm] = useState({
+    title: '',
+    subtitle: '',
+    badge: '',
+    buttonText: '',
+    buttonLink: '',
+    button2Text: '',
+    button2Link: '',
+    bgImage: '',
+    orden: 1,
+    activo: true
+  });
   const [loading, setLoading] = useState(true);
 
   // CRUD Product Form States
@@ -34,14 +49,16 @@ export default function Admin() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [pRes, oRes, mRes] = await Promise.all([
+      const [pRes, oRes, mRes, sRes] = await Promise.all([
         axios.get('/api/productos'),
         axios.get('/api/ordenes-todas'),
-        axios.get('/api/contacto')
+        axios.get('/api/contacto'),
+        axios.get('/api/slides/all')
       ]);
       setProducts(pRes.data);
       setOrders(oRes.data);
       setMessages(mRes.data);
+      setSlides(sRes.data);
     } catch (err) {
       console.error('Error fetching admin data', err);
     } finally {
@@ -116,6 +133,71 @@ export default function Admin() {
     if (!confirm('¿Desea eliminar la cosecha seleccionada?')) return;
     try {
       await axios.delete(`/api/productos/${id}`);
+      loadData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCreateSlideClick = () => {
+    setIsEditingSlide(true);
+    setEditingSlideId(null);
+    setSlideForm({
+      title: '',
+      subtitle: '',
+      badge: '',
+      buttonText: '',
+      buttonLink: '/tienda',
+      button2Text: '',
+      button2Link: '',
+      bgImage: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=85&w=1200',
+      orden: slides.length + 1,
+      activo: true
+    });
+  };
+
+  const handleEditSlideClick = (s: CarouselSlide) => {
+    setIsEditingSlide(true);
+    setEditingSlideId(s.id);
+    setSlideForm({
+      title: s.title,
+      subtitle: s.subtitle,
+      badge: s.badge,
+      buttonText: s.buttonText,
+      buttonLink: s.buttonLink,
+      button2Text: s.button2Text || '',
+      button2Link: s.button2Link || '',
+      bgImage: s.bgImage,
+      orden: s.orden,
+      activo: s.activo
+    });
+  };
+
+  const handleSaveSlideSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        ...slideForm,
+        button2Text: slideForm.button2Text || null,
+        button2Link: slideForm.button2Link || null
+      };
+
+      if (editingSlideId) {
+        await axios.put(`/api/slides/${editingSlideId}`, payload);
+      } else {
+        await axios.post('/api/slides', payload);
+      }
+      setIsEditingSlide(false);
+      loadData();
+    } catch (err: any) {
+      alert('Error guardando slide: ' + (err.response?.data?.error || err.message));
+    }
+  };
+
+  const handleDeleteSlide = async (id: string) => {
+    if (!confirm('¿Desea eliminar este slide del carrusel?')) return;
+    try {
+      await axios.delete(`/api/slides/${id}`);
       loadData();
     } catch (err) {
       console.error(err);
@@ -221,7 +303,7 @@ export default function Admin() {
       {/* Row tab selectors admin */}
       <div className="flex border-b border-stone-200 gap-6">
         <button
-          onClick={() => { setActiveSegment('productos'); setIsEditingProduct(false); }}
+          onClick={() => { setActiveSegment('productos'); setIsEditingProduct(false); setIsEditingSlide(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
             activeSegment === 'productos' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
@@ -229,7 +311,7 @@ export default function Admin() {
           Cafés (CRUD)
         </button>
         <button
-          onClick={() => { setActiveSegment('ordenes'); setIsEditingProduct(false); }}
+          onClick={() => { setActiveSegment('ordenes'); setIsEditingProduct(false); setIsEditingSlide(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
             activeSegment === 'ordenes' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
@@ -237,17 +319,25 @@ export default function Admin() {
           Despachar Pedidos
         </button>
         <button
-          onClick={() => { setActiveSegment('mensajes'); setIsEditingProduct(false); }}
+          onClick={() => { setActiveSegment('mensajes'); setIsEditingProduct(false); setIsEditingSlide(false); }}
           className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
             activeSegment === 'mensajes' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
           }`}
         >
           Mensajes de Ayuda ({pendingInquiries.length})
         </button>
+        <button
+          onClick={() => { setActiveSegment('slides'); setIsEditingProduct(false); setIsEditingSlide(false); }}
+          className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+            activeSegment === 'slides' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
+          }`}
+        >
+          Banner Home
+        </button>
       </div>
 
       {/* CRUD PANEL EXECUTION SECTIONS */}
-      {isEditingProduct ? (
+      {isEditingProduct && !isEditingSlide ? (
         <form onSubmit={handleSaveProductSubmit} className="bg-white border border-stone-200 rounded-3xl p-8 shadow space-y-6 max-w-2xl">
           <h3 className="font-display text-xl font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
             <PenTool className="w-5 h-5 text-[#FFA42C]" />
@@ -579,14 +669,212 @@ export default function Admin() {
                       </p>
                     </div>
                   ))}
-                </div>
+</div>
               )}
             </div>
           )}
 
+          {/* SEGMENT 4: SLIDES / BANNER HOME */}
+          {activeSegment === 'slides' && (
+            <>
+              {isEditingSlide ? (
+                <form onSubmit={handleSaveSlideSubmit} className="bg-white border border-stone-200 rounded-2xl p-8 shadow space-y-6">
+                  <h3 className="font-display text-xl font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
+                    <PenTool className="w-5 h-5 text-[#FFA42C]" />
+                    <span>{editingSlideId ? 'Editar Slide del Banner' : 'Crear Nuevo Slide'}</span>
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Título (usa \n para salto de línea)</label>
+                      <input
+                        type="text"
+                        required
+                        value={slideForm.title}
+                        onChange={(e) => setSlideForm({ ...slideForm, title: e.target.value })}
+                        placeholder="Café Exótico\nJaguar Coffee"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Badge / Etiqueta Superior</label>
+                      <input
+                        type="text"
+                        required
+                        value={slideForm.badge}
+                        onChange={(e) => setSlideForm({ ...slideForm, badge: e.target.value })}
+                        placeholder="Mejor Café de Cundinamarca"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Subtítulo / Descripción</label>
+                    <textarea
+                      required
+                      value={slideForm.subtitle}
+                      onChange={(e) => setSlideForm({ ...slideForm, subtitle: e.target.value })}
+                      placeholder="Descripción breve del slide..."
+                      rows={2}
+                      className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs resize-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Texto Botón Principal</label>
+                      <input
+                        type="text"
+                        required
+                        value={slideForm.buttonText}
+                        onChange={(e) => setSlideForm({ ...slideForm, buttonText: e.target.value })}
+                        placeholder="Explorar Cosechas"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Link Botón Principal</label>
+                      <input
+                        type="text"
+                        required
+                        value={slideForm.buttonLink}
+                        onChange={(e) => setSlideForm({ ...slideForm, buttonLink: e.target.value })}
+                        placeholder="/tienda"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Texto Botón Secundario (opcional)</label>
+                      <input
+                        type="text"
+                        value={slideForm.button2Text}
+                        onChange={(e) => setSlideForm({ ...slideForm, button2Text: e.target.value })}
+                        placeholder="Ver Academia"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Link Botón Secundario (opcional)</label>
+                      <input
+                        type="text"
+                        value={slideForm.button2Link}
+                        onChange={(e) => setSlideForm({ ...slideForm, button2Link: e.target.value })}
+                        placeholder="/academia"
+                        className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block text-xs font-bold text-stone-700 font-mono uppercase">URL de Imagen de Fondo</label>
+                    <input
+                      type="text"
+                      required
+                      value={slideForm.bgImage}
+                      onChange={(e) => setSlideForm({ ...slideForm, bgImage: e.target.value })}
+                      placeholder="https://images.unsplash.com/photo-..."
+                      className="w-full px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs"
+                    />
+                    {slideForm.bgImage && (
+                      <div className="mt-2 rounded-lg overflow-hidden h-32 bg-stone-100">
+                        <img src={slideForm.bgImage} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <div className="space-y-1">
+                      <label className="block text-xs font-bold text-stone-700 font-mono uppercase">Orden</label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={slideForm.orden}
+                        onChange={(e) => setSlideForm({ ...slideForm, orden: parseInt(e.target.value) || 1 })}
+                        className="w-20 px-4 py-2 bg-stone-50 border border-stone-300 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 pt-5">
+                      <input
+                        type="checkbox"
+                        id="activo"
+                        checked={slideForm.activo}
+                        onChange={(e) => setSlideForm({ ...slideForm, activo: e.target.checked })}
+                        className="w-4 h-4 rounded"
+                      />
+                      <label htmlFor="activo" className="text-xs font-medium text-stone-700">Slide activo</label>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 flex gap-4">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white font-bold rounded-xl text-xs cursor-pointer transition-colors"
+                    >
+                      Guardar Slide
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingSlide(false)}
+                      className="px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-xl text-xs"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="p-6 bg-stone-50 border-b border-stone-150 flex justify-between items-center">
+                    <h3 className="font-display font-bold text-stone-900 text-sm">Slides del Banner Home ({(slides || []).length})</h3>
+                    <button
+                      onClick={handleCreateSlideClick}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#122C9B] text-white rounded-lg text-xs font-bold cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Crear Slide</span>
+                    </button>
+                  </div>
+
+                  <div className="divide-y divide-stone-150">
+                    {(slides || []).map((s) => (
+                      <div key={s.id} className="p-4 flex items-center gap-4 hover:bg-stone-50/50">
+                        <div className="w-24 h-16 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0">
+                          <img src={s.bgImage} alt={s.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-bold text-sm text-stone-900 truncate">{s.title.replace(/\n/g, ' ')}</p>
+                          <p className="text-[10px] text-stone-500 font-mono truncate">{s.badge} • Orden: {s.orden}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${s.activo ? 'bg-emerald-50 text-emerald-800' : 'bg-stone-100 text-stone-500'}`}>
+                            {s.activo ? 'Activo' : 'Inactivo'}
+                          </span>
+                          <button
+                            onClick={() => handleEditSlideClick(s)}
+                            className="p-1.5 px-3 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-lg text-stone-700 cursor-pointer"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteSlide(s.id)}
+                            className="p-1.5 px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg text-rose-700 cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
         </div>
       )}
-
     </div>
   );
 }

@@ -8,7 +8,31 @@ import { dbService, hashPassword } from './server/db';
 import * as crypto from 'crypto';
 import { OrderStatus, ShippingAddress } from './src/types';
 
+const PORT = 3000;
+
+// Global error handlers to catch ALL crashes
+process.on('uncaughtException', (err) => {
+  console.log(`[UNCAUGHT EXCEPTION] ${err.message}`);
+  console.log(`[STACK] ${err.stack}`);
+  console.log('[SERVER] Restarting in 2 seconds...');
+  setTimeout(() => process.exit(1), 2000);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.log(`[UNHANDLED REJECTION] ${reason}`);
+  console.log('[SERVER] Restarting in 2 seconds...');
+  setTimeout(() => process.exit(1), 2000);
+});
+
 const app = express();
+
+// Log only API requests (not Vite internal requests)
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api/')) {
+    console.log(`${req.method} ${req.url}`);
+  }
+  next();
+});
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'jaguar_secret_key_987654';
 const WOMPI_INTEGRITY_KEY = process.env.WOMPI_INTEGRITY_KEY || 'integridad_sandbox_key_123';
@@ -17,6 +41,17 @@ const WOMPI_PUBLIC_KEY = process.env.VITE_WOMPI_PUBLIC_KEY || 'pub_test_wompi_sa
 // Middleware config
 app.use(express.json());
 app.use(cookieParser());
+
+// Global error handler to prevent server crashes
+app.use((err: any, req: any, res: any, next: any) => {
+  console.log(`[FATAL ERROR] ${err.stack || err}`);
+  res.status(500).json({ error: 'Error interno del servidor. Intente de nuevo.' });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Auth helper middleware
 function authenticateToken(req: any, res: any, next: any) {
@@ -89,15 +124,38 @@ app.post('/api/auth/login', (req, res) => {
       return res.status(400).json({ error: 'Diligencie el correo y la contraseña.' });
     }
 
+    // Check for account lockout
+    const lockStatus = dbService.checkLoginAttempt(email);
+    if (lockStatus.blocked) {
+      console.log(`[SECURITY] Blocked login attempt for ${email} - locked for ${lockStatus.lockoutRemaining} more minutes`);
+      return res.status(429).json({ 
+        error: `Demasiados intentos fallidos. Cuenta bloqueada por ${lockStatus.lockoutRemaining} minutos.` 
+      });
+    }
+
     const user = dbService.getUserByEmail(email);
     if (!user) {
-      return res.status(400).json({ error: 'Credenciales inválidas. Verifique sus datos.' });
+      const remaining = dbService.recordFailedLogin(email);
+      console.log(`[SECURITY] Failed login attempt for ${email} - ${remaining} attempts remaining`);
+      return res.status(400).json({ 
+        error: 'Credenciales inválidas. Verifique sus datos.',
+        remainingAttempts: remaining
+      });
     }
 
     const inputHash = hashPassword(password);
     if (user.password_hash !== inputHash) {
-      return res.status(400).json({ error: 'Credenciales inválidas. Verifique sus datos.' });
+      const remaining = dbService.recordFailedLogin(email);
+      console.log(`[SECURITY] Failed login for ${email} - ${remaining} attempts remaining`);
+      return res.status(400).json({ 
+        error: 'Credenciales inválidas. Verifique sus datos.',
+        remainingAttempts: remaining
+      });
     }
+
+    // Success - clear failed attempts
+    dbService.clearLoginAttempts(email);
+    console.log(`[SECURITY] Successful login for ${email}`);
 
     const token = jwt.sign({ id: user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '7d' });
     res.cookie('token', token, {
@@ -169,6 +227,7 @@ app.post('/api/auth/recuperar', (req, res) => {
 app.get('/api/productos', (req, res) => {
   try {
     let products = dbService.getProducts();
+    log(`GET /api/productos - returning ${products.length} products`);
     const { categoria, q } = req.query;
 
     if (categoria && categoria !== 'todos') {
@@ -184,6 +243,7 @@ app.get('/api/productos', (req, res) => {
     }
     res.json(products);
   } catch (err: any) {
+    log(`ERROR /api/productos: ${err}`);
     res.status(500).json({ error: err.message });
   }
 });
@@ -457,31 +517,135 @@ app.post('/api/webhooks/wompi-test-trigger', (req, res) => {
 
 
 // ----------------------------------------------------
+// SLIDES / CAROUSEL ENDPOINTS
+// ----------------------------------------------------
+
+app.get('/api/slides', (req, res) => {
+  try {
+    const slides = dbService.getSlides();
+    res.json(slides || []);
+  } catch (err: any) {
+    console.error('[API /slides GET]', err);
+    res.json([]);
+  }
+});
+
+app.get('/api/slides/all', authenticateToken, requireAdmin, (req, res) => {
+  try {
+    const slides = dbService.getAllSlides();
+    res.json(slides || []);
+  } catch (err: any) {
+    console.error('[API /slides/all GET]', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/slides/:id', authenticateToken, requireAdmin, (req, res) => {
+  try {
+    const slide = dbService.getSlideById(req.params.id);
+    if (!slide) return res.status(404).json({ error: 'Slide no encontrado.' });
+    res.json(slide);
+  } catch (err: any) {
+    console.error('[API /slides/:id GET]', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/slides', authenticateToken, requireAdmin, (req, res) => {
+  try {
+    const { title, subtitle, badge, buttonText, buttonLink, button2Text, button2Link, bgImage, orden, activo } = req.body;
+    if (!title || !subtitle || !badge || !buttonText || !buttonLink || !bgImage) {
+      return res.status(400).json({ error: 'Todos los campos obligatorios deben ser diligenciados.' });
+    }
+    dbService.saveSlide({
+      title,
+      subtitle,
+      badge,
+      buttonText,
+      buttonLink,
+      button2Text: button2Text || null,
+      button2Link: button2Link || null,
+      bgImage,
+      orden: orden || 1,
+      activo: activo !== undefined ? activo : true
+    });
+    res.status(201).json({ success: true, message: 'Slide creado exitosamente.' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/slides/:id', authenticateToken, requireAdmin, (req, res) => {
+  try {
+    log(`PUT /api/slides/${req.params.id} - body: ${JSON.stringify(req.body).substring(0, 200)}`);
+    const { title, subtitle, badge, buttonText, buttonLink, button2Text, button2Link, bgImage, orden, activo } = req.body;
+    if (!title || !subtitle || !badge || !buttonText || !buttonLink || !bgImage) {
+      log('PUT /api/slides - validation failed');
+      return res.status(400).json({ error: 'Todos los campos obligatorios deben ser diligenciados.' });
+    }
+    log('PUT /api/slides - calling dbService.saveSlide');
+    dbService.saveSlide({
+      id: req.params.id,
+      title,
+      subtitle,
+      badge,
+      buttonText,
+      buttonLink,
+      button2Text: button2Text || null,
+      button2Link: button2Link || null,
+      bgImage,
+      orden: orden || 1,
+      activo: activo !== undefined ? activo : true
+    });
+    res.json({ success: true, message: 'Slide actualizado exitosamente.' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/slides/:id', authenticateToken, requireAdmin, (req, res) => {
+  try {
+    dbService.deleteSlide(req.params.id);
+    res.json({ success: true, message: 'Slide eliminado.' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ----------------------------------------------------
 // VITE CLIENT MIDDLEWARE AND SERVER INITIALIZER
 // ----------------------------------------------------
 
 async function start() {
-  if (process.env.NODE_ENV !== 'production') {
-    // Development Mode
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    // Production Mode
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
-  }
+  try {
+    if (process.env.NODE_ENV !== 'production') {
+      log('Starting Vite dev server...');
+      // Development Mode
+      const vite = await createViteServer({
+        server: { 
+          middlewareMode: true,
+          hmr: { overlay: false } // Disable HMR overlay to prevent crashes
+        },
+        appType: 'spa',
+      });
+      log('Vite server created successfully');
+      app.use(vite.middlewares);
+    } else {
+      // Production Mode
+      const distPath = path.join(process.cwd(), 'dist');
+      app.use(express.static(distPath));
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+      });
+    }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[JAGUAR-SERVER] Running and waiting on http://localhost:${PORT}`);
-  });
+    app.listen(PORT, '0.0.0.0', () => {
+      log(`[JAGUAR-SERVER] Running on http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    log(`[STARTUP ERROR] ${err}`);
+    process.exit(1);
+  }
 }
 
-start().catch(err => {
-  console.error('Fatal dev server crash:', err);
-});
+start();

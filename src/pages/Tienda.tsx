@@ -4,6 +4,7 @@ import { useCartStore } from '../store';
 import { Search, SlidersHorizontal, ShoppingBag, Eye } from 'lucide-react';
 import { Product, CoffeeCategory } from '../types';
 import axios from 'axios';
+import { showToast } from '../components/Toast';
 
 export default function Tienda() {
   const { addToCart } = useCartStore();
@@ -202,7 +203,7 @@ export default function Tienda() {
                     <button
                       onClick={() => {
                         addToCart(prod, 1);
-                        alert(`¡"${prod.nombre}" fue agregado con éxito a su carrito!`);
+                        showToast(`"${prod.nombre}" agregado al carrito`);
                       }}
                       className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#122C9B] hover:bg-[#FFA42C] text-white text-[10px] font-bold rounded-full uppercase tracking-widest transition-all cursor-pointer shadow-sm"
                     >

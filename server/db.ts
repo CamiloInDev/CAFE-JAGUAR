@@ -1,7 +1,20 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { Product, Experience, Hacienda, User, Order, ContactMessage, OrderStatus, OrderItem } from '../src/types';
+import { Product, Experience, Hacienda, User, Order, ContactMessage, OrderStatus, OrderItem, CarouselSlide } from '../src/types';
+
+const LOG_FILE = path.join(process.cwd(), 'logs', 'server.log');
+
+function log(msg: string) {
+  const timestamp = new Date().toISOString();
+  const logLine = `[${timestamp}] ${msg}\n`;
+  try {
+    const dir = path.dirname(LOG_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.appendFileSync(LOG_FILE, logLine);
+  } catch {}
+  console.log(logLine.trim());
+}
 
 // Password utility to avoid native bcrypt issues on sandbox
 export function hashPassword(password: string): string {
@@ -10,6 +23,13 @@ export function hashPassword(password: string): string {
 
 const DB_FILE = path.join(process.cwd(), 'data', 'db.json');
 
+interface LoginAttempt {
+  email: string;
+  count: number;
+  lastAttempt: number;
+  lockedUntil?: number;
+}
+
 interface DatabaseSchema {
   users: Array<User & { password_hash: string }>;
   products: Product[];
@@ -17,6 +37,8 @@ interface DatabaseSchema {
   haciendas: Hacienda[];
   orders: Order[];
   contactMessages: ContactMessage[];
+  slides: CarouselSlide[];
+  loginAttempts: Record<string, LoginAttempt>;
 }
 
 const INITIAL_DB: DatabaseSchema = {
@@ -189,9 +211,11 @@ const INITIAL_DB: DatabaseSchema = {
       airbnb_url: 'https://airbnb.com/rooms/mock-vista-hermosa',
       booking_url: 'https://booking.com/hotel/co/finca-vista-hermosa-jerico.html'
     }
-  ],
+],
   orders: [],
-  contactMessages: []
+  contactMessages: [],
+  slides: [],
+  loginAttempts: {}
 };
 
 // Initialize file database if it doesn't exist
@@ -211,10 +235,16 @@ function readDb(): DatabaseSchema {
   try {
     if (!fs.existsSync(DB_FILE)) initDb();
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(raw);
+    const data = JSON.parse(raw);
+    if (!data.slides) {
+      data.slides = [];
+      writeDb(data);
+    }
+    return data;
   } catch (err) {
-    console.error('Error reading JSON DB, fallback to memory', err);
-    return INITIAL_DB;
+    log(`ERROR readDb: ${err}`);
+    initDb();
+    return { ...INITIAL_DB, slides: [] };
   }
 }
 
@@ -464,5 +494,141 @@ export const dbService = {
         prod.stock = Math.max(0, prod.stock - item.cantidad);
       }
     }
+  },
+
+  // Slides / Carousel
+  getSlides(): CarouselSlide[] {
+    try {
+      const data = readDb();
+      if (!data.slides || !Array.isArray(data.slides)) {
+        log('WARN: slides is not an array, returning empty');
+        return [];
+      }
+      return data.slides
+        .filter(s => s && s.activo === true)
+        .sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    } catch (err) {
+      log(`ERROR getSlides: ${err}`);
+      return [];
+    }
+  },
+
+  getAllSlides(): CarouselSlide[] {
+    try {
+      const data = readDb();
+      if (!data.slides || !Array.isArray(data.slides)) {
+        log('WARN: slides is not an array, returning empty');
+        return [];
+      }
+      return data.slides
+        .filter(s => s)
+        .sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    } catch (err) {
+      log(`ERROR getAllSlides: ${err}`);
+      return [];
+    }
+  },
+
+  getSlideById(id: string): CarouselSlide | null {
+    return readDb().slides.find(s => s.id === id) || null;
+  },
+
+  saveSlide(slide: Omit<CarouselSlide, 'id'> & { id?: string }) {
+    try {
+      const data = readDb();
+      if (!data.slides) {
+        data.slides = [];
+      }
+      
+      if (slide.id) {
+        const idx = data.slides.findIndex(s => s && s.id === slide.id);
+        if (idx !== -1) {
+          data.slides[idx] = { ...data.slides[idx], ...slide };
+        } else {
+          log(`WARN: Slide not found for update: ${slide.id}`);
+        }
+      } else {
+        const newSlide: CarouselSlide = {
+          title: slide.title || '',
+          subtitle: slide.subtitle || '',
+          badge: slide.badge || '',
+          buttonText: slide.buttonText || '',
+          buttonLink: slide.buttonLink || '/',
+          button2Text: slide.button2Text || null,
+          button2Link: slide.button2Link || null,
+          bgImage: slide.bgImage || '',
+          orden: slide.orden || data.slides.length + 1,
+          activo: slide.activo !== undefined ? slide.activo : true,
+          id: 'slide_' + Date.now().toString(36),
+        };
+        data.slides.push(newSlide);
+      }
+      writeDb(data);
+    } catch (err) {
+      log(`ERROR saveSlide: ${err}`);
+      throw err;
+    }
+  },
+
+  deleteSlide(id: string) {
+    const data = readDb();
+    data.slides = data.slides.filter(s => s.id !== id);
+    writeDb(data);
+  },
+
+  // Security: Login attempts management
+  MAX_LOGIN_ATTEMPTS: 5,
+  LOCKOUT_DURATION_MS: 15 * 60 * 1000, // 15 minutes
+
+  checkLoginAttempt(email: string): { blocked: boolean; remainingAttempts: number; lockoutRemaining?: number } {
+    const data = readDb();
+    const attempt = data.loginAttempts[email.toLowerCase()];
+    
+    if (!attempt) {
+      return { blocked: false, remainingAttempts: this.MAX_LOGIN_ATTEMPTS };
+    }
+
+    // Check if currently locked out
+    if (attempt.lockedUntil && attempt.lockedUntil > Date.now()) {
+      const remaining = Math.ceil((attempt.lockedUntil - Date.now()) / 1000 / 60);
+      return { blocked: true, remainingAttempts: 0, lockoutRemaining: remaining };
+    }
+
+    // Reset if lockout expired
+    if (attempt.lockedUntil && attempt.lockedUntil <= Date.now()) {
+      data.loginAttempts[email.toLowerCase()] = { email: email.toLowerCase(), count: 0, lastAttempt: Date.now() };
+      writeDb(data);
+      return { blocked: false, remainingAttempts: this.MAX_LOGIN_ATTEMPTS };
+    }
+
+    return { blocked: false, remainingAttempts: this.MAX_LOGIN_ATTEMPTS - attempt.count };
+  },
+
+  recordFailedLogin(email: string): number {
+    const data = readDb();
+    const key = email.toLowerCase();
+    const attempt = data.loginAttempts[key];
+
+    if (!attempt) {
+      data.loginAttempts[key] = { email: key, count: 1, lastAttempt: Date.now() };
+    } else {
+      attempt.count += 1;
+      attempt.lastAttempt = Date.now();
+
+      // Lock out if max attempts reached
+      if (attempt.count >= this.MAX_LOGIN_ATTEMPTS) {
+        attempt.lockedUntil = Date.now() + this.LOCKOUT_DURATION_MS;
+        console.log(`[SECURITY] Account locked for ${email} due to ${attempt.count} failed attempts`);
+      }
+    }
+
+    writeDb(data);
+    return this.MAX_LOGIN_ATTEMPTS - (attempt?.count || 1);
+  },
+
+  clearLoginAttempts(email: string) {
+    const data = readDb();
+    delete data.loginAttempts[email.toLowerCase()];
+    writeDb(data);
   }
 };
