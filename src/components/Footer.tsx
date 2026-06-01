@@ -70,25 +70,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <hr className="border-white/5 max-w-7xl mx-auto my-10" />
-
-      {/* Tech Bar / Credits Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest uppercase text-stone-400 border-b border-white/5 pb-6">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <span>Node.js v20</span>
-            <span className="opacity-40">|</span>
-            <span>React 18 + Vite</span>
-            <span className="opacity-40">|</span>
-            <span>MySQL 8.x Hostinger</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center"><span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span> WooMPI Checkout Connected</span>
-            <span className="opacity-30">/</span>
-            <span>V1.0.0 Build: 25.05.26</span>
-          </div>
-        </div>
-        
+      {/* Credits Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center text-[10px] text-stone-500 flex flex-col md:flex-row justify-between items-center gap-2">
           <span>© {new Date().getFullYear()} Jaguar Coffee S.A.S. Todos los derechos reservados.</span>
             <span className="flex items-center gap-1">

@@ -115,3 +115,17 @@ const DB_FILE = path.join(
   ```
 
 **Commit**: `adbede2` — fix duplicate PORT + log → console.log
+
+---
+
+## Fix: Eliminar banner técnico del Footer (29 May 2026)
+
+**Problema**: El footer mostraba un banner con versiones técnicas que no es profesional para el cliente.
+
+**Cambios en `Footer.tsx`**:
+- Eliminado: `Node.js v20 | React 18 + Vite | MySQL 8.x Hostinger`
+- Eliminado: `WooMPI Checkout Connected` con indicador verde
+- Eliminado: `V1.0.0 Build: 25.05.26`
+- Solo quedó: copyright y crédito "Desarrollado con ❤️"
+
+**Para producción**: Mantener el footer limpio. Si se necesita info técnica, mover a una página `/tecnologia` interna.
