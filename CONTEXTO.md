@@ -221,10 +221,50 @@ El proyecto implementa un sistema de skills documentado en `agents.md` que defin
 
 ### Estado Actual
 - Servidor Express + Vite en puerto 3000 ✅
-- 6 productos, 2 experiencias, 2 haciendas ✅
+- 6 productos, 6 experiencias, 2 haciendas ✅
 - Slides editables desde admin ✅
 - Auth con JWT + cookies httpOnly ✅
 - Wompi sandbox integrado ✅
+
+---
+
+## 🆕 Sesión: 4 Jun 2026 — Detalle de Experiencias + Bug Fix
+
+### 1. Bug Fix: Loop Infinito de Recargas (CRÍTICO)
+**Problema**: La página entraba en loop infinito de recargas constantes.
+**Causa raíz**: En `server/db.ts`, función `readDb()`, se llamaba `writeDb()` en cada request si faltaban `slides` o `loginAttempts`, causando que Vite detectara cambios en el archivo y recargara la página.
+**Solución**: Modificada la lógica para solo escribir si realmente hubo cambios (flag `needsWrite`).
+
+### 2. Página de Detalle de Experiencias
+**Agregado**: Cada experiencia ahora tiene página individual accesible via `/experiencias/:slug`.
+
+#### Archivos modificados:
+- `src/pages/Experiencias.tsx`: Tarjetas clickeables que redirigen a `/experiencias/{slug}`
+- `src/pages/ExperienciaDetail.tsx`: Nueva página con:
+  - Galería de imágenes con carrusel y miniaturas
+  - Iconos dinámicos según tipo de experiencia
+  - Panel lateral con precio, duración, capacidad y widget de Booking.com
+  - Lista de "Qué está incluido"
+  - Recomendaciones de asistencia
+  - Certificado de participación
+- `src/types.ts`: Agregado campo `imagenes: string[]` y `detalles_incluidos?: string[]` a interface `Experience`
+
+#### Base de datos actualizada (`db.json`):
+- 6 experiencias completas con slugs: `catacion`, `barismo`, `tueste`, `coffee-tour`, `glamping`, `scooter-tour`
+- Cada experiencia tiene 4 imágenes en la galería
+- Campo `booking_widget` con HTML del widget de Booking.com
+- Campo `detalles_incluidos` con lista de beneficios
+
+### 3. Nota Importante de Arquitectura
+**La base de datos del servidor es `db.json` en la raíz del proyecto**, NO `data/db.json`. El servidor usa `process.cwd()` para resolver la ruta.
+
+### Archivos modificados:
+- `server/db.ts` - Fix loop infinito + experiencias con `imagenes`
+- `server.ts` - Endpoint POST experiencias acepta campo `imagenes`
+- `src/pages/Experiencias.tsx` - Links a detalle
+- `src/pages/ExperienciaDetail.tsx` - Página completa con galería
+- `src/types.ts` - Nuevos campos en Experience
+- `db.json` - 6 experiencias con galería de imágenes
 
 ---
 
@@ -233,4 +273,4 @@ El proyecto implementa un sistema de skills documentado en `agents.md` que defin
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
-- Git: 17 archivos modificados, listo para push
+- Git: Listo para push después de redeploy

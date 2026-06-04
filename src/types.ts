@@ -34,9 +34,11 @@ export interface Experience {
   duracion_min: number;
   precio: number;
   capacidad_max: number;
-  booking_widget: string; // Embed HTML / custom trigger
+  booking_widget: string;
   imagen_url: string;
+  imagenes: string[];
   activo: boolean;
+  detalles_incluidos?: string[];
 }
 
 export interface Hacienda {

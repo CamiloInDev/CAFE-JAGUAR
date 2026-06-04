@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, Users, ChevronRight, Award, Coffee, Flame, Bike, Home as HomeIcon, BookOpen } from 'lucide-react';
+import { Calendar, Clock, Users, ChevronRight, Award } from 'lucide-react';
 
 export default function Experiencias() {
   const experiences = [
@@ -69,7 +69,6 @@ export default function Experiencias() {
   return (
     <div id="experiences-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
 
-      {/* Intro Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase">
           Línea Experiencias
@@ -82,18 +81,18 @@ export default function Experiencias() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {experiences.map((exp) => (
-          <div
+          <Link
             key={exp.id}
-            className="group bg-white border border-[#122C9B]/10 hover:border-[#FFA42C]/20 rounded-3xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+            to={`/experiencias/${exp.slug}`}
+            className="group bg-white border border-[#122C9B]/10 hover:border-[#FFA42C]/30 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col"
           >
-            {/* Media banner */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#122C9B]/5 leading-none">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#122C9B]/5">
               <img
                 src={exp.imagen_url}
                 alt={exp.nombre}
-                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
               <span className="absolute bottom-4 right-4 bg-[#122C9B]/90 text-white text-xs font-bold font-mono px-3 py-1.5 rounded-lg">
@@ -101,49 +100,36 @@ export default function Experiencias() {
               </span>
             </div>
 
-            {/* Body particulars */}
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-6">
-              <div className="space-y-3">
-                <h3 className="font-display text-xl font-bold text-[#122C9B] group-hover:text-[#FFA42C] transition-colors">
+            <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div className="space-y-2">
+                <h3 className="font-display text-lg font-bold text-[#122C9B] group-hover:text-[#FFA42C] transition-colors line-clamp-2">
                   {exp.nombre}
                 </h3>
-                <p className="text-xs text-[#122C9B]/60 leading-relaxed font-light line-clamp-3">
+                <p className="text-xs text-[#122C9B]/60 leading-relaxed font-light line-clamp-2">
                   {exp.descripcion}
                 </p>
               </div>
 
-              {/* Meta details (Duration, Capacity) */}
-              <div className="pt-4 border-t border-[#122C9B]/5 flex items-center justify-between text-xs text-[#122C9B]/60 font-mono">
+              <div className="pt-3 border-t border-[#122C9B]/5 flex items-center justify-between text-xs text-[#122C9B]/60 font-mono">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-[#FFA42C]" />
                   <span>{exp.duracion_min >= 60 ? `${Math.round(exp.duracion_min / 60)}h` : `${exp.duracion_min} min`}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Users className="w-4 h-4 text-[#FFA42C]" />
-                  <span>Máx {exp.capacidad_max} personas</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[#FFA42C] font-bold">
-                  <Award className="w-4 h-4 text-[#FFA42C]" />
-                  <span>Certificado</span>
+                  <span>Máx {exp.capacidad_max}</span>
                 </div>
               </div>
 
-              {/* Redirection Link */}
-              <div className="pt-2">
-                <Link
-                  to="/contacto"
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl text-sm font-semibold transition-all shadow-sm"
-                >
-                  <span>Reservar Ahora</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
+              <div className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#122C9B]/5 hover:bg-[#122C9B] text-[#122C9B] hover:text-white rounded-xl text-sm font-semibold transition-all">
+                <span>Ver Detalles</span>
+                <ChevronRight className="w-4 h-4" />
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
-      {/* Booking Assurance Panel */}
       <div className="p-6 bg-[#122C9B]/5 border border-[#122C9B]/10 rounded-2xl max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
         <span className="p-3 bg-white text-[#122C9B] border border-[#122C9B]/10 rounded-xl inline-block shadow-sm">
           <Calendar className="w-6 h-6" />
@@ -151,7 +137,7 @@ export default function Experiencias() {
         <div className="space-y-1">
           <h4 className="text-sm font-bold text-[#122C9B]">Reservas a través de Booking.com</h4>
           <p className="text-xs text-[#122C9B]/60 leading-normal font-light">
-            Al presionar reservar, se cargará el widget dinámico oficial de <strong>Booking.com Experiences</strong> para que elijas tu fecha preferida. Ningún dato sensible es captado localmente.
+            Al presionar reservar, se cargará el widget dinámico oficial de <strong>Booking.com Experiences</strong> para que elijas tu fecha preferida.
           </p>
         </div>
       </div>

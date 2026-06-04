@@ -333,7 +333,7 @@ app.get('/api/experiencias/:slug', (req, res) => {
 
 app.post('/api/experiencias', authenticateToken, requireAdmin, (req, res) => {
   try {
-    const { nombre, descripcion, duracion_min, precio, capacidad_max, imagen_url, booking_widget } = req.body;
+    const { nombre, descripcion, duracion_min, precio, capacidad_max, imagen_url, imagenes, booking_widget } = req.body;
     dbService.saveExperience({
       nombre,
       descripcion,
@@ -341,6 +341,7 @@ app.post('/api/experiencias', authenticateToken, requireAdmin, (req, res) => {
       precio: Number(precio),
       capacidad_max: Number(capacidad_max),
       imagen_url,
+      imagenes: imagenes || [],
       booking_widget: booking_widget || '<p>Default Booking Widget Embed</p>',
       activo: true
     });
