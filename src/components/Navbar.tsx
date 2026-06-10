@@ -18,10 +18,11 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Tienda', path: '/tienda' },
+    { name: 'Productos', path: '/tienda' },
     { name: 'Experiencias', path: '/experiencias' },
     { name: 'Estadías', path: '/turismo' },
     { name: 'Academia', path: '/academia' },
+    { name: 'Casa Jaguar', path: '/casa-jaguar' },
     { name: 'Contacto', path: '/contacto' },
   ];
 

@@ -15,6 +15,7 @@ import Experiencias from './pages/Experiencias';
 import ExperienciaDetail from './pages/ExperienciaDetail';
 import Turismo from './pages/Turismo';
 import Academia from './pages/Academia';
+import CasaJaguar from './pages/CasaJaguar';
 import Contacto from './pages/Contacto';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -64,6 +65,7 @@ export default function App() {
             <Route path="/experiencias/:slug" element={<ExperienciaDetail />} />
             <Route path="/turismo" element={<Turismo />} />
             <Route path="/academia" element={<Academia />} />
+            <Route path="/casa-jaguar" element={<CasaJaguar />} />
             <Route path="/contacto" element={<Contacto />} />
             
             {/* Authentication Entries */}
