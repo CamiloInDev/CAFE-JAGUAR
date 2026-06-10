@@ -1,131 +1,169 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, ExternalLink, Calendar, Compass, Shield } from 'lucide-react';
-import { Hacienda } from '../types';
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { MapPin, Coffee, TreePine, Sunrise, Moon, Users, Calendar, ArrowRight } from 'lucide-react';
+
+interface Estadia {
+  id: string;
+  tipo: 'glamping' | 'eco-hostal';
+  nombre: string;
+  capacidad: number;
+  precio: number;
+  imagen_principal: string;
+  imagenes?: string[];
+  descripcion?: string;
+}
+
+const estadias: Estadia[] = [
+  {
+    id: 'glamping-familiar',
+    tipo: 'glamping',
+    nombre: 'Glamping Familiar',
+    capacidad: 8,
+    precio: 350000,
+    imagen_principal: '/images/TURISMO/GLAMP1.webp',
+  },
+  {
+    id: 'eco-hostal',
+    tipo: 'eco-hostal',
+    nombre: 'ECO Hostal',
+    capacidad: 8,
+    precio: 350000,
+    imagen_principal: '/images/TURISMO/HOSTAL1.webp',
+  },
+];
 
 export default function Turismo() {
-  const [haciendas, setHaciendas] = useState<Hacienda[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axios.get('/api/haciendas')
-      .then(res => {
-        setHaciendas(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching haciendas', err);
-        setLoading(false);
-      });
-  }, []);
-
   return (
-    <div id="turismo-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div id="turismo-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       
-      {/* Editorial Header */}
-      <div className="max-w-3xl mx-auto text-center space-y-4">
-        <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase">
-          Línea Turismo
+      {/* Header */}
+      <div className="text-center space-y-4 max-w-3xl mx-auto">
+        <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#FFA42C]/10 text-[#FFA42C] border border-[#FFA42C]/20 rounded-full text-xs font-mono font-black tracking-widest uppercase">
+          <Coffee className="w-4 h-4" />
+          Estadías
         </span>
-        <h1 className="font-display text-4xl font-extrabold text-stone-900 tracking-tight leading-tight">
-          Hospédate en las Estadías Cafeteras Históricas
+        <h1 className="font-sans text-4xl md:text-5xl font-extrabold text-[#122C9B] tracking-tighter uppercase leading-[0.9]">
+          Descubre un refugio natural<br />en el corazón de las montañas
         </h1>
-        <p className="text-stone-500 font-light text-base leading-relaxed">
-          Vive la magia de despertar flotando sobre las montañas de Antioquia y el Caldas colonial. Te abrimos las puertas de nuestras fincas tradicionales con reservas 100% garantizadas a través de Airbnb.
+        <p className="text-[#122C9B]/70 text-sm max-w-2xl mx-auto leading-relaxed">
+          Un eco hotel y glamping donde el aroma del café recién tostado se mezcla con el aire puro y la tranquilidad del campo. Vive una experiencia auténtica en una finca cafetera tradicional.
         </p>
       </div>
 
-      {loading ? (
-        <div className="grid grid-cols-1 gap-12">
-          {[1, 2].map(n => (
-            <div key={n} className="bg-white border border-stone-200 rounded-3xl h-80 animate-pulse" />
-          ))}
+      {/* Description Blocks */}
+      <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-8 space-y-4 shadow-sm">
+        <p className="text-[#122C9B]/80 text-sm leading-relaxed">
+          Aquí, el descanso se conecta con la naturaleza. Disfruta de cómodas y exclusivas unidades de glamping, diseñadas para brindarte confort sin perder el encanto rústico del entorno. Despierta con el canto de las aves, recorre nuestros cultivos de café y conoce de cerca el proceso artesanal, desde la semilla hasta la taza.
+        </p>
+        <p className="text-[#122C9B]/60 text-xs font-medium">
+          Ya sea para una escapada romántica, un descanso en familia o una experiencia de conexión interior, nuestro eco hotel y glamping es el destino perfecto para desconectarte de la rutina y reconectarte con lo esencial.
+        </p>
+        <div className="flex items-center justify-center gap-4 pt-4 border-t border-[#122C9B]/10">
+          <span className="flex items-center gap-2 text-[#FFA42C] text-sm font-bold">
+            <Coffee className="w-4 h-4" /> Vive el café
+          </span>
+          <span className="flex items-center gap-2 text-[#FFA42C] text-sm font-bold">
+            <TreePine className="w-4 h-4" /> Respira naturaleza
+          </span>
+          <span className="flex items-center gap-2 text-[#FFA42C] text-sm font-bold">
+            <Moon className="w-4 h-4" /> Siente la tranquilidad
+          </span>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-16">
-          {haciendas.map((hac) => (
-            <div
-              key={hac.id}
-              className="bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-md transition-all flex flex-col lg:flex-row gap-8 p-6 lg:p-8"
-            >
-              {/* Image banner (takes 5 cols in large) */}
-              <div className="lg:w-[45%] aspect-video lg:aspect-auto h-auto rounded-2xl overflow-hidden bg-stone-100 leading-none flex-shrink-0">
-                <img
-                  src={hac.imagen_url}
-                  alt={hac.nombre}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
+      </div>
 
-              {/* Informational Column (takes 55% space) */}
-              <div className="flex-1 flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-1.5 text-xs text-[#122C9B] font-bold font-mono">
-                    <MapPin className="w-4 h-4 text-[#FFA42C]" />
-                    <span>{hac.ubicacion}</span>
-                  </div>
-                  
-                  <h3 className="font-display text-2xl font-black text-stone-950 leading-tight">
-                    {hac.nombre}
-                  </h3>
-                  
-                  <p className="text-sm text-stone-500 font-light leading-relaxed">
-                    {hac.descripcion}
-                  </p>
-                </div>
-
-                {/* Local highlight banners */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pt-2 text-xs font-mono text-stone-500">
-                  <span className="flex items-center gap-1.5 bg-stone-50 p-2.5 rounded-lg border border-stone-100">
-                    <Compass className="w-3.5 h-3.5 text-[#FFA42C]" />
-                    Senderos ecológicos
-                  </span>
-                  <span className="flex items-center gap-1.5 bg-stone-50 p-2.5 rounded-lg border border-stone-100">
-                    ☕ Cosecha manual
-                  </span>
-                  <span className="flex items-center gap-1.5 bg-stone-50 p-2.5 rounded-lg border border-stone-100 col-span-2 md:col-span-1">
-                    🌳 Sombra nativa
-                  </span>
-                </div>
-
-                {/* CTA Action Bar containing direct external links opened in new tabs */}
-                <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row gap-4 items-center">
-                  <a
-                    href={hac.airbnb_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#FF5A5F] hover:bg-[#E04B50] text-[#FAF8F5] text-sm font-bold rounded-xl transition-all shadow-sm cursor-pointer"
-                  >
-                    <span>Ver disponibilidad en Airbnb</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  
-                  <a
-                    href={hac.booking_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-stone-50 border border-stone-200 text-stone-700 text-sm font-semibold rounded-xl transition-all"
-                  >
-                    <span>Ver en Booking.com</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
+      {/* Estadías Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {estadias.map((estadia) => (
+          <Link
+            key={estadia.id}
+            to={estadia.tipo === 'glamping' ? '/turismo/glamping' : '/turismo/eco-hostal'}
+            className="bg-white border border-[#122C9B]/10 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-[#122C9B]/5 transition-all duration-300 group"
+          >
+            {/* Image */}
+            <div className="relative aspect-[4/3] bg-[#122C9B]/5 overflow-hidden">
+              <img
+                src={estadia.imagen_principal}
+                alt={estadia.nombre}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute top-4 left-4 bg-[#122C9B] text-white text-xs font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                {estadia.tipo === 'glamping' ? 'Glamping' : 'ECO Hostal'}
               </div>
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* Redirection Notice */}
-      <div className="p-5 bg-amber-50/50 border border-amber-200/50 rounded-2xl max-w-4xl mx-auto flex items-start gap-4">
-        <Shield className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
-        <div className="space-y-1">
-          <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider font-mono">Nota sobre las reservaciones de estadías</h4>
-          <p className="text-xs text-amber-800 leading-relaxed font-light">
-            Las Estadías son operadas directamente bajo el sello oficial Jaguar Coffee. Al hacer clic, se abre una ventana segura de Airbnb o Booking.com para confirmar las noches preferidas.
-          </p>
+            {/* Info */}
+            <div className="p-6 space-y-4">
+              <div className="space-y-2">
+                <h3 className="font-sans text-xl font-bold text-[#122C9B]">
+                  Estadías ECO Hotel Glamping
+                </h3>
+                <p className="font-sans text-lg font-semibold text-[#122C9B]/80">
+                  {estadia.nombre}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs text-[#122C9B]/60 font-mono">
+                <span className="flex items-center gap-1.5">
+                  <Users className="w-4 h-4 text-[#FFA42C]" />
+                  Capacidad máxima para {estadia.capacidad} personas
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-[#122C9B]/10">
+                <div className="space-y-1">
+                  <p className="text-xs text-[#122C9B]/50 font-mono uppercase tracking-wider">Desde</p>
+                  <p className="text-2xl font-extrabold text-[#122C9B]">
+                    ${estadia.precio.toLocaleString('es-CO')} COP
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#122C9B]/10 group-hover:bg-[#FFA42C]/10 text-[#122C9B] text-xs font-bold rounded-xl uppercase tracking-wider transition-all">
+                  Ver más
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Features Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
+          <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
+            <Sunrise className="w-8 h-8" />
+          </span>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Amaneceres dorados</h3>
+          <p className="text-xs text-[#122C9B]/60">Paisajes verdes y luz natural</p>
         </div>
+        <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
+          <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
+            <Moon className="w-8 h-8" />
+          </span>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Noches estrelladas</h3>
+          <p className="text-xs text-[#122C9B]/60">Cielo despejado y silencio</p>
+        </div>
+        <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
+          <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
+            <Coffee className="w-8 h-8" />
+          </span>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Cultura cafetera</h3>
+          <p className="text-xs text-[#122C9B]/60">De la semilla a la taza</p>
+        </div>
+        <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
+          <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
+            <TreePine className="w-8 h-8" />
+          </span>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Entorno natural</h3>
+          <p className="text-xs text-[#122C9B]/60">Aire puro y naturaleza</p>
+        </div>
+      </div>
+
+      {/* Location Note */}
+      <div className="bg-[#122C9B] text-white rounded-2xl p-8 text-center space-y-3">
+        <h3 className="font-sans text-xl font-bold">¿Cómo llegar?</h3>
+        <p className="text-white/70 text-sm">
+          Ubicado en Silvania, Cundinamarca — a solo 45 minutos de Bogotá
+        </p>
       </div>
 
     </div>

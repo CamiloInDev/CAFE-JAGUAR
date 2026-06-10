@@ -100,7 +100,7 @@ export default function CasaJaguar() {
               <p className="text-[#122C9B]/60 text-xs">Bogotá, Colombia</p>
             </div>
             <a
-              href="https://www.google.com/maps/search/Cra+4+12-78+La+Candelaria+Bogotá"
+              href="https://www.google.com/maps/place/Jaguar+Coffee+Bogota:+Productores+y+Tostadores+de+café+exótico/@4.5974649,-74.0705758,17z/data=!3m1!4b1!4m6!3m5!1s0x8e3f99664d003de3:0x7aa83e1159297c8e!8m2!3d4.5974649!4d-74.0705758!16s%2Fg%2F11fqxyg8sx"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#122C9B] hover:bg-[#FFA42C] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-all"
@@ -157,7 +157,7 @@ export default function CasaJaguar() {
         <h2 className="font-sans text-2xl font-bold text-[#122C9B] tracking-tight">Cómo Llegar</h2>
         <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden border border-[#122C9B]/10 shadow-sm">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6!2d-74.0734!3d4.5981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f989b5f2e7e9f%3A0x7c7c7c7c7c7c7c7c!2sCra.%204%20%2312-78%2C%20Bogotá!5e0!3m2!1ses!2sco!4v1"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6!2d-74.068!3d4.5981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f99664d003de3%3A0x7aa83e1159297c8e!2sJaguar+Coffee+Bogota!5e0!3m2!1ses!2sco!4v1"
             width="100%"
             height="100%"
             style={{ border: 0 }}

@@ -14,6 +14,8 @@ import ProductDetail from './pages/ProductDetail';
 import Experiencias from './pages/Experiencias';
 import ExperienciaDetail from './pages/ExperienciaDetail';
 import Turismo from './pages/Turismo';
+import GlampingDetail from './pages/GlampingDetail';
+import EcoHostalDetail from './pages/EcoHostalDetail';
 import Academia from './pages/Academia';
 import CasaJaguar from './pages/CasaJaguar';
 import Contacto from './pages/Contacto';
@@ -64,6 +66,8 @@ export default function App() {
             <Route path="/experiencias" element={<Experiencias />} />
             <Route path="/experiencias/:slug" element={<ExperienciaDetail />} />
             <Route path="/turismo" element={<Turismo />} />
+            <Route path="/turismo/glamping" element={<GlampingDetail />} />
+            <Route path="/turismo/eco-hostal" element={<EcoHostalDetail />} />
             <Route path="/academia" element={<Academia />} />
             <Route path="/casa-jaguar" element={<CasaJaguar />} />
             <Route path="/contacto" element={<Contacto />} />
