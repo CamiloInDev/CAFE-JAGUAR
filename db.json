@@ -296,7 +296,7 @@
       "buttonLink": "/turismo",
       "button2Text": null,
       "button2Link": null,
-      "bgImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=85&w=1200",
+      "bgImage": "/images/TURISMO/GLAMP1.webp",
       "orden": 4,
       "activo": true
     }
