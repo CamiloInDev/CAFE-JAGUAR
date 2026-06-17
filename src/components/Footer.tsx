@@ -4,7 +4,7 @@ import { ShieldCheck, Heart } from 'lucide-react';
 export default function Footer() {
   return (
     <footer id="app-footer" className="bg-[#122C9B] text-stone-300 border-t border-white/10 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {/* Brand Section */}
         <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-3 text-white">
@@ -60,7 +60,7 @@ export default function Footer() {
         <div className="space-y-4">
           <h4 className="text-white font-bold text-xs tracking-widest uppercase font-mono">Contacto</h4>
           <ul className="space-y-2.5 text-xs text-stone-400">
-            <li className="uppercase tracking-wider font-mono">cafejaguarcolombia@gmail.com</li>
+            <li className="uppercase tracking-wider font-mono break-all">cafejaguarcolombia@gmail.com</li>
             <li className="uppercase tracking-wider font-mono">(+57) 315 7307016</li>
             <li className="font-light">Cra 4 # 12 – 78, La Candelaria, Bogotá</li>
           </ul>
@@ -74,9 +74,15 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/5">
         <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[10px] text-stone-500">
           <span>© {new Date().getFullYear()} Jaguar Coffee S.A.S. Todos los derechos reservados.</span>
+          <div className="flex items-center gap-3">
+            <a href="/privacidad" className="hover:text-[#FFA42C] transition-colors uppercase tracking-wider font-mono">
+              Política de Privacidad
+            </a>
+            <span>·</span>
             <span className="flex items-center gap-1">
               Desarrollado con <Heart className="w-3 h-3 text-[#FFA42C] fill-[#FFA42C]" /> para los apasionados del café de especialidad.
             </span>
+          </div>
         </div>
       </div>
     </footer>

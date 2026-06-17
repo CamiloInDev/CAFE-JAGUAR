@@ -268,9 +268,45 @@ El proyecto implementa un sistema de skills documentado en `agents.md` que defin
 
 ---
 
+---
+
+## 🆕 Sesión: 17 Jun 2026 — Hero Carousel, Privacidad y Fixes Footer
+
+### 1. Fix: Indicadores del Hero Carousel (`Home.tsx`)
+**Problema**: Los 4 puntos del carrusel quedaban cortados a la mitad por el bento grid de propuestas de valor que se superponía con `-mt-24`.
+**Solución**: Se subieron los indicadores de `bottom-6` a `bottom-28 md:bottom-32` y se elevó su `z-index` a `z-40` para garantizar que sean completamente visibles.
+
+### 2. Política de Privacidad y Consentimiento de Datos
+**Contexto**: Cumplimiento con la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia.
+
+#### Archivos nuevos:
+- `src/pages/Privacidad.tsx`: Página pública `/privacidad` con política de tratamiento de datos personales genérica y válida para Colombia.
+- `src/components/PrivacyConsent.tsx`: Modal de consentimiento que se muestra en el primer ingreso, guarda aceptación en `localStorage` (`jaguar_privacy_consent`) y expone helpers `getPrivacyConsent` / `setPrivacyConsent`.
+
+#### Archivos modificados:
+- `src/App.tsx`: Ruta `/privacidad` añadida. Componente `<PrivacyConsent />` renderizado globalmente.
+- `src/components/Footer.tsx`: Link a "Política de Privacidad" añadido en los créditos.
+- `src/pages/Register.tsx`: Checkbox requerido de autorización de datos; al registrarse se guarda el consentimiento.
+- `src/pages/CheckoutPage.tsx`: Checkbox requerido de autorización de datos antes de pagar.
+
+### 3. Fix: Footer en Tablets (`Footer.tsx`)
+**Problema**: El correo `cafejaguarcolombia@gmail.com` se salía de la pantalla en tablets.
+**Solución**: Grid cambiado de `md:grid-cols-5` a `md:grid-cols-3 lg:grid-cols-5` para dar más ancho a las columnas en tablets, y se añadió `break-all` al email para evitar desbordamiento.
+
+### Archivos modificados:
+- `src/pages/Home.tsx` - Posición de dots del carrusel
+- `src/pages/Privacidad.tsx` - Nueva página
+- `src/components/PrivacyConsent.tsx` - Nuevo componente
+- `src/App.tsx` - Ruta y render global del modal
+- `src/components/Footer.tsx` - Link a privacidad + fix responsive
+- `src/pages/Register.tsx` - Checkbox de autorización
+- `src/pages/CheckoutPage.tsx` - Checkbox de autorización
+
+---
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
-- Git: Listo para push después de redeploy
+- Git: Listo para push

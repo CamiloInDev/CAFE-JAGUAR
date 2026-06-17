@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCartStore, useAuthStore } from '../store';
 import { CreditCard, MapPin, ClipboardList, ShieldCheck, ArrowLeft, CheckCircle2, Phone, Sparkles } from 'lucide-react';
 import axios from 'axios';
@@ -16,6 +16,7 @@ export default function CheckoutPage() {
     telefono: user?.telefono || ''
   });
   const [notas, setNotas] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [wompiOpen, setWompiOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   
@@ -45,6 +46,10 @@ export default function CheckoutPage() {
     e.preventDefault();
     if (!address.direccion || !address.telefono) {
       alert('Por favor diligencie su dirección de envío y teléfono de contacto.');
+      return;
+    }
+    if (!privacyAccepted) {
+      alert('Debes aceptar la Política de Tratamiento de Datos Personales para continuar con el pago.');
       return;
     }
     setWompiOpen(true);
@@ -180,6 +185,23 @@ export default function CheckoutPage() {
               className="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-lg text-sm text-stone-900 resize-none"
             />
           </div>
+
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              required
+              checked={privacyAccepted}
+              onChange={(e) => setPrivacyAccepted(e.target.checked)}
+              className="mt-0.5 w-4 h-4 rounded border-stone-300 text-[#122C9B] focus:ring-[#FFA42C] cursor-pointer"
+            />
+            <span className="text-[11px] text-stone-600 font-light leading-relaxed">
+              Acepto la{' '}
+              <Link to="/privacidad" target="_blank" className="font-bold text-[#FFA42C] hover:text-[#3D5FC9] underline underline-offset-2">
+                Política de Tratamiento de Datos Personales
+              </Link>{' '}
+              y autorizo el tratamiento de mis datos de envío y contacto para procesar este pedido.
+            </span>
+          </label>
 
           <button
             type="submit"

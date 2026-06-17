@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../store';
+import { setPrivacyConsent } from '../components/PrivacyConsent';
 import { UserPlus, User, Mail, KeyRound, Phone, AlertTriangle } from 'lucide-react';
 
 export default function Register() {
@@ -13,6 +14,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -21,6 +23,10 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!privacyAccepted) {
+      alert('Debes aceptar la Política de Tratamiento de Datos Personales para continuar.');
+      return;
+    }
     setLoading(true);
     clearError();
 
@@ -32,6 +38,7 @@ export default function Register() {
         password,
         telefono
       });
+      setPrivacyConsent();
       setSuccess(true);
       setTimeout(() => {
         navigate(returnUrl);
@@ -146,6 +153,23 @@ export default function Register() {
                 <span>{error}</span>
               </div>
             )}
+
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                required
+                checked={privacyAccepted}
+                onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                className="mt-0.5 w-4 h-4 rounded border-stone-300 text-[#122C9B] focus:ring-[#FFA42C] cursor-pointer"
+              />
+              <span className="text-[11px] text-stone-600 font-light leading-relaxed">
+                Acepto la{' '}
+                <Link to="/privacidad" target="_blank" className="font-bold text-[#FFA42C] hover:text-[#3D5FC9] underline underline-offset-2">
+                  Política de Tratamiento de Datos Personales
+                </Link>{' '}
+                y autorizo a Jaguar Coffee S.A.S. a recolectar y tratar mis datos para los fines descritos.
+              </span>
+            </label>
 
             <button
               type="submit"

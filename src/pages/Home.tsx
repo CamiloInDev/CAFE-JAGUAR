@@ -105,7 +105,7 @@ export default function Home() {
   
         {/* Carousel Slide Indicators */}
         {slides && slides.length > 0 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-30">
+        <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 flex space-x-3 z-40">
           {slides.map((_, idx) => (
             <button
               key={idx}

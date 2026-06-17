@@ -6,6 +6,7 @@ import { useAuthStore, useCartStore } from './store';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { ToastContainer } from './components/Toast';
+import PrivacyConsent from './components/PrivacyConsent';
 
 // Pages
 import Home from './pages/Home';
@@ -19,6 +20,7 @@ import EcoHostalDetail from './pages/EcoHostalDetail';
 import Academia from './pages/Academia';
 import CasaJaguar from './pages/CasaJaguar';
 import Contacto from './pages/Contacto';
+import Privacidad from './pages/Privacidad';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CartPage from './pages/CartPage';
@@ -71,6 +73,7 @@ export default function App() {
             <Route path="/academia" element={<Academia />} />
             <Route path="/casa-jaguar" element={<CasaJaguar />} />
             <Route path="/contacto" element={<Contacto />} />
+            <Route path="/privacidad" element={<Privacidad />} />
             
             {/* Authentication Entries */}
             <Route path="/auth/login" element={<Login />} />
@@ -93,6 +96,8 @@ export default function App() {
         </main>
 
         <Footer />
+
+        <PrivacyConsent />
       </div>
     </BrowserRouter>
   );
