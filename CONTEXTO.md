@@ -304,9 +304,166 @@ El proyecto implementa un sistema de skills documentado en `agents.md` que defin
 
 ---
 
+## 🆕 Sesión: 18 Jun 2026 — Refactorización de Seguridad Backend (FASE 2 parcial)
+
+### Contexto y Motivación
+
+El proyecto se encuentra en etapa de desarrollo activo iterando con el cliente. Por decisión de arquitectura, **no se migra aún a MySQL/Sequelize (FASE 1) ni se integra Wompi real (FASE 4)** hasta que el frontend esté aprobado y se cuente con credenciales de producción. Sin embargo, `server.ts` se había convertido en un monolito de 650 líneas con endpoints, middlewares, secrets y lógica de pagos mezclados, lo que generaba:
+
+- Deuda técnica creciente cada vez que se agregaba una nueva entidad.
+- Riesgo de seguridad real por secrets hardcodeados (`JWT_SECRET`, `WOMPI_INTEGRITY_KEY`, `VITE_WOMPI_PUBLIC_KEY`) con fallbacks que podrían llegar a producción por accidente.
+- Falta de headers de seguridad, CORS explícito y rate limiting global.
+- Middleware de autenticación sin tipado (`any`), dificultando el mantenimiento.
+
+El objetivo de esta sesión fue **ordenar el backend y aplicar controles de seguridad básicos sin romper el flujo de desarrollo actual**.
+
+### Qué se hizo
+
+1. **Modularización de `server.ts`**
+   - Se extrajo la lógica de endpoints en rutas independientes bajo `server/routes/`.
+   - Se centralizó la configuración de variables de entorno en `server/config/env.ts` con validación estricta mediante Zod.
+   - Se crearon middlewares reutilizables tipados: autenticación, manejo de errores y rate limiting.
+   - `server.ts` ahora solo hace bootstrap: middlewares globales, montaje de rutas y servidor Vite/static.
+
+2. **Variables de entorno y secrets**
+   - Nuevo `.env.example` con todas las variables requeridas documentadas.
+   - Se creó `.env` local con valores de desarrollo (no se sube a git).
+   - Se eliminaron los fallbacks hardcodeados de `JWT_SECRET`, `WOMPI_INTEGRITY_KEY` y `VITE_WOMPI_PUBLIC_KEY`.
+   - El servidor falla al iniciar si falta alguna variable crítica.
+
+3. **Seguridad agregada**
+   - `helmet` para headers de seguridad (configuración relajada en desarrollo para no romper Vite HMR).
+   - `cors` configurado: abierto en desarrollo, restringido a `APP_URL` en producción.
+   - `express-rate-limit` con límites diferenciados para API general, autenticación y checkout.
+   - `cookie-parser` y `express.json` mantenidos.
+   - Middleware `authenticateToken` y `requireAdmin` tipados correctamente.
+   - Error handler global que no expone stack traces en producción.
+
+4. **Mantenimiento de dependencias**
+   - Se ejecutó `npm audit fix` y se dejaron **0 vulnerabilidades** reportadas.
+
+### Archivos Nuevos
+
+- `server/config/env.ts` — validación centralizada de variables de entorno.
+- `server/types/express.d.ts` — extensión tipada de `Express.Request` con `user`.
+- `server/middleware/auth.ts` — `authenticateToken` y `requireAdmin` tipados.
+- `server/middleware/errorHandler.ts` — manejo global de errores.
+- `server/middleware/rateLimiter.ts` — limitadores de tasa por ruta.
+- `server/routes/auth.ts` — registro, login, logout, perfil, recuperación.
+- `server/routes/products.ts` — CRUD de productos.
+- `server/routes/experiences.ts` — CRUD de experiencias.
+- `server/routes/haciendas.ts` — listado de haciendas.
+- `server/routes/contact.ts` — mensajes de contacto.
+- `server/routes/orders.ts` — órdenes, preparación de pago Wompi y webhook de prueba.
+- `server/routes/slides.ts` — CRUD del carrusel del home.
+- `.env` — variables locales de desarrollo (ignorado por git).
+
+### Archivos Modificados
+
+- `server.ts` — refactorizado a bootstrap limpio.
+- `.env.example` — documentación completa de variables requeridas.
+- `package.json` / `package-lock.json` — nuevas dependencias: `helmet`, `cors`, `express-rate-limit`, `zod`, `@types/cors`.
+
+### Qué se decidió NO cambiar (por estar en desarrollo)
+
+- **Base de datos**: se mantiene `db.json` file-based para no agregar infraestructura mientras se itera el frontend.
+- **Hash de contraseñas**: se mantiene el mecanismo actual para que los usuarios precargados (`admin@jaguarcoffee.com`, `cliente@jaguarcoffee.com`) sigan funcionando. Se migrará a `bcrypt` con salt por usuario junto con MySQL.
+- **Wompi**: se mantiene el sandbox/simulador. La integración real se hará en FASE 4 con credenciales reales y validación SHA256 del webhook.
+
+### Verificación
+
+- `npm run lint` ✅ — TypeScript compila sin errores.
+- Servidor arranca correctamente ✅ — probado en puerto 3001 (el puerto 3000 estaba ocupado por otra instancia del proyecto).
+- `npm audit fix` ✅ — 0 vulnerabilidades.
+
+---
+
+## 🆕 Sesión: 18 Jun 2026 — Pentesting Externo Inicial (versión anterior desplegada)
+
+### Contexto
+
+Se realizó un pentesting externo pasivo/ligero contra el subdominio `jaguar.getindev.com` (IP `185.190.142.94`) **antes** de subir la refactorización de seguridad del backend. El objetivo fue establecer una línea base "antes/después" para validar el impacto de los cambios de FASE 2.
+
+> **Nota importante**: el pentesting se limitó a reconocimiento, headers, endpoints públicos y pruebas no destructivas. No se realizaron ataques de fuerza bruta reales, DDoS ni explotación de daños.
+
+### Herramientas utilizadas
+
+- `curl.exe` — headers y respuestas HTTP/HTTPS.
+- `Resolve-DnsName` — resolución DNS.
+- `Test-NetConnection` — escaneo de puertos comunes.
+- `.NET SslStream` — inspección del certificado SSL/TLS.
+
+### Hallazgos de seguridad
+
+#### 🔴 Críticos / Altos
+
+1. **Falta de headers de seguridad HTTP**
+   - No se encontraron: `Strict-Transport-Security` (HSTS), `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`.
+   - **Riesgo**: el sitio es vulnerable a clickjacking, MIME sniffing, y no fuerza HTTPS en subsiguientes visitas.
+
+2. **Exposición de tecnología: `X-Powered-By: Express`**
+   - Tanto en respuestas del proxy como en el puerto 3000 directo.
+   - **Riesgo**: facilita fingerprinting del backend.
+
+3. **Puerto 3000 expuesto directamente a internet**
+   - La aplicación Node.js escucha en el puerto 3000 y es accesible sin pasar por OpenResty.
+   - **Riesgo**: permite ataques directos al backend, bypass parcial de controles del proxy, y fuga de headers (`X-Powered-By`, `Keep-Alive`).
+
+4. **SSH (puerto 22) expuesto públicamente**
+   - Es común, pero debe verificarse que no permita login root con password y que tenga `fail2ban` o equivalente.
+
+5. **Endpoints rotos devolviendo 500**
+   - `POST /api/auth/login` → 500 (incluso con payload válido).
+   - `POST /api/contacto` → 500.
+   - `POST /api/ordenes/preparar-pago` → 500 en lugar de 401 al no estar autenticado.
+   - `PUT /api/productos/:id` → 500.
+   - **Riesgo**: errores 500 pueden ser utilizados para DoS o para enumerar comportamientos internos. Afortunadamente **no se exponen stack traces** en las respuestas.
+
+#### 🟡 Medios
+
+1. **Rate limiting ausente en capa de aplicación**
+   - La versión anterior solo tiene bloqueo por intentos fallidos por cuenta (`db.ts`), pero no hay rate limiting por IP en los endpoints.
+   - No se pudo confirmar el comportamiento real porque `/api/auth/login` responde 500.
+
+2. **CORS no configurado explícitamente**
+   - No se observaron headers `Access-Control-Allow-Origin` en respuestas con `Origin` arbitrario.
+   - No es un riesgo directo, pero la configuración explícita mejora la seguridad y previsibilidad.
+
+3. **SPA fallback para rutas inexistentes**
+   - Solicitudes a `/.env`, `/server.ts`, `/db.json`, `/package.json` devuelven `index.html` (`Content-Type: text/html`).
+   - Esto es correcto (no exponen archivos reales), pero dificulta detectar 404s reales.
+
+#### 🟢 Buenos / Correctos
+
+1. **Certificado SSL/TLS válido**
+   - Let's Encrypt para `jaguar.getindev.com`.
+   - Protocolo TLS 1.2, firma ECDSA con SHA-384.
+   - Vigente hasta agosto 2026.
+
+2. **Autorización en endpoints admin**
+   - `/api/ordenes-todas` y `/api/slides/all` devuelven 401 sin token.
+   - `DELETE /api/productos/:id` devuelve 401 sin token.
+
+3. **No hay exposición de stack traces**
+   - Los errores 500 devuelven un mensaje genérico: `{"error":"Error interno del servidor. Intente de nuevo."}`.
+
+4. **No vulnerable a SQL injection**
+   - La búsqueda en `/api/productos?q=...` usa filtrado en JSON file, no SQL. Payloads como `' OR '1'='1` devuelven array vacío.
+
+### Recomendaciones inmediatas (antes del siguiente deploy)
+
+1. **Subir la refactorización de seguridad** (Helmet agregará los headers faltantes).
+2. **Cerrar el puerto 3000 al público** o restringirlo a localhost; solo 80/443 deberían estar abiertos.
+3. **Verificar configuración SSH**: deshabilitar login root con password, usar keys, activar fail2ban.
+4. **Investigar los errores 500** en los endpoints rotos; podrían deberse a que `db.json` no se inicializó correctamente en el entorno de Coolify.
+5. **Cambiar o eliminar las credenciales por defecto** `admin@jaguarcoffee.com` / `admin123` antes de producción.
+
+---
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
+- Pentesting: 🟡 Línea base establecida — pendiente comparativa tras deploy de FASE 2
 - Git: Listo para push
