@@ -460,10 +460,234 @@ Se realizó un pentesting externo pasivo/ligero contra el subdominio `jaguar.get
 
 ---
 
+## 🆕 Sesión: 18 Jun 2026 — Pausa para Actualización de Frontend
+
+### Contexto
+
+El cliente finalmente entregó la información necesaria para actualizar el frontend. Por decisión de priorización, **se pausa temporalmente el redeploy de la refactorización de seguridad (FASE 2) y el pentesting comparativo** hasta aplicar los cambios del frontend. Esto evita deployar dos veces seguidas.
+
+### Flujo de trabajo definido
+
+1. Aplicar cambios de frontend con la información proporcionada por el cliente.
+2. Subir cambios de frontend al repositorio.
+3. Configurar variables de entorno en Coolify (ver tabla inferior).
+4. Redeployar la aplicación completa en Coolify.
+5. Repetir el pentesting externo contra `jaguar.getindev.com`.
+6. Documentar comparativa "antes/después" en este archivo.
+
+### Variables de entorno para Coolify
+
+Todas las variables son obligatorias para que el servidor arranque tras la refactorización (validación con Zod):
+
+| Name | Valor en producción | Buildtime | Runtime | Literal |
+|------|---------------------|-----------|---------|---------|
+| `NODE_ENV` | `production` | ❌ | ✅ | ✅ |
+| `PORT` | `3000` | ❌ | ✅ | ✅ |
+| `APP_URL` | `https://jaguar.getindev.com` | ❌ | ✅ | ✅ |
+| `JWT_SECRET` | Generar con `crypto.randomBytes(64)` | ❌ | ✅ | ✅ |
+| `WOMPI_INTEGRITY_KEY` | Sandbox o producción de Wompi | ❌ | ✅ | ✅ |
+| `VITE_WOMPI_PUBLIC_KEY` | Sandbox o producción de Wompi | ✅ | ✅ | ✅ |
+
+> **Nota**: en Coolify, `Buildtime` debe marcarse solo para `VITE_WOMPI_PUBLIC_KEY` porque Vite la necesita durante el build. Las demás solo requieren `Runtime`. `Literal` debe marcarse en todas para evitar expansión de variables.
+
+### Estado de Wompi
+
+- **Wompi real/producción**: pendiente. Requiere cuenta del cliente verificada con NIT y cuenta bancaria.
+- **Wompi sandbox**: recomendado para desarrollo/pruebas. Permite deployar y probar el checkout sin dinero real.
+- **Alternativa temporal**: si no se crea la cuenta sandbox ahora, se pueden usar valores de prueba (`integridad_sandbox_key_123`, `pub_test_wompi_sandbox_public_key`) solo para que el servidor arranque en desarrollo. **Deben reemplazarse antes de producción real.**
+
+### Datos importantes del pentesting previo
+
+- **Target**: `jaguar.getindev.com` (IP `185.190.142.94`).
+- **Autorización**: propietario del VPS y dominio confirmó permiso.
+- **Problemas críticos detectados en versión anterior**:
+  - Faltan headers de seguridad HTTP.
+  - `X-Powered-By: Express` expone tecnología.
+  - Puerto 3000 expuesto directamente.
+  - SSH (22) expuesto.
+  - Endpoints `/api/auth/login`, `/api/contacto`, `/api/ordenes/preparar-pago`, `PUT /api/productos/:id` devuelven 500.
+- **Esperado tras redeploy con FASE 2**:
+  - Headers de seguridad presentes (Helmet).
+  - Sin `X-Powered-By: Express`.
+  - Rate limiting activo.
+  - Endpoints 500 corregidos (o al menos dan 401 cuando corresponda).
+
+---
+
+## 🆕 Sesión: 18 Jun 2026 — Actualización de Experiencias (información del cliente)
+
+### Contexto
+
+El cliente entregó la información oficial para la sección de experiencias. Se aplicaron los cambios tanto en la lista pública (`Experiencias.tsx`) como en la base de datos (`db.json`) que alimenta las páginas de detalle (`ExperienciaDetail.tsx`).
+
+### Decisiones tomadas
+
+- Se mantienen **solo las experiencias incluidas en la información del cliente**.
+- Se **eliminan** del sitio de experiencias:
+  - `Taller de Barismo` → se moverá a **Academia**.
+  - `Coffee Tour — Finca y Beneficio` → no está en la información del cliente.
+  - `Glamping entre Cafetales` → se moverá a **Estadías**.
+- Se agrega un campo opcional `recomendaciones?: string[]` a la interfaz `Experience` para mostrar recomendaciones específicas por experiencia.
+
+### Experiencias finales
+
+| # | Nombre | Slug | Duración | Capacidad | Precio |
+|---|--------|------|----------|-----------|--------|
+| 1 | Cata de Cafés de Especialidad | `catacion` | 45 min | 10 | $90.000 COP |
+| 2 | Métodos de Preparación | `metodos-de-preparacion` | 45 min | 10 | $90.000 COP |
+| 3 | Experiencia de Tueste | `tueste` | 45 min | 10 | $115.000 COP |
+| 4 | Experiencia Completa Jaguar Coffee | `experiencia-completa` | 3 h | 10 | $200.000 COP |
+| 5 | Scooter Tour — Centro Histórico de Bogotá | `scooter-tour` | 1h 45min - 2h | 7 | Desde $65.000 COP |
+
+### Notas específicas
+
+- **Métodos de Preparación**: usa la imagen previa de filtrados. Widget de Booking.com por ahora.
+- **Experiencia Completa**: se muestra como tarjeta más con su propia página de detalle, como solicitó el cliente.
+- **Scooter Tour**: se resumió el tarifario y términos del guía turístico freelance. No tiene reserva por Booking.com; el widget redirige a `/contacto` para reserva directa mientras se define el canal de reserva.
+
+### Archivos modificados
+
+- `src/pages/Experiencias.tsx` — lista de experiencias actualizada y texto introductorio del cliente.
+- `src/pages/ExperienciaDetail.tsx` — sección de recomendaciones ahora usa `experience.recomendaciones` cuando existe.
+- `src/types.ts` — agregado campo opcional `recomendaciones` a `Experience`.
+- `db.json` — experiencias actualizadas; slide 3 del home ajustado al nuevo listado.
+
+---
+
+## 🆕 Sesión: 18 Jun 2026 — Datos de Contacto, Redes y Horarios
+
+### Contexto
+
+El cliente entregó los datos oficiales de contacto, redes sociales y horarios de Casa Jaguar. Se actualizaron Footer y página de Contacto.
+
+### Cambios aplicados
+
+- **Correo electrónico**: `support.coffe.jaguar@gmail.com`
+- **Instagram**: https://www.instagram.com/jaguarcoffeecolombia
+- **Facebook**: https://www.facebook.com/share/1H51icMuVf/
+- **Horarios Casa Jaguar**:
+  - Lun – Mié: 9:00 a.m. – 7:00 p.m.
+  - Jue: 9:00 a.m. – 8:00 p.m.
+  - Vie – Sáb: 8:00 a.m. – 9:00 p.m.
+  - Dom normal: 10:00 a.m. – 7:00 p.m.
+  - Dom con lunes festivo: 10:00 a.m. – 9:00 p.m.
+  - Lunes festivo: 10:00 a.m. – 7:00 p.m.
+
+### Archivos modificados
+
+- `src/components/Footer.tsx` — redes sociales, horarios, nuevo correo, tamaños de fuente mejorados.
+- `src/pages/Contacto.tsx` — redes sociales, horarios, nuevo correo, tamaños de fuente mejorados.
+
+### Notas
+
+- Se mejoraron tamaños de fuente en Footer y Contacto para mayor legibilidad (de `text-[10px]`/`text-xs` a `text-sm` en contenido principal).
+- Botones de Instagram y Facebook enlazan directamente a los perfiles oficiales.
+
+---
+
+## 🆕 Sesión: 22 Jun 2026 — Integración de "Nuestra Planta"
+
+### Contexto
+
+La página `Nuestra Planta` (`src/pages/NuestraPlanta.tsx`) y una sección homónima en `Home.tsx` habían sido agregadas en una iteración previa no documentada en este archivo. Sin embargo, la sección no estaba integrada en la navegación principal y generaba redundancia con la sección posterior de "Desarrollo de Producto" en el Home.
+
+### Qué se hizo
+
+1. **Navegación principal (`Navbar.tsx`)**
+   - Se agregó el link **"Nuestra Planta"** entre "Productos" y "Experiencias", manteniendo el orden lógico de líneas de negocio.
+   - Se ajustó el espaciado del menú desktop a `space-x-6 lg:space-x-10 xl:space-x-14` para mantener el diseño equilibrado con 7 links en lugar de 6.
+   - El link también se renderiza en el menú mobile drawer.
+
+2. **Footer (`Footer.tsx`)**
+   - Se agregó **"Planta de Tueste"** con link a `/nuestra-planta` en la columna **Líneas de Negocio**, ubicado entre E-commerce y Experiencias.
+
+3. **Home (`Home.tsx`)**
+   - Se eliminó la sección completa **"Nuestra Planta de Tueste"** (hero interno, grid de servicios y CTA) para evitar duplicidad de contenido.
+   - Se limpió el import de `lucide-react` eliminando `MessageCircle`, que dejó de usarse al quitar la sección.
+   - Se renumeraron los comentarios de sección del Home tras la eliminación.
+
+### Archivos modificados
+
+- `src/components/Navbar.tsx` — link de Nuestra Planta + espaciado responsive.
+- `src/components/Footer.tsx` — link de Planta de Tueste en Líneas de Negocio.
+- `src/pages/Home.tsx` — eliminación de la sección redundante y limpieza de imports.
+- `CONTEXTO.md` — documentación de esta sesión.
+
+### Verificación
+
+- `npm run lint` ✅ — TypeScript compila sin errores.
+
+## 🆕 Sesión: 22 Jun 2026 — Rediseño de la Página "Nuestra Planta"
+
+### Contexto
+
+La página `/nuestra-planta` tenía un diseño poco pulido: secciones amontonadas, falta de jerarquía visual, imágenes genéricas sin tratamiento coherente y texto excesivo. Se aplicó la skill local **react-vite-tailwind** para reconstruirla con un enfoque premium, espacios generosos y componentes nativos de React.
+
+### Qué se hizo
+
+1. **Nueva arquitectura visual (`src/pages/NuestraPlanta.tsx`)**
+   - **Hero full-width** con imagen de fondo, overlay azul corporativo (`#122C9B`) y título grande con acento naranja (`#FFA42C`).
+   - **Stats strip** flotante con 4 indicadores clave (origen, micro-tostados, protocolos SCA, trazabilidad).
+   - **Sección "Tecnología y pasión"** con texto + galería de imágenes con carrusel automático y controles manuales.
+   - **Servicios** en grid de 3 columnas con cards blancas, iconos naranjas y flecha de hover.
+   - **Proceso de 6 pasos** como timeline alternado (zig-zag) en desktop, limpio en mobile.
+   - **CTA final** con fondo oscuro, blur y botones a WhatsApp y contacto.
+
+2. **Aplicación de la skill react-vite-tailwind**
+   - Se usó Tailwind v4 CSS-first con las variables de marca del proyecto.
+   - Se encapsularon estilos repetitivos en sub-componentes nativos: `SectionHeader`, `ServiceCard`, `ProcessStep`, `StatItem`.
+   - No se utilizó `@apply`.
+   - Estado local con `useState`/`useCallback` para el carrusel de imágenes.
+
+3. **Fix del Navbar**
+   - Se cambió el menú desktop para que aparezca solo desde `lg` (1024px), evitando el apiñamiento en tablets.
+   - Se redujo espaciado y tamaño de fuente en breakpoints intermedios.
+   - Se agregó `whitespace-nowrap` a los links para evitar saltos de línea.
+
+### Archivos modificados
+
+- `src/pages/NuestraPlanta.tsx` — reconstrucción completa de la página.
+- `src/components/Navbar.tsx` — ajustes de espaciado y breakpoint del menú desktop.
+- `CONTEXTO.md` — documentación de esta sesión.
+
+### Verificación
+
+- `npm run lint` ✅ — TypeScript compila sin errores.
+
+## 🆕 Sesión: 22 Jun 2026 — Fix: Scroll al Cambiar de Página
+
+### Contexto
+
+En una SPA con React Router, el navegador conserva la posición del scroll al cambiar de ruta. Esto causaba que, si el usuario bajaba en una página y luego navegaba a otra, la nueva página se renderizara en la misma posición inferior en lugar de volver al inicio.
+
+### Qué se hizo
+
+1. **Nuevo componente `ScrollToTop.tsx`**
+   - Usa `useLocation` de `react-router-dom` para detectar cambios de ruta.
+   - En cada cambio de `pathname`, ejecuta `window.scrollTo({ top: 0, left: 0, behavior: 'auto' })`.
+   - El componente no renderiza ningún elemento (`return null`).
+
+2. **Integración en `App.tsx`**
+   - Se importó `ScrollToTop` y se colocó dentro de `<BrowserRouter>`, justo antes del layout principal.
+
+### Archivos modificados
+
+- `src/components/ScrollToTop.tsx` — nuevo componente.
+- `src/App.tsx` — integración del componente.
+- `CONTEXTO.md` — documentación de esta sesión.
+
+### Verificación
+
+- `npm run lint` ✅ — TypeScript compila sin errores.
+
+---
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
-- Pentesting: 🟡 Línea base establecida — pendiente comparativa tras deploy de FASE 2
-- Git: Listo para push
+- Frontend: ✅ Página Nuestra Planta rediseñada; Navbar corregido; scroll al cambiar de página; skills locales configuradas
+- Deploy: 🟡 Pendiente configurar env vars en Coolify y redeployar
+- Pentesting: 🟡 Línea base establecida — pendiente comparativa tras deploy
+- Git: ✅ Cambios de FASE 2 y experiencias subidos al repo

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon } from 'lucide-react';
+import BookingCalendar from '../components/BookingCalendar';
 
 const images = [
   '/images/TURISMO/HOSTAL1.webp',
@@ -127,12 +128,20 @@ export default function EcoHostalDetail() {
           </div>
         </div>
 
-        {/* Booking Card */}
+        {/* Booking Calendar */}
         <div className="space-y-4">
-          <div className="bg-[#122C9B] border border-[#122C9B]/20 rounded-2xl p-6 space-y-6 shadow-sm sticky top-24">
+          <BookingCalendar
+            tipo="estadia"
+            itemId="eco-hostal"
+            itemNombre="ECO Hostal"
+            itemSlug="eco-hostal"
+            maxPeople={8}
+          />
+
+          <div className="bg-[#122C9B] border border-[#122C9B]/20 rounded-2xl p-6 space-y-4 shadow-sm">
             <div className="space-y-2 text-center">
               <p className="text-xs text-white/50 font-mono uppercase tracking-wider">Precio por noche</p>
-              <p className="text-4xl font-extrabold text-white">$350.000</p>
+              <p className="text-3xl font-extrabold text-white">$350.000</p>
               <p className="text-xs text-white/50 font-mono">COP</p>
             </div>
 
@@ -142,10 +151,6 @@ export default function EcoHostalDetail() {
                 Máx 8 personas
               </span>
             </div>
-
-            <button className="w-full py-4 bg-[#FFA42C] hover:bg-[#FFA42C]/90 text-[#122C9B] text-sm font-bold rounded-xl uppercase tracking-wider transition-all shadow-lg">
-              Reservar ahora
-            </button>
 
             <div className="text-center text-xs text-white/50">
               Ubicación: Silvania, Cundinamarca

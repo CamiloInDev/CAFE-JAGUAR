@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../store';
-import { Coffee, Award, Calendar, Home as HomeIcon, GraduationCap, ChevronRight, ArrowRight, ShieldCheck, Heart, ExternalLink, Star, TrendingUp, Globe, Beaker } from 'lucide-react';
+import { Coffee, Award, Calendar, Home as HomeIcon, GraduationCap, ChevronRight, ArrowRight, ShieldCheck, Heart, ExternalLink, Star, TrendingUp, Globe, Beaker, Instagram } from 'lucide-react';
 import { Product, CarouselSlide } from '../types';
 import axios from 'axios';
 import { showToast } from '../components/Toast';
@@ -121,7 +121,7 @@ export default function Home() {
 
       {/* 2. VALUE PROPOSITIONS BENTO GRID */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="brand-values" className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-white border border-[#122C9B]/10 shadow-sm rounded-2xl p-8 -mt-24 relative z-30">
+        <div id="brand-values" className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-white border border-[#122C9B]/10 shadow-sm rounded-2xl p-8 relative z-30">
           <div className="flex items-start gap-4 p-4">
             <span className="p-3 bg-[#FFA42C]/10 rounded-2xl text-[#FFA42C]">
               <Coffee className="w-6 h-6" />
@@ -394,6 +394,56 @@ export default function Home() {
             <span>Ver programas de certificación</span>
             <ChevronRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />
           </Link>
+        </div>
+      </div>
+
+      {/* 7. INSTAGRAM REEL SECTION */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-8 md:p-12 shadow-sm">
+          <div className="text-center max-w-2xl mx-auto space-y-4 mb-8">
+            <span className="px-3 py-1 bg-[#FFA42C]/10 text-[#122C9B] rounded-full text-xs font-bold font-mono tracking-wider uppercase">
+              Síguenos en Instagram
+            </span>
+            <h2 className="font-sans text-3xl font-extrabold text-[#122C9B] tracking-tight">
+              @jaguarcoffeecolombia
+            </h2>
+            <p className="text-sm text-[#122C9B]/60 font-light">
+              Vive el día a día de Jaguar Coffee: catas, tuestes, experiencias y el mejor café de especialidad colombiano.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="w-full max-w-[400px] mx-auto aspect-[9/16] rounded-2xl overflow-hidden border border-[#122C9B]/10 shadow-md">
+              <iframe
+                src="https://www.instagram.com/reel/C7HkE3RLZb3/embed/"
+                className="w-full h-full"
+                frameBorder="0"
+                scrolling="no"
+                allowTransparency
+                title="Jaguar Coffee Instagram Reel"
+              />
+            </div>
+            <div className="w-full max-w-[400px] mx-auto aspect-[9/16] rounded-2xl overflow-hidden border border-[#122C9B]/10 shadow-md">
+              <iframe
+                src="https://www.instagram.com/p/DZP3PQfRFnj/embed/"
+                className="w-full h-full"
+                frameBorder="0"
+                scrolling="no"
+                allowTransparency
+                title="Experiencia de Catación Jaguar Coffee"
+              />
+            </div>
+          </div>
+          <div className="text-center mt-6">
+            <a
+              href="https://www.instagram.com/jaguarcoffeecolombia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white text-sm font-bold rounded-2xl transition-colors"
+            >
+              <Instagram className="w-4 h-4" />
+              <span>Seguir en Instagram</span>
+            </a>
+          </div>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Users, Award, ShieldCheck, CheckCircle2, Loader2, MapPin, Coffee, Flame, Bike, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Award, ShieldCheck, CheckCircle2, Loader2, MapPin, Coffee, Flame, Bike, ChevronLeft, ChevronRight, MessageCircle, Instagram } from 'lucide-react';
 import { Experience } from '../types';
 import axios from 'axios';
 
@@ -186,6 +186,28 @@ export default function ExperienciaDetail() {
             </p>
           </div>
 
+          {slug === 'catacion' && (
+            <div className="space-y-4">
+              <h3 className="font-display text-lg font-bold text-[#122C9B] flex items-center gap-2">
+                <Instagram className="w-5 h-5 text-[#FFA42C]" />
+                <span>Así vivimos la cata</span>
+              </h3>
+              <div className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden border border-[#122C9B]/10 shadow-md">
+                <iframe
+                  src="https://www.instagram.com/p/DZP3PQfRFnj/embed/"
+                  className="w-full h-full"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowTransparency
+                  title="Experiencia de Catación Jaguar Coffee"
+                />
+              </div>
+              <p className="text-xs text-[#122C9B]/60 font-light">
+                Mira un resumen de nuestra experiencia de catación guiada en Instagram.
+              </p>
+            </div>
+          )}
+
           {experience.detalles_incluidos && experience.detalles_incluidos.length > 0 && (
             <div className="p-6 bg-white border border-[#122C9B]/10 rounded-2xl space-y-3">
               <h4 className="text-sm font-bold text-[#122C9B] uppercase font-mono tracking-wider flex items-center gap-2">
@@ -206,10 +228,18 @@ export default function ExperienciaDetail() {
           <div className="p-5 bg-[#FFA42C]/5 border border-[#FFA42C]/20 rounded-2xl space-y-2">
             <h4 className="text-xs font-bold text-[#122C9B] uppercase font-mono tracking-wider">Recomendaciones</h4>
             <ul className="text-xs text-[#122C9B]/60 space-y-1.5 list-disc pl-4 font-light">
-              <li>Llegar 10 minutos antes para el registro.</li>
-              <li>No requiere conocimientos previos, nuestros instructores le guiarán paso a paso.</li>
-              <li>Recomendamos no usar fragancias densas para apreciar los aromas del café.</li>
-              <li>Usar ropa cómoda y calzado apropiado para caminatas si aplica.</li>
+              {experience.recomendaciones && experience.recomendaciones.length > 0 ? (
+                experience.recomendaciones.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))
+              ) : (
+                <>
+                  <li>Llegar 10 minutos antes para el registro.</li>
+                  <li>No requiere conocimientos previos, nuestros instructores le guiarán paso a paso.</li>
+                  <li>Recomendamos no usar fragancias densas para apreciar los aromas del café.</li>
+                  <li>Usar ropa cómoda y calzado apropiado para caminatas si aplica.</li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -256,13 +286,18 @@ export default function ExperienciaDetail() {
 
             <div className="space-y-4">
               <h4 className="text-xs font-bold font-mono tracking-wider text-[#122C9B]/60 uppercase text-center">
-                Reservar a través de Booking.com
+                Reservar por WhatsApp
               </h4>
-              
-              <div
-                className="booking-widget-container"
-                dangerouslySetInnerHTML={{ __html: experience.booking_widget || '' }}
-              />
+
+              <a
+                href={`https://wa.me/573157307016?text=${encodeURIComponent(`Hola Jaguar Coffee, quiero reservar la experiencia: ${experience.nombre}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-xl text-sm font-bold transition-all"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Reservar ahora</span>
+              </a>
             </div>
 
             <hr className="border-[#122C9B]/10" />
@@ -270,7 +305,7 @@ export default function ExperienciaDetail() {
             <div className="flex items-start gap-3 text-xs text-[#122C9B]/60 leading-relaxed">
               <ShieldCheck className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
               <span>
-                Garantía oficial Booking.com. Cancelación gratuita hasta con 24 horas de antelación. Mesa de asistencia Jaguar Coffee disponible.
+                Un asesor de Jaguar Coffee te confirmará disponibilidad, te ayudará a separar tu fecha y resolverá cualquier duda antes de tu experiencia.
               </span>
             </div>
 

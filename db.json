@@ -115,11 +115,11 @@
     {
       "id": "exp_1",
       "slug": "catacion",
-      "nombre": "Catación de Café de Especialidad",
-      "descripcion": "Aprende a identificar notas, aromas, acidez y cuerpo del café. Sesión guiada por catadores certificados Q-Grader con protocolos SCA. Descubrirás el fascinante mundo de los descriptores sensoriales del café colombiano, desde las frutas rojas hasta los chocolates complejos.",
-      "duracion_min": 90,
-      "precio": 85000,
-      "capacidad_max": 8,
+      "nombre": "Cata de Cafés de Especialidad",
+      "descripcion": "Descubre los matices y perfiles sensoriales de los mejores cafés colombianos. Durante esta experiencia, los participantes degustarán hasta cinco variedades de café de especialidad 100% colombiano en una sesión guiada por nuestros baristas. Aprenderán a identificar aromas, sabores, niveles de acidez, cuerpo y características únicas de cada origen.",
+      "duracion_min": 45,
+      "precio": 90000,
+      "capacidad_max": 10,
       "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp",
       "imagenes": [
         "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp",
@@ -128,17 +128,23 @@
         "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800"
       ],
       "activo": true,
-      "detalles_incluidos": ["5 varietales para cata", "Copa SCA oficial", "Material de cata SCA", "Certificado de participación"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva tu Cata de Café</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Sesión guiada por catadores Q-Grader. Duración: 90 minutos.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
+      "detalles_incluidos": [
+        "Degustación de hasta 5 variedades de café de especialidad 100% colombiano",
+        "Sesión guiada por nuestros baristas",
+        "Identificación de aromas, sabores, acidez y cuerpo",
+        "Características únicas de cada origen",
+        "Certificado de participación"
+      ],
+      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva tu Cata de Café</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Sesión guiada por nuestros baristas. Duración: 45 minutos.</p><button onclick=\"window.open('https://wa.me/573157307016?text=Hola%2C%20quiero%20reservar%20una%20experiencia%20en%20Jaguar%20Coffee','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar por WhatsApp</button></div>"
     },
     {
       "id": "exp_2",
-      "slug": "barismo",
-      "nombre": "Taller de Barismo",
-      "descripcion": "Domina el arte del espresso perfecto, lances de leche y latte art. Practica con máquinas profesionales bajo la guía de instructores certificados. Aprenderás a controlar la molienda, dosis, tamping y extracción para lograr el tiro perfecto.",
-      "duracion_min": 120,
-      "precio": 120000,
-      "capacidad_max": 6,
+      "slug": "metodos-de-preparacion",
+      "nombre": "Métodos de Preparación",
+      "descripcion": "Convierte la preparación del café en un verdadero ritual. Aprende a preparar café utilizando diferentes métodos de extracción como Prensa Francesa, Aeropress, V60 y otros. Además, conocerás las diferencias entre las bebidas derivadas del espresso y descubrirás cómo obtener mejores resultados en casa mediante técnicas simples y efectivas.",
+      "duracion_min": 45,
+      "precio": 90000,
+      "capacidad_max": 10,
       "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-filtrados-685x1024.webp",
       "imagenes": [
         "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-filtrados-685x1024.webp",
@@ -147,17 +153,23 @@
         "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=800"
       ],
       "activo": true,
-      "detalles_incluidos": ["Práctica en máquina espresso", "Latte art básico", "Copa SCA oficial", "Certificado SCA", "Kit de barista"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Taller de Barismo</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Domina el espresso y latte art. Duración: 2 horas.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
+      "detalles_incluidos": [
+        "Métodos Prensa Francesa, Aeropress, V60 y otros",
+        "Diferencias entre bebidas derivadas del espresso",
+        "Técnicas para preparar café en casa",
+        "Material de apoyo",
+        "Certificado de participación"
+      ],
+      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Métodos de Preparación</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Convierte la preparación del café en un ritual. Duración: 45 minutos.</p><button onclick=\"window.open('https://wa.me/573157307016?text=Hola%2C%20quiero%20reservar%20una%20experiencia%20en%20Jaguar%20Coffee','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar por WhatsApp</button></div>"
     },
     {
       "id": "exp_3",
       "slug": "tueste",
-      "nombre": "Experiencia de Tostión",
-      "descripcion": "Descubre el proceso de tueste del café verde al grano tostado. Controla curvas de temperatura y aprende a desarrollar perfiles de sabor únicos. Una experiencia práctica donde tú mismo tuestes tu propia bolsa de café para llevar.",
-      "duracion_min": 90,
-      "precio": 95000,
-      "capacidad_max": 6,
+      "nombre": "Experiencia de Tueste",
+      "descripcion": "Conecta con el corazón del café. Conoce de primera mano el proceso de transformación del grano verde al café tostado. Descubrirás los factores que influyen en el desarrollo de aromas, sabores y perfiles de taza, comprendiendo cómo el tueste impacta la calidad final del café.",
+      "duracion_min": 45,
+      "precio": 115000,
+      "capacidad_max": 10,
       "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-tueste-685x1024.webp",
       "imagenes": [
         "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-tueste-685x1024.webp",
@@ -166,55 +178,48 @@
         "https://images.unsplash.com/photo-1504630083234-14187a9df0f5?auto=format&fit=crop&q=80&w=800"
       ],
       "activo": true,
-      "detalles_incluidos": ["Control de curvas de tueste", "Tostión personalizada", "200g de tu café tostado", "Guía de perfiles", "Certificado"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Experiencia de Tueste</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Tuesta tu propio café. Duración: 90 minutos.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
+      "detalles_incluidos": [
+        "Proceso de transformación del grano verde al tostado",
+        "Factores que influyen en aromas y sabores",
+        "Perfiles de taza y su relación con el tueste",
+        "Práctica guiada",
+        "Certificado de participación"
+      ],
+      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Experiencia de Tueste</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Conecta con el corazón del café. Duración: 45 minutos.</p><button onclick=\"window.open('https://wa.me/573157307016?text=Hola%2C%20quiero%20reservar%20una%20experiencia%20en%20Jaguar%20Coffee','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar por WhatsApp</button></div>"
     },
     {
       "id": "exp_4",
-      "slug": "coffee-tour",
-      "nombre": "Coffee Tour — Finca y Beneficio",
-      "descripcion": "Recorre los cafetales, conoce el proceso de beneficio y participa en la cosecha. Una inmersión completa en el origen del café. Descubrirás cómo el terroir, la altitud y el trabajo artesanal definen el sabor de cada taza.",
+      "slug": "experiencia-completa",
+      "nombre": "Experiencia Completa Jaguar Coffee",
+      "descripcion": "La experiencia definitiva para los amantes del café. Incluye Cata de Cafés de Especialidad, Métodos de Preparación y Experiencia de Tueste. Una inmersión completa para conocer cada etapa del viaje del café, desde la degustación hasta la transformación del grano.",
       "duracion_min": 180,
-      "precio": 150000,
+      "precio": 200000,
       "capacidad_max": 10,
-      "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp",
+      "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp",
       "imagenes": [
-        "https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp",
-        "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1524350876685-274059332603?auto=format&fit=crop&q=80&w=800"
+        "https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp",
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800"
       ],
       "activo": true,
-      "detalles_incluidos": ["Tour por cafetales", "Beneficio húmedo", "Almuerzo incluido", "Degustación en finca", "Transporte ida y vuelta"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Coffee Tour</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Inmersión completa en el origen. Duración: 3 horas.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
+      "detalles_incluidos": [
+        "Cata de Cafés de Especialidad",
+        "Métodos de Preparación",
+        "Experiencia de Tueste",
+        "Inmersión completa en el mundo del café",
+        "Certificado de participación"
+      ],
+      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva la Experiencia Completa</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">La experiencia definitiva para amantes del café. Duración: 3 horas.</p><button onclick=\"window.open('https://wa.me/573157307016?text=Hola%2C%20quiero%20reservar%20una%20experiencia%20en%20Jaguar%20Coffee','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar por WhatsApp</button></div>"
     },
     {
       "id": "exp_5",
-      "slug": "glamping",
-      "nombre": "Glamping entre Cafetales",
-      "descripcion": "Vive una noche única en nuestras fincas cafeteras con alojamiento glamping. Despierta entre cafetales con una taza de café de origen preparada en el sitio. Una experiencia de desconexión total en la naturaleza.",
-      "duracion_min": 1440,
-      "precio": 350000,
-      "capacidad_max": 4,
-      "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp",
-      "imagenes": [
-        "https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1546548970-71785318a17b?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=800"
-      ],
-      "activo": true,
-      "detalles_incluidos": ["Alojamiento glamping premium", "Cena campestre", "Desayuno con café de origen", "Tour matutino", "Kit de café para llevar"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Glamping</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Noche única entre cafetales. Capacidad máx 4 personas.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
-    },
-    {
-      "id": "exp_6",
       "slug": "scooter-tour",
-      "nombre": "Scooter Tour — Ruta Histórica",
-      "descripcion": "Recorre en scooter eléctrico la ruta histórica del café en Colombia. Descubre haciendas coloniales, miradores naturales y pequeños pueblos cafeteros. Una aventura sobre dos ruedas que combina adrenalina y cultura cafetera.",
-      "duracion_min": 240,
-      "precio": 180000,
-      "capacidad_max": 8,
+      "nombre": "Scooter Tour — Centro Histórico de Bogotá",
+      "descripcion": "Recorrido guiado en patineta eléctrica por el Centro Histórico de Bogotá. Con una duración aproximada de 1 hora y 45 minutos a 2 horas y un máximo de 7 pasajeros por recorrido, esta experiencia combina cultura, historia y diversión sobre dos ruedas, acompañada de un guía profesional y todo el equipo de seguridad.",
+      "duracion_min": 120,
+      "precio": 65000,
+      "capacidad_max": 7,
       "imagen_url": "https://cafejaguar.com/wp-content/uploads/2026/01/tour-historico-en-scooter-685x1024.webp",
       "imagenes": [
         "https://cafejaguar.com/wp-content/uploads/2026/01/tour-historico-en-scooter-685x1024.webp",
@@ -223,8 +228,20 @@
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=800"
       ],
       "activo": true,
-      "detalles_incluidos": ["Scooter eléctrico incluido", "Casco y equipo", "Paradas patrimoniales", "Almuerzo típico", "Seguro de aventura"],
-      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Scooter Tour</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Ruta histórica en scooter. Duración: 4 horas.</p><button onclick=\"window.open('https://www.booking.com/experiences','_blank')\" class=\"w-full py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar en Booking.com</button></div>"
+      "detalles_incluidos": [
+        "Recorrido en patineta eléctrica por el Centro Histórico de Bogotá",
+        "Duración aproximada 1h 45min a 2h",
+        "Máximo 7 pasajeros por recorrido",
+        "Guía profesional bilingüe disponible",
+        "Equipo de seguridad incluido"
+      ],
+      "recomendaciones": [
+        "Llegar 10 minutos antes del inicio",
+        "Traer documento de identidad para afiliación al seguro",
+        "Firmar consentimiento informado antes del tour",
+        "Las propinas son voluntarias y corresponden al guía"
+      ],
+      "booking_widget": "<div class=\"p-6 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-2xl max-w-md mx-auto text-center\"><h4 class=\"text-lg font-bold text-[#122C9B] mb-2\">Reserva Scooter Tour</h4><p class=\"text-sm text-[#122C9B]/60 mb-4\">Recorrido guiado por el Centro Histórico de Bogotá. Máximo 7 pasajeros.</p><a href=\"/contacto\" class=\"w-full block py-3 bg-[#122C9B] hover:bg-[#FFA42C] text-white rounded-xl font-semibold transition-all\">Reservar directamente</a></div>"
     }
   ],
   "haciendas": [
@@ -277,7 +294,7 @@
     {
       "id": "slide_3",
       "title": "Experiencias\nde Specialty",
-      "subtitle": "Catación, barismo, tostión, coffee tour, glamping y scooter tour. Vive la tradición cafeteramente.",
+      "subtitle": "Cata, métodos de preparación, tueste, experiencia completa y scooter tour. Vive la tradición cafetera.",
       "badge": "Vive el Café",
       "buttonText": "Reservar Experiencia",
       "buttonLink": "/experiencias",
@@ -303,5 +320,6 @@
   ],
   "orders": [],
   "contactMessages": [],
+  "reservations": [],
   "loginAttempts": {}
 }

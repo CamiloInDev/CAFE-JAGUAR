@@ -1,66 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, Users, ChevronRight, Award } from 'lucide-react';
+import { Calendar, Clock, Users, ChevronRight, Award, MessageCircle } from 'lucide-react';
 
 export default function Experiencias() {
   const experiences = [
     {
       id: 1,
-      nombre: 'Catación de Café de Especialidad',
-      descripcion: 'Aprende a identificar notas, aromas, acidez y cuerpo del café. Sesión guiada por catadores certificados Q-Grader con protocolos SCA.',
-      duracion_min: 90,
-      capacidad_max: 8,
-      precio: 85000,
+      nombre: 'Cata de Cafés de Especialidad',
+      descripcion: 'Descubre los matices y perfiles sensoriales de los mejores cafés colombianos en una sesión guiada por nuestros baristas.',
+      duracion_min: 45,
+      capacidad_max: 10,
+      precio: 90000,
       imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp',
       slug: 'catacion'
     },
     {
       id: 2,
-      nombre: 'Taller de Barismo',
-      descripcion: 'Domina el arte del espresso perfecto, lances de leche y latte art. Practica con máquinas profesionales bajo la guía de instructores certificados.',
-      duracion_min: 120,
-      capacidad_max: 6,
-      precio: 120000,
+      nombre: 'Métodos de Preparación',
+      descripcion: 'Convierte la preparación del café en un verdadero ritual con métodos como Prensa Francesa, Aeropress y V60.',
+      duracion_min: 45,
+      capacidad_max: 10,
+      precio: 90000,
       imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-filtrados-685x1024.webp',
-      slug: 'barismo'
+      slug: 'metodos-de-preparacion'
     },
     {
       id: 3,
-      nombre: 'Experiencia de Tostión',
-      descripcion: 'Descubre el proceso de tueste del café verde al grano tostado. Controla curvas de temperatura y aprende a desarrollar perfiles de sabor únicos.',
-      duracion_min: 90,
-      capacidad_max: 6,
-      precio: 95000,
+      nombre: 'Experiencia de Tueste',
+      descripcion: 'Conecta con el corazón del café y conoce el proceso de transformación del grano verde al café tostado.',
+      duracion_min: 45,
+      capacidad_max: 10,
+      precio: 115000,
       imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-tueste-685x1024.webp',
       slug: 'tueste'
     },
     {
       id: 4,
-      nombre: 'Coffee Tour — Finca y Beneficio',
-      descripcion: 'Recorre los cafetales, conoce el proceso de beneficio y participar en la cosecha. Una inmersión completa en el origen del café.',
+      nombre: 'Experiencia Completa Jaguar Coffee',
+      descripcion: 'La experiencia definitiva para los amantes del café: incluye Cata, Métodos de Preparación y Tueste.',
       duracion_min: 180,
       capacidad_max: 10,
-      precio: 150000,
-      imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp',
-      slug: 'coffee-tour'
+      precio: 200000,
+      imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Experiencia-de-cataciones-684x1024.webp',
+      slug: 'experiencia-completa'
     },
     {
       id: 5,
-      nombre: 'Glamping entre Cafetales',
-      descripcion: 'Vive una noche única en nuestras fincas cafeteras con alojamiento glamping. Despierta entre cafetales con una taza de café de origen preparada en el sitio.',
-      duracion_min: 1440,
-      capacidad_max: 4,
-      precio: 350000,
-      imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/Tour-cafetero-684x1024.webp',
-      slug: 'glamping'
-    },
-    {
-      id: 6,
-      nombre: 'Scooter Tour — Ruta Histórica',
-      descripcion: 'Recorre en scooter eléctrico la ruta histórica del café en Colombia. Descubre haciendas coloniales, miradores naturales y pequeños pueblos cafeteros.',
-      duracion_min: 240,
-      capacidad_max: 8,
-      precio: 180000,
+      nombre: 'Scooter Tour — Centro Histórico de Bogotá',
+      descripcion: 'Recorrido guiado en patineta eléctrica por el Centro Histórico de Bogotá, con guía profesional y equipo de seguridad.',
+      duracion_min: 120,
+      capacidad_max: 7,
+      precio: 65000,
       imagen_url: 'https://cafejaguar.com/wp-content/uploads/2026/01/tour-historico-en-scooter-685x1024.webp',
       slug: 'scooter-tour'
     }
@@ -74,10 +64,10 @@ export default function Experiencias() {
           Línea Experiencias
         </span>
         <h1 className="font-display text-4xl font-extrabold text-[#122C9B] tracking-tight">
-          Experiencias Dedicadas al Café
+          Experiencias Sensoriales Jaguar Coffee
         </h1>
         <p className="text-[#122C9B]/60 font-light text-base leading-relaxed">
-          Conecta con el origen, descubre el sabor, vive la tradición. Todas las experiencias incluyen certificado de participación y material de apoyo.
+          Vive el café más allá de una taza. En Jaguar Coffee hemos diseñado experiencias inmersivas para que conozcas, disfrutes y comprendas el verdadero mundo del café de especialidad colombiano, guiadas por expertos y pensadas para conectar con el origen, los aromas, los sabores y los procesos que hacen único al café.
         </p>
       </div>
 
@@ -132,12 +122,12 @@ export default function Experiencias() {
 
       <div className="p-6 bg-[#122C9B]/5 border border-[#122C9B]/10 rounded-2xl max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
         <span className="p-3 bg-white text-[#122C9B] border border-[#122C9B]/10 rounded-xl inline-block shadow-sm">
-          <Calendar className="w-6 h-6" />
+          <MessageCircle className="w-6 h-6" />
         </span>
         <div className="space-y-1">
-          <h4 className="text-sm font-bold text-[#122C9B]">Reservas a través de Booking.com</h4>
+          <h4 className="text-sm font-bold text-[#122C9B]">Reservas por WhatsApp</h4>
           <p className="text-xs text-[#122C9B]/60 leading-normal font-light">
-            Al presionar reservar, se cargará el widget dinámico oficial de <strong>Booking.com Experiences</strong> para que elijas tu fecha preferida.
+            Al presionar reservar, serás redirigido a nuestro canal de WhatsApp donde un asesor te confirmará disponibilidad y te ayudará a separar tu fecha.
           </p>
         </div>
       </div>

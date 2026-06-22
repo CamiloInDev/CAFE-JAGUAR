@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, HelpCircle, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, HelpCircle, CheckCircle, Clock, Instagram, Facebook } from 'lucide-react';
 import axios from 'axios';
 
 export default function Contacto() {
@@ -73,25 +73,64 @@ export default function Contacto() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#122C9B] font-mono uppercase">Dirección</h4>
-                  <p className="text-xs text-[#122C9B]/60 mt-0.5 font-light">Cra 4 # 12 – 78, La Candelaria, Bogotá, Colombia</p>
+                  <h4 className="text-sm font-bold text-[#122C9B] font-mono uppercase">Dirección</h4>
+                  <p className="text-sm text-[#122C9B]/60 mt-0.5 font-light">Cra 4 # 12 – 78, La Candelaria, Bogotá, Colombia</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#122C9B] font-mono uppercase">Correo electrónico</h4>
-                  <p className="text-xs text-[#122C9B]/60 mt-0.5 font-light">cafejaguarcolombia@gmail.com</p>
+                  <h4 className="text-sm font-bold text-[#122C9B] font-mono uppercase">Correo electrónico</h4>
+                  <a href="mailto:support.coffe.jaguar@gmail.com" className="text-sm text-[#122C9B]/60 mt-0.5 font-light hover:text-[#FFA42C] transition-colors break-all">support.coffe.jaguar@gmail.com</a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-[#FFA42C] flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#122C9B] font-mono uppercase">Canal de Whatsapp</h4>
-                  <p className="text-xs text-[#122C9B]/60 mt-0.5 font-light">(+57) 315 7307016</p>
+                  <h4 className="text-sm font-bold text-[#122C9B] font-mono uppercase">Canal de Whatsapp</h4>
+                  <p className="text-sm text-[#122C9B]/60 mt-0.5 font-light">(+57) 315 7307016</p>
                 </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-[#122C9B]/10 space-y-3">
+              <h4 className="text-sm font-bold text-[#122C9B] font-mono uppercase flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#FFA42C]" />
+                Horarios Casa Jaguar
+              </h4>
+              <ul className="text-sm text-[#122C9B]/60 font-light space-y-1">
+                <li><span className="font-semibold text-[#122C9B]/80">Lun – Mié:</span> 9:00 a.m. – 7:00 p.m.</li>
+                <li><span className="font-semibold text-[#122C9B]/80">Jue:</span> 9:00 a.m. – 8:00 p.m.</li>
+                <li><span className="font-semibold text-[#122C9B]/80">Vie – Sáb:</span> 8:00 a.m. – 9:00 p.m.</li>
+                <li><span className="font-semibold text-[#122C9B]/80">Domingo normal:</span> 10:00 a.m. – 7:00 p.m.</li>
+                <li><span className="font-semibold text-[#122C9B]/80">Domingo con lunes festivo:</span> 10:00 a.m. – 9:00 p.m.</li>
+                <li><span className="font-semibold text-[#122C9B]/80">Lunes festivo:</span> 10:00 a.m. – 7:00 p.m.</li>
+              </ul>
+            </div>
+
+            <div className="pt-4 border-t border-[#122C9B]/10 space-y-3">
+              <h4 className="text-sm font-bold text-[#122C9B] font-mono uppercase">Síguenos</h4>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://www.instagram.com/jaguarcoffeecolombia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-lg text-sm font-semibold text-[#122C9B] hover:bg-[#122C9B] hover:text-white transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href="https://www.facebook.com/share/1H51icMuVf/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#FFF9F5] border border-[#122C9B]/20 rounded-lg text-sm font-semibold text-[#122C9B] hover:bg-[#122C9B] hover:text-white transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                  <span>Facebook</span>
+                </a>
               </div>
             </div>
           </div>
@@ -100,8 +139,8 @@ export default function Contacto() {
           <div className="p-5 bg-[#122C9B]/5 border border-[#122C9B]/10 rounded-xl flex items-start gap-3 leading-relaxed">
             <HelpCircle className="w-5 h-5 text-[#FFA42C] flex-shrink-0" />
             <div>
-              <h4 className="text-xs font-bold text-[#122C9B] uppercase tracking-wide font-mono">¿Eres Mayorista?</h4>
-              <p className="text-xs text-[#122C9B]/60 mt-1 font-light">
+              <h4 className="text-sm font-bold text-[#122C9B] uppercase tracking-wide font-mono">¿Eres Mayorista?</h4>
+              <p className="text-sm text-[#122C9B]/60 mt-1 font-light">
                 Brindamos tarifas especiales de saco verde o grano tostado para cafeterías, corporaciones y oficinas a nivel nacional. Escríbenos con el asunto "Socio Mayorista".
               </p>
             </div>

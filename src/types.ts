@@ -39,6 +39,7 @@ export interface Experience {
   imagenes: string[];
   activo: boolean;
   detalles_incluidos?: string[];
+  recomendaciones?: string[];
 }
 
 export interface Hacienda {
@@ -58,6 +59,25 @@ export interface CartItem {
 }
 
 export type OrderStatus = 'pendiente' | 'pagado' | 'enviado' | 'entregado' | 'cancelado';
+
+export type ReservationType = 'academia' | 'estadia';
+export type ReservationStatus = 'pendiente' | 'confirmada' | 'cancelada';
+
+export interface Reservation {
+  id: string;
+  tipo: ReservationType;
+  item_id: string;
+  item_nombre: string;
+  item_slug: string;
+  fecha: string; // YYYY-MM-DD
+  nombre: string;
+  email: string;
+  telefono: string;
+  cantidad_personas: number;
+  estado: ReservationStatus;
+  notas?: string;
+  created_at: string;
+}
 
 export interface OrderItem {
   product_id: string;

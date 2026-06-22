@@ -19,6 +19,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Productos', path: '/tienda' },
+    { name: 'Nuestra Planta', path: '/nuestra-planta' },
     { name: 'Experiencias', path: '/experiencias' },
     { name: 'Estadías', path: '/turismo' },
     { name: 'Academia', path: '/academia' },
@@ -30,7 +31,7 @@ export default function Navbar() {
 
   return (
     <nav id="app-navbar" className="bg-[#FFF9F5]/95 backdrop-blur-md border-b border-[#122C9B]/10 sticky top-0 z-50">
-      <div className="max-w-[90rem] mx-auto px-8 sm:px-12 lg:px-20">
+      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20">
         <div className="flex justify-between h-20">
           {/* Logo Brand */}
           <div className="flex items-center">
@@ -44,12 +45,12 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex flex-1 items-center justify-center space-x-14">
+          <div className="hidden lg:flex flex-1 items-center justify-center space-x-5 xl:space-x-8 2xl:space-x-12">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-sans text-xs font-bold uppercase tracking-widest transition-colors pb-1 mt-[2px] ${
+                className={`font-sans text-[10px] xl:text-xs font-bold uppercase tracking-wider xl:tracking-widest transition-colors pb-1 mt-[2px] whitespace-nowrap ${
                   isActive(link.path) 
                     ? 'text-[#FFA42C] border-b-2 border-[#FFA42C]' 
                     : 'text-[#122C9B]/75 hover:text-[#3D5FC9]'
@@ -61,7 +62,7 @@ export default function Navbar() {
           </div>
 
           {/* Actions Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-8">
             {/* Shopping Cart Trigger */}
             <Link
               to="/carrito"
@@ -124,7 +125,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-4">
+          <div className="flex lg:hidden items-center space-x-4">
             <Link
               to="/carrito"
               className="relative p-2.5 text-[#122C9B] bg-[#122C9B]/5 rounded-full"
@@ -149,7 +150,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div id="mobile-menu" className="md:hidden bg-[#FFF9F5] border-t border-[#122C9B]/10 py-4 px-6 space-y-4 shadow-inner">
+        <div id="mobile-menu" className="lg:hidden bg-[#FFF9F5] border-t border-[#122C9B]/10 py-4 px-6 space-y-4 shadow-inner">
           <div className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <Link

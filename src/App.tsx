@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import PrivacyConsent from './components/PrivacyConsent';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import Home from './pages/Home';
@@ -19,6 +20,7 @@ import GlampingDetail from './pages/GlampingDetail';
 import EcoHostalDetail from './pages/EcoHostalDetail';
 import Academia from './pages/Academia';
 import CasaJaguar from './pages/CasaJaguar';
+import NuestraPlanta from './pages/NuestraPlanta';
 import Contacto from './pages/Contacto';
 import Privacidad from './pages/Privacidad';
 import Login from './pages/Login';
@@ -54,6 +56,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ToastContainer />
       <div className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
         <Navbar />
@@ -72,6 +75,7 @@ export default function App() {
             <Route path="/turismo/eco-hostal" element={<EcoHostalDetail />} />
             <Route path="/academia" element={<Academia />} />
             <Route path="/casa-jaguar" element={<CasaJaguar />} />
+            <Route path="/nuestra-planta" element={<NuestraPlanta />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/privacidad" element={<Privacidad />} />
             

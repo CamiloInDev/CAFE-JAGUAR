@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Plus, Trash2, Edit2, ShoppingBag, Landmark, MessageSquare, ClipboardList, PenTool, CheckCircle, RefreshCw } from 'lucide-react';
-import { Product, Order, Experience, ContactMessage, CoffeeCategory, OrderStatus, CarouselSlide } from '../types';
+import { ShieldCheck, Plus, Trash2, Edit2, ShoppingBag, Landmark, MessageSquare, ClipboardList, PenTool, CheckCircle, RefreshCw, Calendar } from 'lucide-react';
+import { Product, Order, Experience, ContactMessage, CoffeeCategory, OrderStatus, CarouselSlide, Reservation } from '../types';
 import axios from 'axios';
 
 export default function Admin() {
-  const { user } = useAuthStore();
+  const { user, loading: authLoading } = useAuthStore();
   const navigate = useNavigate();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
-  
-  const [activeSegment, setActiveSegment] = useState<'productos' | 'ordenes' | 'mensajes' | 'slides'>('productos');
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+
+  const [activeSegment, setActiveSegment] = useState<'productos' | 'ordenes' | 'mensajes' | 'slides' | 'reservas'>('productos');
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [isEditingSlide, setIsEditingSlide] = useState(false);
   const [editingSlideId, setEditingSlideId] = useState<string | null>(null);
@@ -30,6 +31,15 @@ export default function Admin() {
     activo: true
   });
   const [loading, setLoading] = useState(true);
+
+  if (authLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
+        <div className="w-10 h-10 border-4 border-[#FFA42C] border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-stone-500 text-sm">Verificando acceso...</p>
+      </div>
+    );
+  }
 
   // CRUD Product Form States
   const [isEditingProduct, setIsEditingProduct] = useState(false);
@@ -49,16 +59,18 @@ export default function Admin() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [pRes, oRes, mRes, sRes] = await Promise.all([
+      const [pRes, oRes, mRes, sRes, rRes] = await Promise.allSettled([
         axios.get('/api/productos'),
         axios.get('/api/ordenes-todas'),
         axios.get('/api/contacto'),
-        axios.get('/api/slides/all')
+        axios.get('/api/slides/all'),
+        axios.get('/api/reservas')
       ]);
-      setProducts(pRes.data);
-      setOrders(oRes.data);
-      setMessages(mRes.data);
-      setSlides(sRes.data);
+      if (pRes.status === 'fulfilled' && Array.isArray(pRes.value.data)) setProducts(pRes.value.data);
+      if (oRes.status === 'fulfilled' && Array.isArray(oRes.value.data)) setOrders(oRes.value.data);
+      if (mRes.status === 'fulfilled' && Array.isArray(mRes.value.data)) setMessages(mRes.value.data);
+      if (sRes.status === 'fulfilled' && Array.isArray(sRes.value.data)) setSlides(sRes.value.data);
+      if (rRes.status === 'fulfilled' && Array.isArray(rRes.value.data)) setReservations(rRes.value.data);
     } catch (err) {
       console.error('Error fetching admin data', err);
     } finally {
@@ -67,12 +79,13 @@ export default function Admin() {
   };
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user || user.rol !== 'admin') {
       navigate('/auth/login?returnUrl=/admin');
       return;
     }
     loadData();
-  }, [user, navigate]);
+  }, [user, authLoading, navigate]);
 
   const handleCreateProductClick = () => {
     setIsEditingProduct(true);
@@ -333,6 +346,14 @@ export default function Admin() {
           }`}
         >
           Banner Home
+        </button>
+        <button
+          onClick={() => { setActiveSegment('reservas'); setIsEditingProduct(false); setIsEditingSlide(false); }}
+          className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+            activeSegment === 'reservas' ? 'border-[#122C9B] text-[#122C9B] font-black' : 'border-transparent text-stone-500 hover:text-[#122C9B]'
+          }`}
+        >
+          Reservas ({reservations.length})
         </button>
       </div>
 
@@ -871,6 +892,110 @@ export default function Admin() {
                 </div>
               )}
             </>
+          )}
+
+          {/* SEGMENT 5: RESERVAS / CALENDARIO */}
+          {activeSegment === 'reservas' && (
+            <div className="bg-white border border-stone-200 rounded-2xl p-6 shadow space-y-6">
+              <div className="flex items-center justify-between border-b border-stone-100 pb-4">
+                <h3 className="font-display text-lg font-bold text-stone-900 flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-[#FFA42C]" />
+                  <span>Solicitudes de Reserva</span>
+                </h3>
+                <button
+                  onClick={loadData}
+                  className="p-2 hover:bg-stone-100 rounded-lg transition-colors"
+                  title="Recargar"
+                >
+                  <RefreshCw className="w-4 h-4 text-stone-500" />
+                </button>
+              </div>
+
+              {reservations.length === 0 ? (
+                <div className="text-center py-10 text-stone-500">
+                  <Calendar className="w-10 h-10 mx-auto mb-3 text-stone-300" />
+                  <p className="text-sm">No hay solicitudes de reserva aún.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="text-stone-500 border-b border-stone-100">
+                        <th className="text-left py-2 px-3 font-mono uppercase">Fecha</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Tipo / Item</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Solicitante</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Contacto</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Personas</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Estado</th>
+                        <th className="text-left py-2 px-3 font-mono uppercase">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {reservations.map((res) => (
+                        <tr key={res.id} className="border-b border-stone-50 hover:bg-stone-50">
+                          <td className="py-3 px-3 font-medium">{new Date(res.fecha + 'T00:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                          <td className="py-3 px-3">
+                            <span className="block font-semibold text-stone-700">{res.item_nombre}</span>
+                            <span className="text-stone-400 uppercase text-[10px]">{res.tipo}</span>
+                          </td>
+                          <td className="py-3 px-3">{res.nombre}</td>
+                          <td className="py-3 px-3">
+                            <span className="block">{res.telefono}</span>
+                            <span className="text-stone-400">{res.email}</span>
+                          </td>
+                          <td className="py-3 px-3">{res.cantidad_personas}</td>
+                          <td className="py-3 px-3">
+                            <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
+                              res.estado === 'confirmada' ? 'bg-emerald-100 text-emerald-700' :
+                              res.estado === 'cancelada' ? 'bg-rose-100 text-rose-700' :
+                              'bg-amber-100 text-amber-700'
+                            }`}>
+                              {res.estado}
+                            </span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <div className="flex items-center gap-2">
+                              {res.estado !== 'confirmada' && (
+                                <button
+                                  onClick={async () => {
+                                    try {
+                                      await axios.put(`/api/reservas/${res.id}/estado`, { estado: 'confirmada' });
+                                      loadData();
+                                    } catch (err) {
+                                      console.error(err);
+                                    }
+                                  }}
+                                  className="p-1.5 bg-emerald-100 text-emerald-700 rounded hover:bg-emerald-200 transition-colors"
+                                  title="Confirmar"
+                                >
+                                  <CheckCircle className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                              {res.estado !== 'cancelada' && (
+                                <button
+                                  onClick={async () => {
+                                    try {
+                                      await axios.put(`/api/reservas/${res.id}/estado`, { estado: 'cancelada' });
+                                      loadData();
+                                    } catch (err) {
+                                      console.error(err);
+                                    }
+                                  }}
+                                  className="p-1.5 bg-rose-100 text-rose-700 rounded hover:bg-rose-200 transition-colors"
+                                  title="Cancelar"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           )}
 
         </div>

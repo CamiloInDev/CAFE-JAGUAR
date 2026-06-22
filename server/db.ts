@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { Product, Experience, Hacienda, User, Order, ContactMessage, OrderStatus, OrderItem, CarouselSlide } from '../src/types';
+import { Product, Experience, Hacienda, User, Order, ContactMessage, OrderStatus, OrderItem, CarouselSlide, Reservation, ReservationStatus } from '../src/types';
 
 const LOG_FILE = path.join(process.cwd(), 'logs', 'server.log');
 
@@ -38,6 +38,7 @@ interface DatabaseSchema {
   orders: Order[];
   contactMessages: ContactMessage[];
   slides: CarouselSlide[];
+  reservations: Reservation[];
   loginAttempts: Record<string, LoginAttempt>;
 }
 
@@ -287,6 +288,7 @@ const INITIAL_DB: DatabaseSchema = {
   orders: [],
   contactMessages: [],
   slides: [],
+  reservations: [],
   loginAttempts: {}
 };
 
@@ -315,6 +317,10 @@ function readDb(): DatabaseSchema {
     }
     if (!data.loginAttempts) {
       data.loginAttempts = {};
+      needsWrite = true;
+    }
+    if (!data.reservations) {
+      data.reservations = [];
       needsWrite = true;
     }
     if (needsWrite) {
@@ -710,5 +716,49 @@ export const dbService = {
     const data = readDb();
     delete (data.loginAttempts || {})[email.toLowerCase()];
     writeDb(data);
+  },
+
+  // Reservations / Booking Calendar
+  createReservation(reservation: Omit<Reservation, 'id' | 'estado' | 'created_at'>) {
+    const data = readDb();
+    const newReservation: Reservation = {
+      ...reservation,
+      id: 'res_' + Date.now().toString(36),
+      estado: 'pendiente',
+      created_at: new Date().toISOString()
+    };
+    data.reservations.push(newReservation);
+    writeDb(data);
+    return newReservation;
+  },
+
+  getReservations(): Reservation[] {
+    return readDb().reservations.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  },
+
+  getReservationsByItem(tipo: Reservation['tipo'], item_id: string, from?: string, to?: string): Reservation[] {
+    return readDb().reservations.filter(r => {
+      if (r.tipo !== tipo || r.item_id !== item_id) return false;
+      if (r.estado === 'cancelada') return false;
+      if (from && r.fecha < from) return false;
+      if (to && r.fecha > to) return false;
+      return true;
+    });
+  },
+
+  getOccupiedDates(tipo: Reservation['tipo'], item_id: string): string[] {
+    const reservations = this.getReservationsByItem(tipo, item_id);
+    return [...new Set<string>(reservations.map(r => r.fecha))];
+  },
+
+  updateReservationState(id: string, estado: ReservationStatus) {
+    const data = readDb();
+    const idx = data.reservations.findIndex(r => r.id === id);
+    if (idx !== -1) {
+      data.reservations[idx].estado = estado;
+      writeDb(data);
+      return data.reservations[idx];
+    }
+    return null;
   }
 };

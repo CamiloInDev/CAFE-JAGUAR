@@ -16,6 +16,7 @@ import haciendaRoutes from './server/routes/haciendas';
 import contactRoutes from './server/routes/contact';
 import orderRoutes from './server/routes/orders';
 import slideRoutes from './server/routes/slides';
+import reservationRoutes from './server/routes/reservations';
 
 // -----------------------------------------------------------------------------
 // Global error handlers to catch ALL crashes
@@ -87,6 +88,7 @@ app.use('/api/haciendas', haciendaRoutes);
 app.use('/api/contacto', contactRoutes);
 app.use('/api/ordenes', orderRoutes);
 app.use('/api/slides', slideRoutes);
+app.use('/api/reservas', reservationRoutes);
 
 // -----------------------------------------------------------------------------
 // Global error handler

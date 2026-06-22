@@ -37,3 +37,4 @@ Thumbs.db
 # Configuración de agentes/opencode
 # -----------------------------------------------------------------------------
 .opencode/
+opencode.json
