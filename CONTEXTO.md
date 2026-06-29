@@ -682,12 +682,79 @@ En una SPA con React Router, el navegador conserva la posición del scroll al ca
 
 ---
 
+---
+
+## 🆕 Sesión: 29 Jun 2026 — Deploy Producción, Estadías Airbnb, Skills IA
+
+### 1. Fix: Content Security Policy (CSP) en Producción
+**Problema**: Helmet en producción bloqueaba:
+- Embeds de Instagram (`ERR_BLOCKED_BY_CSP`)
+- Imágenes de `cafejaguar.com` y `images.unsplash.com`
+- Fuente Krub de Google Fonts (`fonts.googleapis.com`, `fonts.gstatic.com`)
+**Solución**: CSP personalizado en `server.ts` con `frame-src`, `img-src`, `style-src`, `font-src` configurados para permitir estos orígenes.
+
+### 2. Limpieza: Eliminación de Referencias Google/Gemini
+- Eliminada dependencia `@google/genai` de `package.json`
+- Eliminada variable `GEMINI_API_KEY` de `env.ts`, `.env` y `.env.example`
+- Eliminada capability Gemini de `metadata.json`
+
+### 3. Despliegue en Coolify
+- Configuradas variables de entorno en Coolify (JWT_SECRET, WOMPI keys, APP_URL)
+- Ninguna variable requiere Buildtime — todas solo Runtime
+- App corriendo en producción ✅
+
+### 4. Actualización de Estadías — Glamping y ECO Hostal
+**Contexto**: El cliente entregó info oficial de Airbnb para las propiedades.
+
+**Glamping** (`src/pages/GlampingDetail.tsx`):
+- Nueva descripción con caminatas ecológicas, fogata, atardeceres, agro turismo
+- Badge **Pet Friendly** + features: parqueadero, WiFi, jardín
+- Google Maps: `maps.app.goo.gl/ekvGgp5soN9PfTr86`
+- Airbnb: `airbnb.es/h/jaguarglampibg`
+
+**ECO Hostal** (`src/pages/EcoHostalDetail.tsx`):
+- Ref. a Finca la Esperanza y 42 km de Bogotá
+- Google Maps link
+- Airbnb: `airbnb.es/h/jaguarhostal`
+
+**Turismo/Estadías** (`src/pages/Turismo.tsx`):
+- Cards rediseñadas con botón "Ver más" + botón directo "Airbnb"
+- Sección de ubicación con link a Google Maps
+
+**Sidebar de reservas rediseñado** (ambas páginas):
+- Tabs tipo botón: **Reserva directa** (calendario + WhatsApp) | **Airbnb** (redirección)
+- Por defecto muestra "Reserva directa"; al cambiar a Airbnb muestra info y botón
+
+### 5. Skills de IA Instaladas
+- `open-hax/opencode-skills` — 74 skills (testing-e2e, playwright, github-actions, git-workflow, etc.)
+- `playwright` desde `bobmatnyc/claude-mpm-skills` — E2E testing
+- `.agents/` y `skills-lock.json` agregados a `.gitignore`
+
+### Archivos modificados
+- `server.ts` — CSP personalizado para producción
+- `src/pages/GlampingDetail.tsx` — info cliente, Airbnb, Google Maps, pet friendly, tabs reserva
+- `src/pages/EcoHostalDetail.tsx` — Airbnb, Google Maps, tabs reserva
+- `src/pages/Turismo.tsx` — rediseño completo con enlaces Airbnb
+- `package.json` — eliminado `@google/genai`
+- `server/config/env.ts` — eliminado `GEMINI_API_KEY`
+- `.env` / `.env.example` — limpieza Gemini
+- `metadata.json` — limpieza Gemini
+- `.gitignore` — agregados `.agents/` y `skills-lock.json`
+
+### Verificación
+- `npm run lint` ✅ — TypeScript compila sin errores
+- Deploy en Coolify ✅ — app corriendo en producción
+- Instagram embeds funcionales ✅
+- Fuente Krub cargando correctamente ✅
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
-- Frontend: ✅ Página Nuestra Planta rediseñada; Navbar corregido; scroll al cambiar de página; skills locales configuradas
-- Deploy: 🟡 Pendiente configurar env vars en Coolify y redeployar
+- Frontend: ✅ Rediseño completo branding; Nuestra Planta; ScrollToTop; Estadías con Airbnb; tabs reserva
+- Backend: ✅ Modularizado con seguridad OWASP (Helmet, CORS, rate-limit, Zod)
+- Deploy: ✅ Producción en Coolify — `jaguar.getindev.com`
 - Pentesting: 🟡 Línea base establecida — pendiente comparativa tras deploy
-- Git: ✅ Cambios de FASE 2 y experiencias subidos al repo
+- Skills IA: ✅ 74+ skills instaladas (open-hax + playwright)
+- Git: ✅ Todos los cambios subidos al repo
