@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Coffee, TreePine, Sunrise, Moon, Users, Calendar, ArrowRight } from 'lucide-react';
+import { MapPin, Coffee, TreePine, Sunrise, Moon, Users, Calendar, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface Estadia {
   id: string;
@@ -9,18 +9,24 @@ interface Estadia {
   capacidad: number;
   precio: number;
   imagen_principal: string;
-  imagenes?: string[];
-  descripcion?: string;
+  airbnb_url: string;
+  descripcion_corta: string;
 }
+
+const AIRBNB_GLAMPING = 'https://www.airbnb.es/h/jaguarglampibg';
+const AIRBNB_HOSTAL = 'https://www.airbnb.es/h/jaguarhostal';
+const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ekvGgp5soN9PfTr86?g_st=aw';
 
 const estadias: Estadia[] = [
   {
     id: 'glamping-familiar',
     tipo: 'glamping',
-    nombre: 'Glamping Familiar',
+    nombre: 'Glamping Finca Cafetera',
     capacidad: 8,
     precio: 350000,
     imagen_principal: '/images/TURISMO/GLAMP1.webp',
+    airbnb_url: AIRBNB_GLAMPING,
+    descripcion_corta: 'Experiencia ecológica con fogata, atardeceres y caminatas entre cafetales.',
   },
   {
     id: 'eco-hostal',
@@ -29,34 +35,36 @@ const estadias: Estadia[] = [
     capacidad: 8,
     precio: 350000,
     imagen_principal: '/images/TURISMO/HOSTAL1.webp',
+    airbnb_url: AIRBNB_HOSTAL,
+    descripcion_corta: 'Alojamiento sostenible en Finca la Esperanza, rodeado de naturaleza y café.',
   },
 ];
 
 export default function Turismo() {
   return (
     <div id="turismo-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      
+
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#FFA42C]/10 text-[#FFA42C] border border-[#FFA42C]/20 rounded-full text-xs font-mono font-black tracking-widest uppercase">
           <Coffee className="w-4 h-4" />
-          Estadías
+          Estadías Cafeteras
         </span>
         <h1 className="font-sans text-4xl md:text-5xl font-extrabold text-[#122C9B] tracking-tighter uppercase leading-[0.9]">
-          Descubre un refugio natural<br />en el corazón de las montañas
+          Vive la montaña<br />en Finca la Esperanza
         </h1>
         <p className="text-[#122C9B]/70 text-sm max-w-2xl mx-auto leading-relaxed">
-          Un eco hotel y glamping donde el aroma del café recién tostado se mezcla con el aire puro y la tranquilidad del campo. Vive una experiencia auténtica en una finca cafetera tradicional.
+          Ubicados en Silvania, Cundinamarca — a solo 42 km de Bogotá. Disfruta de la tranquilidad del campo, el aroma del café y la calidez de nuestras montañas en un entorno pet friendly.
         </p>
       </div>
 
       {/* Description Blocks */}
       <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-8 space-y-4 shadow-sm">
         <p className="text-[#122C9B]/80 text-sm leading-relaxed">
-          Aquí, el descanso se conecta con la naturaleza. Disfruta de cómodas y exclusivas unidades de glamping, diseñadas para brindarte confort sin perder el encanto rústico del entorno. Despierta con el canto de las aves, recorre nuestros cultivos de café y conoce de cerca el proceso artesanal, desde la semilla hasta la taza.
+          Brindamos una experiencia ecológica de tranquilidad y agro turismo en medio de la naturaleza. Caminatas al aire libre, atardeceres inolvidables, fogata bajo las estrellas y la grandeza de nuestras montañas cafeteras te esperan. Parqueadero, jardín y WiFi gratuito incluidos.
         </p>
         <p className="text-[#122C9B]/60 text-xs font-medium">
-          Ya sea para una escapada romántica, un descanso en familia o una experiencia de conexión interior, nuestro eco hotel y glamping es el destino perfecto para desconectarte de la rutina y reconectarte con lo esencial.
+          Ya sea para una escapada romántica, un descanso en familia o una experiencia de conexión interior, nuestro glamping y ECO hostal son el destino perfecto para desconectarte de la rutina y reconectarte con lo esencial. ¡Trae a tu mascota!
         </p>
         <div className="flex items-center justify-center gap-4 pt-4 border-t border-[#122C9B]/10">
           <span className="flex items-center gap-2 text-[#FFA42C] text-sm font-bold">
@@ -74,31 +82,35 @@ export default function Turismo() {
       {/* Estadías Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {estadias.map((estadia) => (
-          <Link
+          <div
             key={estadia.id}
-            to={estadia.tipo === 'glamping' ? '/turismo/glamping' : '/turismo/eco-hostal'}
             className="bg-white border border-[#122C9B]/10 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-[#122C9B]/5 transition-all duration-300 group"
           >
             {/* Image */}
-            <div className="relative aspect-[4/3] bg-[#122C9B]/5 overflow-hidden">
-              <img
-                src={estadia.imagen_principal}
-                alt={estadia.nombre}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute top-4 left-4 bg-[#122C9B] text-white text-xs font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                {estadia.tipo === 'glamping' ? 'Glamping' : 'ECO Hostal'}
+            <Link to={estadia.tipo === 'glamping' ? '/turismo/glamping' : '/turismo/eco-hostal'}>
+              <div className="relative aspect-[4/3] bg-[#122C9B]/5 overflow-hidden">
+                <img
+                  src={estadia.imagen_principal}
+                  alt={estadia.nombre}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-4 left-4 bg-[#122C9B] text-white text-xs font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  {estadia.tipo === 'glamping' ? 'Glamping' : 'ECO Hostal'}
+                </div>
               </div>
-            </div>
+            </Link>
 
             {/* Info */}
             <div className="p-6 space-y-4">
               <div className="space-y-2">
                 <h3 className="font-sans text-xl font-bold text-[#122C9B]">
-                  Estadías ECO Hotel Glamping
+                  Finca la Esperanza
                 </h3>
                 <p className="font-sans text-lg font-semibold text-[#122C9B]/80">
                   {estadia.nombre}
+                </p>
+                <p className="text-xs text-[#122C9B]/60 leading-relaxed">
+                  {estadia.descripcion_corta}
                 </p>
               </div>
 
@@ -116,13 +128,27 @@ export default function Turismo() {
                     ${estadia.precio.toLocaleString('es-CO')} COP
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#122C9B]/10 group-hover:bg-[#FFA42C]/10 text-[#122C9B] text-xs font-bold rounded-xl uppercase tracking-wider transition-all">
-                  Ver más
-                  <ArrowRight className="w-4 h-4" />
-                </span>
+                <div className="flex gap-2">
+                  <Link
+                    to={estadia.tipo === 'glamping' ? '/turismo/glamping' : '/turismo/eco-hostal'}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#122C9B]/10 hover:bg-[#FFA42C]/10 text-[#122C9B] text-xs font-bold rounded-xl uppercase tracking-wider transition-all"
+                  >
+                    Ver más
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <a
+                    href={estadia.airbnb_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFA42C] hover:bg-[#122C9B] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-all"
+                  >
+                    Airbnb
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
 
@@ -132,8 +158,8 @@ export default function Turismo() {
           <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
             <Sunrise className="w-8 h-8" />
           </span>
-          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Amaneceres dorados</h3>
-          <p className="text-xs text-[#122C9B]/60">Paisajes verdes y luz natural</p>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Atardeceres y fogata</h3>
+          <p className="text-xs text-[#122C9B]/60">Cielo dorado y noches cálidas</p>
         </div>
         <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
           <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
@@ -146,24 +172,33 @@ export default function Turismo() {
           <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
             <Coffee className="w-8 h-8" />
           </span>
-          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Cultura cafetera</h3>
-          <p className="text-xs text-[#122C9B]/60">De la semilla a la taza</p>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Agro turismo</h3>
+          <p className="text-xs text-[#122C9B]/60">Caminatas entre cafetales</p>
         </div>
         <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 text-center space-y-3 shadow-sm">
           <span className="p-4 bg-[#FFA42C]/10 rounded-full inline-block text-[#FFA42C]">
             <TreePine className="w-8 h-8" />
           </span>
-          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Entorno natural</h3>
-          <p className="text-xs text-[#122C9B]/60">Aire puro y naturaleza</p>
+          <h3 className="font-sans text-sm font-bold text-[#122C9B]">Pet friendly</h3>
+          <p className="text-xs text-[#122C9B]/60">Tu mascota es bienvenida</p>
         </div>
       </div>
 
       {/* Location Note */}
-      <div className="bg-[#122C9B] text-white rounded-2xl p-8 text-center space-y-3">
+      <div className="bg-[#122C9B] text-white rounded-2xl p-8 text-center space-y-4">
         <h3 className="font-sans text-xl font-bold">¿Cómo llegar?</h3>
         <p className="text-white/70 text-sm">
-          Ubicado en Silvania, Cundinamarca — a solo 45 minutos de Bogotá
+          Finca la Esperanza — Silvania, Cundinamarca | A solo 42 km de Bogotá
         </p>
+        <a
+          href={GOOGLE_MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#FFA42C] hover:bg-white hover:text-[#122C9B] text-white text-sm font-bold rounded-xl transition-colors"
+        >
+          <MapPin className="w-4 h-4" />
+          Abrir en Google Maps
+        </a>
       </div>
 
     </div>

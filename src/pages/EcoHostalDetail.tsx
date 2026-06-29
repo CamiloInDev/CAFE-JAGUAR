@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon, MapPin, Wifi, PawPrint } from 'lucide-react';
 import BookingCalendar from '../components/BookingCalendar';
 
 const images = [
@@ -10,6 +10,9 @@ const images = [
   '/images/TURISMO/HOSTAL4.webp',
 ];
 
+const AIRBNB_URL = 'https://www.airbnb.es/h/jaguarhostal';
+const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ekvGgp5soN9PfTr86?g_st=aw';
+
 export default function EcoHostalDetail() {
   const [currentImage, setCurrentImage] = useState(0);
 
@@ -18,7 +21,7 @@ export default function EcoHostalDetail() {
 
   return (
     <div id="eco-hostal-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      
+
       {/* Back Button */}
       <Link to="/turismo" className="inline-flex items-center gap-2 text-[#122C9B]/60 hover:text-[#FFA42C] text-sm font-bold transition-colors">
         <ArrowLeft className="w-4 h-4" />
@@ -35,7 +38,7 @@ export default function EcoHostalDetail() {
           ECO Hostal
         </h1>
         <p className="text-[#122C9B]/70 text-sm max-w-2xl mx-auto">
-          Alojamiento eco-amigable en el corazón de las montañas de Silvania. Confort y sostenibilidad en perfecta armonía.
+          Alojamiento eco-amigable en Finca la Esperanza, Silvania. Confort y sostenibilidad en perfecta armonía con la naturaleza.
         </p>
       </div>
 
@@ -94,16 +97,16 @@ export default function EcoHostalDetail() {
 
       {/* Info + Booking */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Description */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-8 space-y-4 shadow-sm">
             <h2 className="font-sans text-2xl font-bold text-[#122C9B]">Sobre esta experiencia</h2>
             <p className="text-[#122C9B]/70 text-sm leading-relaxed">
-              Un espacio diseñado para quienes buscan reconectarse con la naturaleza sin sacrificar comodidad. Nuestro ECO Hostal ofrece una experiencia de alojamiento sostenible en medio de los cultivos de café de Silvania.
+              Un espacio diseñado para quienes buscan reconectarse con la naturaleza sin sacrificar comodidad. Nuestro ECO Hostal ofrece una experiencia de alojamiento sostenible en Finca la Esperanza, en medio de los cultivos de café de Silvania.
             </p>
             <p className="text-[#122C9B]/70 text-sm leading-relaxed">
-              Perfecto para grupos, familias o viajeros que buscan una experiencia auténtica y eco-friendly. Disfruta de espacios comunes, zonas verdes y la calidez de la cultura cafetera colombiana.
+              Perfecto para grupos, familias o viajeros que buscan una experiencia auténtica y eco-friendly. Disfruta de espacios comunes, zonas verdes, WiFi gratuito y la calidez de la cultura cafetera colombiana. A solo 42 km de Bogotá.
             </p>
           </div>
 
@@ -118,8 +121,8 @@ export default function EcoHostalDetail() {
               <p className="text-xs text-[#122C9B]/70">Hasta 8 personas</p>
             </div>
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
-              <Coffee className="w-6 h-6 text-[#122C9B] mx-auto" />
-              <p className="text-xs text-[#122C9B]/70">Tour de café incluido</p>
+              <Wifi className="w-6 h-6 text-[#122C9B] mx-auto" />
+              <p className="text-xs text-[#122C9B]/70">WiFi gratuito</p>
             </div>
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
               <Moon className="w-6 h-6 text-[#122C9B] mx-auto" />
@@ -128,7 +131,7 @@ export default function EcoHostalDetail() {
           </div>
         </div>
 
-        {/* Booking Calendar */}
+        {/* Booking + Airbnb */}
         <div className="space-y-4">
           <BookingCalendar
             tipo="estadia"
@@ -152,10 +155,26 @@ export default function EcoHostalDetail() {
               </span>
             </div>
 
-            <div className="text-center text-xs text-white/50">
-              Ubicación: Silvania, Cundinamarca
-            </div>
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 text-xs text-white/50 hover:text-[#FFA42C] transition-colors"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              Silvania, Cundinamarca
+            </a>
           </div>
+
+          {/* Airbnb CTA */}
+          <a
+            href={AIRBNB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3.5 bg-[#FFA42C] hover:bg-[#122C9B] text-white text-sm font-bold rounded-xl transition-colors text-center"
+          >
+            Reservar en Airbnb
+          </a>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon, MapPin, Car, Wifi, PawPrint, Tent, FireExtinguisher } from 'lucide-react';
 import BookingCalendar from '../components/BookingCalendar';
 
 const images = [
@@ -11,6 +11,9 @@ const images = [
   '/images/TURISMO/GLAMP5.webp',
 ];
 
+const AIRBNB_URL = 'https://www.airbnb.es/h/jaguarglampibg';
+const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ekvGgp5soN9PfTr86?g_st=aw';
+
 export default function GlampingDetail() {
   const [currentImage, setCurrentImage] = useState(0);
 
@@ -19,7 +22,7 @@ export default function GlampingDetail() {
 
   return (
     <div id="glamping-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      
+
       {/* Back Button */}
       <Link to="/turismo" className="inline-flex items-center gap-2 text-[#122C9B]/60 hover:text-[#FFA42C] text-sm font-bold transition-colors">
         <ArrowLeft className="w-4 h-4" />
@@ -28,15 +31,21 @@ export default function GlampingDetail() {
 
       {/* Header */}
       <div className="text-center space-y-4">
-        <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#FFA42C]/10 text-[#FFA42C] border border-[#FFA42C]/20 rounded-full text-xs font-mono font-black tracking-widest uppercase">
-          <Coffee className="w-4 h-4" />
-          Estadías ECO Hotel Glamping
-        </span>
+        <div className="flex items-center justify-center gap-3">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#FFA42C]/10 text-[#FFA42C] border border-[#FFA42C]/20 rounded-full text-xs font-mono font-black tracking-widest uppercase">
+            <Coffee className="w-4 h-4" />
+            Estadías ECO Hotel Glamping
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-mono font-black tracking-widest uppercase">
+            <PawPrint className="w-3.5 h-3.5" />
+            Pet Friendly
+          </span>
+        </div>
         <h1 className="font-sans text-4xl md:text-5xl font-extrabold text-[#122C9B] tracking-tighter uppercase leading-[0.9]">
-          Glamping Familiar
+          Glamping Finca Cafetera
         </h1>
         <p className="text-[#122C9B]/70 text-sm max-w-2xl mx-auto">
-          Un refugio natural en el corazón de las montañas de Silvania. Descubre el encanto rústico sin perder el confort.
+          Finca la Esperanza — Silvania, Cundinamarca. Una experiencia ecológica de tranquilidad y agro turismo en medio de la naturaleza.
         </p>
       </div>
 
@@ -95,46 +104,54 @@ export default function GlampingDetail() {
 
       {/* Info + Booking */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Description */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-8 space-y-4 shadow-sm">
             <h2 className="font-sans text-2xl font-bold text-[#122C9B]">Sobre esta experiencia</h2>
             <p className="text-[#122C9B]/70 text-sm leading-relaxed">
-              Despierta con el canto de las aves, recorre nuestros cultivos de café y conoce de cerca el proceso artesanal, desde la semilla hasta la taza. Nuestras unidades de glamping están diseñadas para brindarte confort sin perder el encanto rústico del entorno.
+              Brindamos una experiencia ecológica de tranquilidad y agro turismo en medio de la naturaleza; se podrá hacer caminatas ecológicas al aire libre, disfrutar de un bello atardecer y compartir de una calurosa fogata mientras se contempla la grandeza de nuestras montañas cafeteras.
             </p>
             <p className="text-[#122C9B]/70 text-sm leading-relaxed">
-              Ya sea para una escapada romántica, un descanso en familia o una experiencia de conexión interior, nuestro glamping es el destino perfecto para desconectarte de la rutina y reconectarte con lo esencial.
+              El Glamping, Finca Cafetera Jaguar se encuentra en Silvania y ofrece parqueadero, jardín, WiFi gratuito y vistas a las montañas cafeteras. El alojamiento está a 42 km de Bogotá. Somos pet friendly!
             </p>
           </div>
 
           {/* Features */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
               <Sunrise className="w-6 h-6 text-[#FFA42C] mx-auto" />
-              <p className="text-xs text-[#122C9B]/70">Amaneceres dorados</p>
+              <p className="text-xs text-[#122C9B]/70">Atardeceres y fogata</p>
             </div>
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
-              <Moon className="w-6 h-6 text-[#FFA42C] mx-auto" />
-              <p className="text-xs text-[#122C9B]/70">Noches estrelladas</p>
+              <TreePine className="w-6 h-6 text-[#FFA42C] mx-auto" />
+              <p className="text-xs text-[#122C9B]/70">Caminatas ecológicas</p>
             </div>
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
               <Coffee className="w-6 h-6 text-[#FFA42C] mx-auto" />
               <p className="text-xs text-[#122C9B]/70">Cultura cafetera</p>
             </div>
             <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
-              <TreePine className="w-6 h-6 text-[#FFA42C] mx-auto" />
-              <p className="text-xs text-[#122C9B]/70">Entorno natural</p>
+              <Car className="w-6 h-6 text-[#FFA42C] mx-auto" />
+              <p className="text-xs text-[#122C9B]/70">Parqueadero</p>
+            </div>
+            <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
+              <Wifi className="w-6 h-6 text-[#FFA42C] mx-auto" />
+              <p className="text-xs text-[#122C9B]/70">WiFi gratuito</p>
+            </div>
+            <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-4 text-center space-y-2 shadow-sm">
+              <PawPrint className="w-6 h-6 text-[#FFA42C] mx-auto" />
+              <p className="text-xs text-[#122C9B]/70">Pet friendly</p>
             </div>
           </div>
         </div>
 
-        {/* Booking Calendar */}
+        {/* Booking + Airbnb */}
         <div className="space-y-4">
           <BookingCalendar
             tipo="estadia"
             itemId="glamping-familiar"
-            itemNombre="Glamping Familiar"
+            itemNombre="Glamping Finca Cafetera"
             itemSlug="glamping-familiar"
             maxPeople={8}
           />
@@ -153,10 +170,26 @@ export default function GlampingDetail() {
               </span>
             </div>
 
-            <div className="text-center text-xs text-[#122C9B]/50">
-              Ubicación: Silvania, Cundinamarca
-            </div>
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 text-xs text-[#122C9B]/50 hover:text-[#FFA42C] transition-colors"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              Silvania, Cundinamarca — 42 km de Bogotá
+            </a>
           </div>
+
+          {/* Airbnb CTA */}
+          <a
+            href={AIRBNB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3.5 bg-[#FFA42C] hover:bg-[#122C9B] text-white text-sm font-bold rounded-xl transition-colors text-center"
+          >
+            Reservar en Airbnb
+          </a>
         </div>
       </div>
 
