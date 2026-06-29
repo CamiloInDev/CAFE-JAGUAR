@@ -56,8 +56,8 @@ const helmetConfig: HelmetOptions & { crossOriginEmbedderPolicy?: boolean } = {
           frameSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com"],
           imgSrc: ["'self'", "data:", "https://www.instagram.com", "https://*.cdninstagram.com", "https://cafejaguar.com", "https://images.unsplash.com"],
           connectSrc: ["'self'", "https://www.instagram.com"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          fontSrc: ["'self'", "data:"],
+          styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+          fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
           baseUri: ["'self'"],
         },
       }
