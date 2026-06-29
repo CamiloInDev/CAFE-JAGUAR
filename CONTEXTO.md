@@ -747,6 +747,57 @@ En una SPA con React Router, el navegador conserva la posición del scroll al ca
 - Instagram embeds funcionales ✅
 - Fuente Krub cargando correctamente ✅
 
+## 🆕 Sesión: 29 Jun 2026 — Suite de Tests Completa (117 tests) + Fix CSP Google Maps
+
+### 1. Suite de Tests
+
+Se implementó una suite completa de automatizada con **Vitest** y **Playwright**:
+
+**Unit Tests** (`tests/unit/`):
+- `store.test.ts` (11): Carrito Zustand — agregar, incrementar, límite stock, eliminar, limpiar, localStorage
+- `types.test.ts` (5): Validación de formas TypeScript
+
+**Integration Tests — DB** (`tests/integration/db.test.ts`) (33):
+- Users, Products, Login Attempts, Orders, Reservations, Slides, Contact Messages
+
+**Integration Tests — API** (`tests/integration/api/`) (~60):
+- `auth.test.ts` (13), `products.test.ts` (13), `experiences.test.ts` (6), `slides.test.ts` (10), `orders.test.ts` (12), `contact.test.ts` (4), `reservations.test.ts` (10)
+
+**E2E Playwright** (`e2e/`) (8 spec files):
+- auth, home, tienda, cart, checkout, experiencias, contacto, admin (control de acceso)
+
+### 2. Problemas Encontrados y Soluciones
+
+| Problema | Causa | Solución |
+|----------|-------|----------|
+| Colisión de IDs | `Date.now().toString(36)` — 2 llamadas en el mismo ms = mismo ID | `crypto.randomUUID()` en todos los generadores |
+| Slides API: get wrong slide | `all.body[0]` no era determinista con múltiples slides de orden 1 | Buscar por título con `.find()` |
+| Aserciones frágiles | Tests esperaban conteos fijos | Comparaciones relativas `before ± 1` |
+| EBUSY en tests paralelos | Múltiples archivos escribiendo a `db.json` | `fileParallelism: false` en vitest.config |
+
+**Estado**: ✅ **117 tests pasando — 10 archivos — 0 fallas**
+
+### 3. Fix: CSP Google Maps
+
+**Problema**: El embed de Google Maps en `CasaJaguar.tsx` era bloqueado por CSP en producción (igual que Instagram).
+**Solución**: Agregado `"https://www.google.com"` a `frame-src` en `server.ts:55`.
+
+### 4. Archivos nuevos/creados
+
+- `TEST.md` — documentación completa de la suite de tests
+- `tests/` — helpers, setup, unit, integration (DB + API)
+- `e2e/` — 8 spec files + auth setup
+- `vitest.config.ts`, `playwright.config.ts`
+
+### 5. Archivos modificados
+
+- `server/db.ts` — id generation: `Date.now()` → `crypto.randomUUID()`
+- `server.ts` — CSP: `frame-src` agregado `www.google.com`
+- `.gitignore` — agregado `db.json.bak`
+- `package.json` / `package-lock.json` — devDependencies de test
+
+---
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
@@ -754,6 +805,7 @@ En una SPA con React Router, el navegador conserva la posición del scroll al ca
 - Dependencias: Todas instaladas y funcionales
 - Frontend: ✅ Rediseño completo branding; Nuestra Planta; ScrollToTop; Estadías con Airbnb; tabs reserva
 - Backend: ✅ Modularizado con seguridad OWASP (Helmet, CORS, rate-limit, Zod)
+- Tests: ✅ 117 tests (unit + integration DB/API + E2E Playwright) — 0 fallas
 - Deploy: ✅ Producción en Coolify — `jaguar.getindev.com`
 - Pentesting: 🟡 Línea base establecida — pendiente comparativa tras deploy
 - Skills IA: ✅ 74+ skills instaladas (open-hax + playwright)
