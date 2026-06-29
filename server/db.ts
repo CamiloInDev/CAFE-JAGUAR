@@ -366,7 +366,7 @@ export const dbService = {
   createUser(user: { email: string; password_hash: string; nombre: string; apellido: string; telefono?: string; rol?: 'cliente' | 'admin' }) {
     const data = readDb();
     const newUser: DatabaseSchema['users'][0] = {
-      id: 'usr_' + Date.now().toString(36),
+      id: 'usr_' + crypto.randomUUID(),
       email: user.email,
       password_hash: user.password_hash,
       nombre: user.nombre,
@@ -428,7 +428,7 @@ export const dbService = {
       // Create
       const newProd: Product = {
         ...prod,
-        id: 'prod_' + Date.now().toString(36),
+        id: 'prod_' + crypto.randomUUID(),
         slug: prod.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         activo: prod.activo !== undefined ? prod.activo : true,
         created_at: new Date().toISOString()
@@ -468,7 +468,7 @@ export const dbService = {
     } else {
       const newExp: Experience = {
         ...exp,
-        id: 'exp_' + Date.now().toString(36),
+        id: 'exp_' + crypto.randomUUID(),
         slug: exp.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         activo: exp.activo !== undefined ? exp.activo : true
       };
@@ -493,7 +493,7 @@ export const dbService = {
     const data = readDb();
     const newMsg: ContactMessage = {
       ...msg,
-      id: 'msg_' + Date.now().toString(36),
+      id: 'msg_' + crypto.randomUUID(),
       respondido: false,
       created_at: new Date().toISOString()
     };
@@ -645,7 +645,7 @@ export const dbService = {
           bgImage: slide.bgImage || '',
           orden: slide.orden || data.slides.length + 1,
           activo: slide.activo !== undefined ? slide.activo : true,
-          id: 'slide_' + Date.now().toString(36),
+          id: 'slide_' + crypto.randomUUID(),
         };
         data.slides.push(newSlide);
       }
@@ -723,7 +723,7 @@ export const dbService = {
     const data = readDb();
     const newReservation: Reservation = {
       ...reservation,
-      id: 'res_' + Date.now().toString(36),
+      id: 'res_' + crypto.randomUUID(),
       estado: 'pendiente',
       created_at: new Date().toISOString()
     };
