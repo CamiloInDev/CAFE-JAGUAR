@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon, MapPin, Car, Wifi, PawPrint, Tent, FireExtinguisher } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, Calendar, ArrowLeft, Coffee, TreePine, Sunrise, Moon, MapPin, Car, Wifi, PawPrint, ExternalLink } from 'lucide-react';
 import BookingCalendar from '../components/BookingCalendar';
 
 const images = [
@@ -16,6 +16,7 @@ const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ekvGgp5soN9PfTr86?g_st=aw';
 
 export default function GlampingDetail() {
   const [currentImage, setCurrentImage] = useState(0);
+  const [bookingMode, setBookingMode] = useState<'directo' | 'airbnb'>('directo');
 
   const nextImage = () => setCurrentImage((prev) => (prev + 1) % images.length);
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
@@ -146,16 +147,9 @@ export default function GlampingDetail() {
           </div>
         </div>
 
-        {/* Booking + Airbnb */}
+        {/* Booking Sidebar */}
         <div className="space-y-4">
-          <BookingCalendar
-            tipo="estadia"
-            itemId="glamping-familiar"
-            itemNombre="Glamping Finca Cafetera"
-            itemSlug="glamping-familiar"
-            maxPeople={8}
-          />
-
+          {/* Price Card */}
           <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 space-y-4 shadow-sm">
             <div className="space-y-2 text-center">
               <p className="text-xs text-[#122C9B]/50 font-mono uppercase tracking-wider">Precio por noche</p>
@@ -181,15 +175,65 @@ export default function GlampingDetail() {
             </a>
           </div>
 
-          {/* Airbnb CTA */}
-          <a
-            href={AIRBNB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full py-3.5 bg-[#FFA42C] hover:bg-[#122C9B] text-white text-sm font-bold rounded-xl transition-colors text-center"
-          >
-            Reservar en Airbnb
-          </a>
+          {/* Booking Method Tabs */}
+          <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-1.5 shadow-sm">
+            <div className="grid grid-cols-2 gap-1">
+              <button
+                onClick={() => setBookingMode('directo')}
+                className={`py-2.5 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
+                  bookingMode === 'directo'
+                    ? 'bg-[#122C9B] text-white shadow-md'
+                    : 'text-[#122C9B]/60 hover:text-[#122C9B] hover:bg-[#122C9B]/5'
+                }`}
+              >
+                <Calendar className="w-4 h-4" />
+                Reserva directa
+              </button>
+              <button
+                onClick={() => setBookingMode('airbnb')}
+                className={`py-2.5 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
+                  bookingMode === 'airbnb'
+                    ? 'bg-[#FFA42C] text-white shadow-md'
+                    : 'text-[#122C9B]/60 hover:text-[#122C9B] hover:bg-[#122C9B]/5'
+                }`}
+              >
+                <ExternalLink className="w-4 h-4" />
+                Airbnb
+              </button>
+            </div>
+          </div>
+
+          {/* Booking Content */}
+          {bookingMode === 'directo' ? (
+            <BookingCalendar
+              tipo="estadia"
+              itemId="glamping-familiar"
+              itemNombre="Glamping Finca Cafetera"
+              itemSlug="glamping-familiar"
+              maxPeople={8}
+            />
+          ) : (
+            <div className="bg-white border border-[#122C9B]/10 rounded-2xl p-6 space-y-4 shadow-sm text-center">
+              <div className="w-14 h-14 bg-[#FFA42C]/10 rounded-full flex items-center justify-center mx-auto">
+                <ExternalLink className="w-7 h-7 text-[#FFA42C]" />
+              </div>
+              <h3 className="font-sans text-lg font-bold text-[#122C9B]">Reserva en Airbnb</h3>
+              <p className="text-xs text-[#122C9B]/60 leading-relaxed">
+                Reserva al instante con pago seguro a través de Airbnb. Sin esperas ni formularios.
+              </p>
+              <a
+                href={AIRBNB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full py-3.5 bg-[#FFA42C] hover:bg-[#122C9B] text-white text-sm font-bold rounded-xl transition-colors"
+              >
+                Ir a Airbnb
+              </a>
+              <p className="text-[10px] text-[#122C9B]/40">
+                Serás redirigido a airbnb.es para completar tu reserva
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
