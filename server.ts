@@ -53,7 +53,7 @@ const helmetConfig: HelmetOptions & { crossOriginEmbedderPolicy?: boolean } = {
         directives: {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com"],
-          frameSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com"],
+          frameSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com", "https://www.google.com"],
           imgSrc: ["'self'", "data:", "https://www.instagram.com", "https://*.cdninstagram.com", "https://cafejaguar.com", "https://images.unsplash.com"],
           connectSrc: ["'self'", "https://www.instagram.com"],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
