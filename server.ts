@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { createServer as createViteServer } from 'vite';
 
+import type { HelmetOptions } from 'helmet';
 import { env } from './server/config/env';
 import { errorHandler } from './server/middleware/errorHandler';
 import { apiRateLimiter } from './server/middleware/rateLimiter';
@@ -45,10 +46,25 @@ if (env.NODE_ENV === 'production') {
 }
 
 // Security headers — relaxed in development for Vite HMR
-app.use(helmet({
-  contentSecurityPolicy: env.NODE_ENV === 'production' ? undefined : false,
+const helmetConfig: HelmetOptions & { crossOriginEmbedderPolicy?: boolean } = {
   crossOriginEmbedderPolicy: env.NODE_ENV === 'production' ? undefined : false,
-}));
+  contentSecurityPolicy: env.NODE_ENV === 'production'
+    ? {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com"],
+          frameSrc: ["'self'", "https://www.instagram.com", "https://*.cdninstagram.com"],
+          imgSrc: ["'self'", "data:", "https://www.instagram.com", "https://*.cdninstagram.com", "https://cafejaguar.com", "https://images.unsplash.com"],
+          connectSrc: ["'self'", "https://www.instagram.com"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          fontSrc: ["'self'", "data:"],
+          baseUri: ["'self'"],
+        },
+      }
+    : false,
+};
+
+app.use(helmet(helmetConfig));
 
 // CORS — open in development, restricted in production
 app.use(cors({

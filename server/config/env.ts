@@ -20,8 +20,6 @@ const envSchema = z.object({
   // Application
   APP_URL: z.string().url().default('http://localhost:3000'),
 
-  // Optional: AI integration
-  GEMINI_API_KEY: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

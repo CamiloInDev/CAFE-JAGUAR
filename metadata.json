@@ -1,6 +1,5 @@
 {
   "name": "Jaguar Coffee",
   "description": "Plataforma transaccional de café premium: e-commerce con pasarela WooMPI, reservación de experiencias, turismo de hacienda y academia virtual.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "requestFramePermissions": []
 }
