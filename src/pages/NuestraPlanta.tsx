@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Beaker,
@@ -10,11 +10,6 @@ import {
   MapPin,
   MessageCircle,
   ArrowRight,
-  Flame,
-  Thermometer,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
   ArrowUpRight,
   Leaf,
   Truck,
@@ -24,24 +19,8 @@ import {
 /*  Data                                                              */
 /* ------------------------------------------------------------------ */
 
-const GALLERY_IMAGES = [
-  {
-    src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=85&w=1600',
-    alt: 'Tostadora de café de especialidad',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=85&w=1600',
-    alt: 'Granos de café tostándose',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=85&w=1600',
-    alt: 'Preparación de café de especialidad',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=85&w=1600',
-    alt: 'Catación de café en laboratorio',
-  },
-];
+const HERO_IMAGE = '/images/NUESTRA-PLANTA/PLANTA1.webp';
+const GALLERY_IMAGE = { src: '/images/NUESTRA-PLANTA/pLANTA2.webp', alt: 'Planta de tueste Jaguar Coffee' };
 
 const SERVICES = [
   {
@@ -71,47 +50,8 @@ const SERVICES = [
   },
   {
     icon: <Star className="w-6 h-6" />,
-    title: 'Empaque y distribución',
-    desc: 'Empaque al vacío, etiquetado personalizado y logística para puntos de venta.',
-  },
-];
-
-const PROCESS_STEPS = [
-  {
-    step: '01',
-    title: 'Recepción',
-    desc: 'Verificación de humedad, olor y estado físico del café verde proveniente de nuestras fincas aliadas.',
-    icon: <CheckCircle2 className="w-5 h-5" />,
-  },
-  {
-    step: '02',
-    title: 'Clasificación',
-    desc: 'Selección por densidad, tamaño y defectos para garantizar lotes homogéneos.',
-    icon: <ShieldCheck className="w-5 h-5" />,
-  },
-  {
-    step: '03',
-    title: 'Tueste',
-    desc: 'Aplicación de perfiles controlados con registro de tiempo, temperatura y tasa de aumento de calor.',
-    icon: <Flame className="w-5 h-5" />,
-  },
-  {
-    step: '04',
-    title: 'Enfriamiento',
-    desc: 'Enfriamiento rápido para detener el tueste en el punto exacto y preservar los aromas.',
-    icon: <Thermometer className="w-5 h-5" />,
-  },
-  {
-    step: '05',
-    title: 'Catación',
-    desc: 'Evaluación sensorial del lote tostado para confirmar que cumple con nuestros estándares.',
-    icon: <Coffee className="w-5 h-5" />,
-  },
-  {
-    step: '06',
     title: 'Empaque',
     desc: 'Empaque al vacío inmediato con etiquetado de trazabilidad y fecha de tueste.',
-    icon: <Star className="w-5 h-5" />,
   },
 ];
 
@@ -173,7 +113,7 @@ function ServiceCard({
   title,
   desc,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   desc: string;
 }) {
@@ -187,49 +127,6 @@ function ServiceCard({
       </div>
       <h3 className="font-sans text-lg font-bold text-[#122C9B] mb-2">{title}</h3>
       <p className="text-sm text-[#122C9B]/60 font-light leading-relaxed">{desc}</p>
-    </div>
-  );
-}
-
-function ProcessStep({
-  item,
-  index,
-}: {
-  item: (typeof PROCESS_STEPS)[number];
-  index: number;
-}) {
-  const isEven = index % 2 === 0;
-
-  return (
-    <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 items-center">
-      {/* Timeline center line */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-[#122C9B]/10 -translate-x-1/2" />
-
-      {/* Content side */}
-      <div className={`${isEven ? 'md:pr-16 md:text-right' : 'md:col-start-2 md:pl-16'}`}>
-        <div
-          className={`inline-flex items-center gap-3 mb-3 ${
-            isEven ? 'md:flex-row-reverse' : ''
-          }`}
-        >
-          <span className="p-2.5 bg-[#FFA42C]/10 text-[#FFA42C] rounded-xl">{item.icon}</span>
-          <span className="text-xs font-mono font-bold text-[#FFA42C] uppercase tracking-widest">
-            Paso {item.step}
-          </span>
-        </div>
-        <h3 className="font-sans text-xl md:text-2xl font-bold text-[#122C9B] mb-2">
-          {item.title}
-        </h3>
-        <p className="text-sm text-[#122C9B]/60 font-light leading-relaxed">{item.desc}</p>
-      </div>
-
-      {/* Dot on timeline */}
-      <div
-        className={`hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 border-[#FFF9F5] bg-[#FFA42C] z-10`}
-      />
-
-      {/* Empty side for layout */}
-      <div className={`hidden md:block ${isEven ? 'md:col-start-2' : 'md:col-start-1 md:row-start-1'}`} />
     </div>
   );
 }
@@ -248,28 +145,13 @@ function StatItem({ value, label }: { value: string; label: string }) {
 /* ------------------------------------------------------------------ */
 
 export default function NuestraPlanta() {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const nextImage = useCallback(() => {
-    setCurrentImage((prev) => (prev + 1) % GALLERY_IMAGES.length);
-  }, []);
-
-  const prevImage = useCallback(() => {
-    setCurrentImage((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(nextImage, 5000);
-    return () => clearInterval(timer);
-  }, [nextImage]);
-
   return (
     <div id="nuestra-planta-view" className="bg-[#FFF9F5]">
       {/* Hero */}
       <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${GALLERY_IMAGES[0].src})` }}
+          style={{ backgroundImage: `url(${HERO_IMAGE})` }}
         />
         <div className="absolute inset-0 bg-[#122C9B]/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#122C9B] via-transparent to-transparent" />
@@ -289,7 +171,7 @@ export default function NuestraPlanta() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <a
-              href="https://wa.me/573157307016?text=Hola%20Jaguar%20Coffee,%20quiero%20conocer%20los%20servicios%20de%20tueste%20de%20la%20planta%20en%20Silvania"
+              href="https://wa.me/573204263217?text=Hola%20Jaguar%20Coffee,%20quiero%20conocer%20los%20servicios%20de%20tueste%20de%20la%20planta%20en%20Silvania"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#FFA42C] hover:bg-[#FFA42C]/90 text-[#122C9B] font-bold rounded-2xl text-xs uppercase tracking-widest shadow-lg shadow-[#FFA42C]/30 transition-all"
@@ -356,41 +238,13 @@ export default function NuestraPlanta() {
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-[#122C9B]/10 shadow-lg group">
-                <img
-                  src={GALLERY_IMAGES[currentImage].src}
-                  alt={GALLERY_IMAGES[currentImage].alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#122C9B]/40 to-transparent" />
-                <button
-                  onClick={prevImage}
-                  aria-label="Imagen anterior"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/95 hover:bg-white text-[#122C9B] rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  aria-label="Siguiente imagen"
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/95 hover:bg-white text-[#122C9B] rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="flex justify-center gap-2">
-                {GALLERY_IMAGES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImage(idx)}
-                    aria-label={`Ver imagen ${idx + 1}`}
-                    className={`h-2 rounded-full transition-all ${
-                      currentImage === idx ? 'bg-[#FFA42C] w-8' : 'bg-[#122C9B]/20 hover:bg-[#122C9B]/40 w-2'
-                    }`}
-                  />
-                ))}
-              </div>
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-[#122C9B]/10 shadow-lg">
+              <img
+                src={GALLERY_IMAGE.src}
+                alt={GALLERY_IMAGE.alt}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#122C9B]/40 to-transparent" />
             </div>
           </div>
         </div>
@@ -415,28 +269,9 @@ export default function NuestraPlanta() {
         </div>
       </section>
 
-      {/* Process */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            eyebrow="Proceso"
-            title="Del café verde al café tostado"
-            subtitle="Seis etapas controladas que garantizan calidad, consistencia y trazabilidad en cada grano."
-          />
-
-          <div className="space-y-12 md:space-y-0">
-            {PROCESS_STEPS.map((item, idx) => (
-              <Fragment key={item.step}>
-                <ProcessStep item={item} index={idx} />
-              </Fragment>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Location + CTA */}
       <section className="py-20 md:py-28 bg-[#122C9B] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=85&w=1600')] bg-cover bg-center mix-blend-overlay opacity-10" />
+        <div className="absolute inset-0 bg-[url('/images/NUESTRA-PLANTA/pLANTA2.webp')] bg-cover bg-center mix-blend-overlay opacity-10" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -472,7 +307,7 @@ export default function NuestraPlanta() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://wa.me/573157307016?text=Hola%20Jaguar%20Coffee,%20quiero%20conocer%20los%20servicios%20de%20tueste%20de%20la%20planta%20en%20Silvania"
+                  href="https://wa.me/573204263217?text=Hola%20Jaguar%20Coffee,%20quiero%20conocer%20los%20servicios%20de%20tueste%20de%20la%20planta%20en%20Silvania"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold rounded-2xl text-xs uppercase tracking-widest transition-all"

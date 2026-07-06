@@ -8,7 +8,7 @@ export interface User {
   created_at: string;
 }
 
-export type CoffeeCategory = 'grano' | 'molido' | 'capsulas' | 'kit' | 'accesorio';
+export type CoffeeCategory = '250gr' | '175gr' | 'institucional' | 'togo';
 
 export interface Product {
   id: string;
@@ -55,7 +55,7 @@ export interface Hacienda {
 export interface CartItem {
   product_id: string;
   cantidad: number;
-  product?: Product; // Populated client-side or during retrieval
+  product?: Product;
 }
 
 export type OrderStatus = 'pendiente' | 'pagado' | 'enviado' | 'entregado' | 'cancelado';

@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import PrivacyConsent from './components/PrivacyConsent';
 import ScrollToTop from './components/ScrollToTop';
+import FloatingCart from './components/FloatingCart';
 
 // Pages
 import Home from './pages/Home';
@@ -60,6 +61,7 @@ export default function App() {
       <ToastContainer />
       <div className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
         <Navbar />
+        <FloatingCart />
 
         {/* Core dynamic route display panel */}
         <main className="flex-grow">

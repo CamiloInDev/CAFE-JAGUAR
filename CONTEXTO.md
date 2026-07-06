@@ -798,12 +798,103 @@ Se implementó una suite completa de automatizada con **Vitest** y **Playwright*
 
 ---
 
+## 🆕 Sesión: 5 Jul 2026 — Catálogo Real 26 Productos, Carrito Flotante, Footer Simplificado, Nuestra Planta Imágenes Reales
+
+### Contexto
+
+El cliente entregó el listado oficial de productos con dos presentaciones (250gr / 175gr) y especificó que deben ser productos independientes, no variantes. También corrigió datos de Nuestra Planta (WhatsApp, descripción de servicios) y subió imágenes reales de la planta.
+
+### 1. Catálogo — Productos Reales del Cliente
+
+**Reestructuración completa del catálogo** (`db.json`, `src/types.ts`):
+
+- **4 categorías planas**: `250gr`, `175gr`, `institucional`, `togo`
+- **26 productos** como entidades independientes:
+  - 10 productos en 250gr (Caturra Chiroso, Caturra Lavado, Geisha Lavado, etc.)
+  - 10 productos en 175gr (mismos orígenes)
+  - 2 institucionales (Jaguar Coffee 250gr, Termo Jaguar)
+  - 4 togo (Café Filtrado, Cappuccino, Mocaccino, Chocolate)
+
+**Cambios estructurales**:
+- `CoffeeCategory` → `'250gr' | '175gr' | 'institucional' | 'togo'`
+- Eliminado `ProductVariant` e interfaz `variants` de `Product`
+- `CartItem` simplificado sin campo de variante
+- `addToCart` en store sin parámetro de variante
+- `ProductDetail.tsx` sin selector de peso
+- `Tienda.tsx` filtros actualizados a 4 categorías
+- Servidor (`server/db.ts`): default products actualizados
+
+### 2. Carrito Flotante
+
+**Nuevo componente** `src/components/FloatingCart.tsx`:
+
+- Posición `fixed bottom-6 right-6 z-40`
+- Badge condicional (solo cuando `cartCount > 0`)
+- Botón siempre visible
+- Icono ShoppingCart de Lucide
+- Eliminado de `Navbar.tsx`
+
+### 3. Navbar — Separación de Logo
+
+- Logo separado de "Productos" con `mr-6 xl:mr-12`
+- Links con `gap-x-6 xl:gap-x-10 2xl:gap-x-16`
+- Actions (auth) con `ml-6 xl:ml-10`
+
+### 4. Footer — Rediseño a 3 Columnas
+
+- **5 columnas → 3 columnas** limpias: Marca, Enlaces, Contacto
+- Logo blanco (`logo-blanco.png`, 474×310, `h-9 w-auto opacity-90`)
+- Descripción reducida a 1 línea
+- Horarios eliminados (exceso de texto)
+- Enlaces en grid de 2 columnas
+- Créditos simplificados
+
+### 5. Nuestra Planta — Simplificación e Imágenes Reales
+
+- **WhatsApp** corregido a `+57 320 4263217`
+- **"Empaque y distribución"** → **"Empaque"** en servicios
+- **Sección Proceso** (timeline de 6 pasos) eliminada por simplicidad
+- **Imágenes reales** del cliente:
+  - Hero: `public/images/NUESTRA-PLANTA/PLANTA1.webp`
+  - Galería + overlay CTA: `public/images/NUESTRA-PLANTA/pLANTA2.webp`
+  - Carrusel reemplazado por imagen fija
+- Creada carpeta `public/images/NUESTRA-PLANTA/`
+
+### Archivos nuevos
+
+- `src/components/FloatingCart.tsx` — carrito flotante
+- `public/images/NUESTRA-PLANTA/PLANTA1.webp` — hero real
+- `public/images/NUESTRA-PLANTA/pLANTA2.webp` — galería real
+- `public/images/logo-blanco.png` — logo blanco recortado para footer
+
+### Archivos modificados
+
+- `src/types.ts` — CoffeeCategory actualizado, ProductVariant eliminado
+- `src/store.ts` — addToCart sin variante
+- `src/components/Navbar.tsx` — logo separado, carrito removido
+- `src/components/FloatingCart.tsx` — nuevo
+- `src/components/Footer.tsx` — 3 columnas, logo blanco
+- `src/pages/Tienda.tsx` — filtros 4 categorías
+- `src/pages/ProductDetail.tsx` — sin variantes
+- `src/pages/NuestraPlanta.tsx` — simplificado + imágenes reales
+- `db.json` — 26 productos reales en 4 categorías
+- `server/db.ts` — default products actualizados
+- `tests/integration/db.test.ts` — categorías actualizadas
+- `tests/integration/api/products.test.ts` — categorías actualizadas
+- `tests/unit/types.test.ts` — categorías actualizadas
+
+### Verificación
+
+- `npm run lint` ✅ — TypeScript compila sin errores
+
+---
+
 ## 🚀 Estado de Construcción
 
 - TypeScript: ✅ Compila sin errores
 - npm: ✅ 0 vulnerabilidades
 - Dependencias: Todas instaladas y funcionales
-- Frontend: ✅ Rediseño completo branding; Nuestra Planta; ScrollToTop; Estadías con Airbnb; tabs reserva
+- Frontend: ✅ Rediseño completo branding; Nuestra Planta con imágenes reales; Catálogo 26 productos en 4 categorías; Carrito flotante; Footer 3 columnas; ScrollToTop; Estadías con Airbnb; tabs reserva
 - Backend: ✅ Modularizado con seguridad OWASP (Helmet, CORS, rate-limit, Zod)
 - Tests: ✅ 117 tests (unit + integration DB/API + E2E Playwright) — 0 fallas
 - Deploy: ✅ Producción en Coolify — `jaguar.getindev.com`

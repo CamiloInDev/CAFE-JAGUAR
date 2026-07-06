@@ -24,14 +24,14 @@ it('Product type has required fields', () => {
     descripcion: 'Desc',
     precio: 25000,
     stock: 10,
-    categoria: 'grano',
+    categoria: '250gr',
     origen: 'Colombia',
     tueste: 'Medio',
     imagen_url: 'https://example.com/img.jpg',
     activo: true,
     created_at: new Date().toISOString(),
   };
-  expect(product.categoria).toMatch(/^(grano|molido|capsulas|kit|accesorio)$/);
+  expect(product.categoria).toMatch(/^(250gr|175gr|institucional|togo)$/);
 });
 
 it('Order type has valid statuses', () => {

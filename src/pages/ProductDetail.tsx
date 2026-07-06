@@ -4,6 +4,7 @@ import { useCartStore } from '../store';
 import { ArrowLeft, ShoppingCart, ShieldCheck, RefreshCw, Truck } from 'lucide-react';
 import { Product } from '../types';
 import axios from 'axios';
+import { showToast } from '../components/Toast';
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -27,6 +28,11 @@ export default function ProductDetail() {
         console.error('Error fetching product slug detailed details', err);
         setLoading(false);
       });
+  }, [slug]);
+
+  useEffect(() => {
+    setQuantity(1);
+    setErrorMsg(null);
   }, [slug]);
 
   if (loading) {
@@ -64,7 +70,16 @@ export default function ProductDetail() {
   const handleAddToCart = () => {
     try {
       addToCart(product, quantity);
-      alert(`¡${quantity} unidad(es) de "${product.nombre}" agregada(s) con éxito al carrito!`);
+      showToast(`${quantity} unidad(es) de "${product.nombre}" agregada(s) al carrito`);
+    } catch (err: any) {
+      setErrorMsg(err.message);
+    }
+  };
+
+  const handleBuyNow = () => {
+    try {
+      addToCart(product, quantity);
+      navigate('/carrito');
     } catch (err: any) {
       setErrorMsg(err.message);
     }
@@ -72,7 +87,6 @@ export default function ProductDetail() {
 
   return (
     <div id="product-detail-view" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      {/* Back to Catalog bar */}
       <div>
         <button
           onClick={() => navigate('/tienda')}
@@ -84,7 +98,6 @@ export default function ProductDetail() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        {/* Left Side: Product Image Display */}
         <div className="bg-white p-4 border border-stone-200 rounded-3xl overflow-hidden shadow-sm leading-none">
           <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-stone-100">
             <img
@@ -101,7 +114,6 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Right Side: Product Details Formulation */}
         <div className="space-y-6">
           <div className="space-y-2">
             <span className="text-xs font-bold text-amber-700 tracking-widest uppercase font-mono">{product.origen}</span>
@@ -113,7 +125,6 @@ export default function ProductDetail() {
 
           <hr className="border-stone-200" />
 
-          {/* Pricing Box */}
           <div className="flex items-baseline gap-4">
             <span className="text-3xl font-extrabold text-stone-950 font-sans">
               ${product.precio.toLocaleString('es-CO')} <span className="text-sm text-stone-600 font-normal font-mono">COP</span>
@@ -125,7 +136,6 @@ export default function ProductDetail() {
             )}
           </div>
 
-          {/* Complete Coffee Description Paragraph */}
           <div className="space-y-4">
             <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-stone-400">Descripción de Origen</h3>
             <p className="text-sm text-stone-600 font-light leading-relaxed">
@@ -133,7 +143,6 @@ export default function ProductDetail() {
             </p>
           </div>
 
-          {/* Quality Seals / Shipping Promises column */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-4 bg-stone-50 rounded-2xl border border-stone-150 p-4">
             <div className="flex items-center gap-3 sm:flex-col sm:text-center p-2">
               <Truck className="w-5 h-5 text-[#FFA42C]" />
@@ -160,7 +169,6 @@ export default function ProductDetail() {
 
           <hr className="border-stone-200" />
 
-          {/* Quantity Controls & Dynamic Add Action */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <span className="text-sm font-semibold text-stone-700">Cantidad:</span>
@@ -198,7 +206,6 @@ export default function ProductDetail() {
               </p>
             )}
 
-            {/* Bottom Primary Buy Actions */}
             <div className="pt-2 flex flex-col sm:flex-row gap-4">
               {product.stock > 0 ? (
                 <>
@@ -210,14 +217,7 @@ export default function ProductDetail() {
                     <span>Añadir al Carrito</span>
                   </button>
                   <button
-                    onClick={() => {
-                      try {
-                        addToCart(product, quantity);
-                        navigate('/carrito');
-                      } catch (err: any) {
-                        setErrorMsg(err.message);
-                      }
-                    }}
+                    onClick={handleBuyNow}
                     className="flex-grow flex items-center justify-center px-8 py-3.5 bg-white hover:bg-stone-50 border border-stone-300 text-stone-850 text-sm font-semibold rounded-xl transition-all shadow-sm"
                   >
                     Comprar Ahora

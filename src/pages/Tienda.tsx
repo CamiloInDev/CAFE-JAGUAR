@@ -15,11 +15,10 @@ export default function Tienda() {
 
   const categories: { label: string; value: string }[] = [
     { label: 'Todos', value: 'todos' },
-    { label: 'Café en Grano', value: 'grano' },
-    { label: 'Café Molido', value: 'molido' },
-    { label: 'Cápsulas', value: 'capsulas' },
-    { label: 'Kits Baristas', value: 'kit' },
-    { label: 'Accesorios', value: 'accesorio' },
+    { label: '250 gr', value: '250gr' },
+    { label: '175 gr', value: '175gr' },
+    { label: 'Institucional', value: 'institucional' },
+    { label: 'To-Go', value: 'togo' },
   ];
 
   const fetchFilteredProducts = () => {

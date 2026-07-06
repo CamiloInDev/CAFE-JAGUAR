@@ -39,9 +39,9 @@ describe('GET /api/productos', () => {
   });
 
   it('filters by categoria', async () => {
-    const res = await request(app).get('/api/productos?categoria=grano');
+    const res = await request(app).get('/api/productos?categoria=250gr');
     expect(res.status).toBe(200);
-    res.body.forEach((p: any) => expect(p.categoria).toBe('grano'));
+    res.body.forEach((p: any) => expect(p.categoria).toBe('250gr'));
   });
 
   it('searches by query', async () => {
@@ -75,7 +75,7 @@ describe('POST /api/productos - Admin', () => {
     const res = await request(app)
       .post('/api/productos')
       .set('Cookie', cookies)
-      .send({ nombre: 'New Product', descripcion: 'Brand new test product', precio: 30000, stock: 100, categoria: 'grano', origen: 'Test Origin', tueste: 'Medio', imagen_url: 'https://example.com/new.jpg' });
+      .send({ nombre: 'New Product', descripcion: 'Brand new test product', precio: 30000, stock: 100, categoria: '250gr', origen: 'Test Origin', tueste: 'Medio', imagen_url: 'https://example.com/new.jpg' });
     expect(res.status).toBe(201);
     expect(res.body.success).toBe(true);
   });
@@ -85,7 +85,7 @@ describe('POST /api/productos - Admin', () => {
     const res = await request(app)
       .post('/api/productos')
       .set('Cookie', cookies)
-      .send({ nombre: 'Unauthorized', descripcion: 'Should fail', precio: 10000, stock: 5, categoria: 'molido', origen: 'Test', tueste: 'Oscuro', imagen_url: 'https://example.com/img.jpg' });
+      .send({ nombre: 'Unauthorized', descripcion: 'Should fail', precio: 10000, stock: 5, categoria: '250gr', origen: 'Test', tueste: 'Oscuro', imagen_url: 'https://example.com/img.jpg' });
     expect(res.status).toBe(403);
   });
 
@@ -105,7 +105,7 @@ describe('PUT /api/productos/:id - Admin', () => {
     const res = await request(app)
       .put('/api/productos/prod_1')
       .set('Cookie', cookies)
-      .send({ nombre: 'Updated Product', descripcion: 'Updated description', precio: 35000, stock: 75, categoria: 'grano', origen: 'Updated Origin', tueste: 'Ligero', imagen_url: 'https://example.com/updated.jpg' });
+      .send({ nombre: 'Updated Product', descripcion: 'Updated description', precio: 35000, stock: 75, categoria: '250gr', origen: 'Updated Origin', tueste: 'Ligero', imagen_url: 'https://example.com/updated.jpg' });
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
   });
@@ -115,7 +115,7 @@ describe('PUT /api/productos/:id - Admin', () => {
     const res = await request(app)
       .put('/api/productos/prod_1')
       .set('Cookie', cookies)
-      .send({ nombre: 'Hack', descripcion: 'Hack', precio: 1, stock: 1, categoria: 'grano', origen: 'H', tueste: 'M', imagen_url: 'https://x.com/x.jpg' });
+      .send({ nombre: 'Hack', descripcion: 'Hack', precio: 1, stock: 1, categoria: '250gr', origen: 'H', tueste: 'M', imagen_url: 'https://x.com/x.jpg' });
     expect(res.status).toBe(403);
   });
 });

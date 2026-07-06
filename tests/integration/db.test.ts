@@ -160,7 +160,7 @@ describe('DB Service - Products', () => {
 
   it('saveProduct creates a new product', async () => {
     const { dbService } = await import('../../server/db');
-    dbService.saveProduct({ nombre: 'New Product', descripcion: 'Brand new', precio: 15000, stock: 100, categoria: 'capsulas', origen: 'Test', tueste: 'Oscuro', imagen_url: 'https://example.com/new.jpg', activo: true });
+    dbService.saveProduct({ nombre: 'New Product', descripcion: 'Brand new', precio: 15000, stock: 100, categoria: '250gr', origen: 'Test', tueste: 'Oscuro', imagen_url: 'https://example.com/new.jpg', activo: true });
     const products = dbService.getProducts();
     expect(products).toHaveLength(3);
     const created = products.find(p => p.nombre === 'New Product');
@@ -170,7 +170,7 @@ describe('DB Service - Products', () => {
 
   it('saveProduct edits an existing product', async () => {
     const { dbService } = await import('../../server/db');
-    dbService.saveProduct({ id: 'prod_1', nombre: 'Updated Product', descripcion: 'Updated', precio: 30000, stock: 25, categoria: 'grano', origen: 'Updated', tueste: 'Ligero', imagen_url: 'https://example.com/updated.jpg', activo: true });
+    dbService.saveProduct({ id: 'prod_1', nombre: 'Updated Product', descripcion: 'Updated', precio: 30000, stock: 25, categoria: '250gr', origen: 'Updated', tueste: 'Ligero', imagen_url: 'https://example.com/updated.jpg', activo: true });
     const p = dbService.getProductById('prod_1');
     expect(p!.nombre).toBe('Updated Product');
     expect(p!.slug).toBe('updated-product');

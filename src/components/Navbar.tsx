@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuthStore, useCartStore } from '../store';
-import { ShoppingCart, User as UserIcon, LogOut, ShieldCheck, Menu, X } from 'lucide-react';
+import { useAuthStore } from '../store';
+import { User as UserIcon, LogOut, ShieldCheck, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
-  const { items } = useCartStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const cartCount = items.reduce((acc, item) => acc + item.cantidad, 0);
 
   const handleLogout = async () => {
     await logout();
@@ -32,20 +29,20 @@ export default function Navbar() {
   return (
     <nav id="app-navbar" className="bg-[#FFF9F5]/95 backdrop-blur-md border-b border-[#122C9B]/10 sticky top-0 z-50">
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20">
-        <div className="flex justify-between h-20">
+        <div className="flex justify-between items-center h-20">
           {/* Logo Brand */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-all">
+          <div className="flex items-center flex-none mr-6 xl:mr-12">
+            <Link to="/" className="flex items-center hover:opacity-90 transition-all">
               <img
                 src="/images/logo-color.png"
                 alt="Jaguar Coffee"
-                className="h-16 w-auto"
+                className="h-16 lg:h-[72px] w-auto"
               />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 items-center justify-center space-x-5 xl:space-x-8 2xl:space-x-12">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-x-6 xl:gap-x-10 2xl:gap-x-16">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -62,21 +59,7 @@ export default function Navbar() {
           </div>
 
           {/* Actions Menu */}
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-8">
-            {/* Shopping Cart Trigger */}
-            <Link
-              to="/carrito"
-              id="nav-cart-btn"
-              className="relative p-2.5 text-[#122C9B] hover:text-[#3D5FC9] transition-colors bg-[#122C9B]/5 hover:bg-[#122C9B]/10 rounded-full"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1.5 bg-[#FFA42C] text-white rounded-full text-[10px] w-5 h-5 flex items-center justify-center font-bold shadow-sm">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
+          <div className="hidden lg:flex items-center flex-none ml-6 xl:ml-10">
             {/* Auth Buttons */}
             {user ? (
               <div className="flex items-center gap-4">
@@ -125,19 +108,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center space-x-4">
-            <Link
-              to="/carrito"
-              className="relative p-2.5 text-[#122C9B] bg-[#122C9B]/5 rounded-full"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1.5 bg-[#FFA42C] text-white rounded-full text-[10px] w-5 h-5 flex items-center justify-center font-bold">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-            
+          <div className="flex lg:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-[#122C9B] hover:text-[#3D5FC9] transition-colors rounded-lg bg-[#122C9B]/5"
